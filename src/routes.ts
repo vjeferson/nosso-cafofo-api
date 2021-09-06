@@ -1,5 +1,5 @@
 import express from 'express';
-import WellcomeController from './modules/welcome-controller';
+import WellcomeController from './modules/wellcome/welcome-controller';
 
 const routes = express.Router();
 const wellComeController = new WellcomeController();
