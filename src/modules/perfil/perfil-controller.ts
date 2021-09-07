@@ -1,25 +1,30 @@
 import { Request, Response } from 'express';
+import PerfilService from './perfil-service';
 
-export default class WellcomeController {
+export default class PerfilController {
 
     constructor() { };
 
-    async wellcome(request: Request, response: Response) {
-        // try {
-        //     const filters = request.query;
+    async find(request: Request, response: Response) {
+        try {
+            const filters = request.query;
+            const service = new PerfilService();
+            const perfis = await service.find(filters);
+            return response.status(200).send(perfis);
+        } catch (error: any) {
+            return response.status(400).json({ error: 'Erro ao consultar perfis', message: error.message });
+        }
+    }
 
-        //     if (!filters.subject || !filters.week_day || !filters.time) {
-        //         return response.status(400).json({
-        //             error: 'Missing filters', message: 'Missing filters to search classes',
-        //         });
-        //     }
-
-        //     const service = new ClassesService();
-        //     const classes = await service.find(filters);
-            return response.status(200).send('Hello World!');
-        // } catch (error) {
-        //     return response.status(400).json({ error: 'Unexpected error while creating new class', message: error.message });
-        // }
+    async findOne(request: Request, response: Response) {
+        try {
+            const perfilId = +request.params.id;
+            const service = new PerfilService();
+            const perfil = await service.findOne(perfilId);
+            return response.status(200).send(perfil);
+        } catch (error: any) {
+            return response.status(400).json({ error: 'Erro ao consultar perfil', message: error.message });
+        }
     }
 
 }
