@@ -21,6 +21,6 @@ routes.get('/perfil/:id', authMiddleware, perfilController.findOne);
 routes.get('/usuario', authMiddleware, usuarioController.find);
 routes.get('/usuario/:id', authMiddleware, usuarioController.findOne);
 routes.post('/usuario', authMiddleware, usuarioController.create);
-routes.post('/cadastro-novo-cliente', authMiddleware, usuarioController.createNewClient);
+routes.post('/cadastro-novo-cliente', usuarioController.createNewClient);
 
 export default routes;

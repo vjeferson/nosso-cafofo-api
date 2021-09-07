@@ -1,0 +1,32 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Nosso Cafofo API",
+        "description": "API do sistema do Nosso Cafofo.",
+        "termsOfService": "",
+        "contact": {
+            "email": "valdeci_jeferson@hotmail.com.br"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3001",
+            "description": "API de Desenvolvimento e Teste"
+        }
+    ],
+    "paths": {
+        "/usuario": {
+            "post": {
+                "sumary": "Cadastro de Usuário",
+                "description": "Rota para criação de usuários no sistema, acessível para usuários autenticados.",
+                "tags": [
+                    "Usuarios"
+                ],
+                "requestBody": {
+                    "content": {}
+                }
+            }
+        }
+    }
+}
