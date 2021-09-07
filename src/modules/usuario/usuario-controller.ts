@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { IUsuario } from './usuario-model';
+import { IUsuario } from './usuario-interface';
 import UsuarioService from './usuario-service';
 
 export default class UsuarioController {

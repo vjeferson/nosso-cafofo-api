@@ -1,5 +1,5 @@
 import database from '../../database/connection';
-import { IFiltroPerfil } from './perfil-filter-model';
+import { IFiltroPerfil } from './perfil-filter-interface';
 
 export default class PerfilService {
     constructor() { };

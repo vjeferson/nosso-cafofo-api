@@ -1,5 +1,5 @@
 import { Response } from 'express';
-import { IUsuario } from './usuario-model';
+import { IUsuario } from './usuario-interface';
 import database from '../../database/connection';
 import { CriptografarSenhasSerive } from '../../utils/criptografar-senhas-service';
 import { ValidadoresSerive } from '../../utils/validadores-service';
