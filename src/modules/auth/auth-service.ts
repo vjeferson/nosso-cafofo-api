@@ -1,12 +1,13 @@
-import database from '../database/connection';
-import { IUsuario } from '../modules/usuario/usuario-interface';
-import { CriptografarSenhasSerive } from '../utils/criptografar-senhas-service';
-import { ValidadoresSerive } from '../utils/validadores-service';
+
 import { IAuthenticateBody } from './auth-body-interface';
 import { IAuthenticateResult } from './auth-result-model';
 import moment from 'moment';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import { CriptografarSenhasSerive } from '../../utils/criptografar-senhas-service';
+import database from '../../database/connection';
+import { ValidadoresSerive } from '../../utils/validadores-service';
+import { IUsuario } from '../usuario/usuario-interface';
 
 dotenv.config();
 
