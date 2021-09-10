@@ -37,49 +37,4 @@ export default class PerfilService {
         }
     }
 
-    // async create(data: any) {
-    //     const {
-    //         name,
-    //         avatar,
-    //         whatsapp,
-    //         bio,
-    //         subject,
-    //         cost,
-    //         schedule
-    //     } = data;
-
-    //     const transaction = await database.transaction();
-
-    //     try {
-    //         const insertedUsersIds = await transaction('users').insert({
-    //             name,
-    //             avatar,
-    //             whatsapp,
-    //             bio
-    //         });
-    //         const user_id = insertedUsersIds[0];
-
-    //         const insertedClassesIds = await transaction('classes').insert({
-    //             subject,
-    //             cost,
-    //             user_id
-    //         });
-    //         const class_id = insertedClassesIds[0];
-
-    //         const classSchedule = schedule.map((element: ScheduleItem) => {
-    //             return {
-    //                 class_id,
-    //                 week_day: element.week_day,
-    //                 from: converteHourToMinutes(element.from),
-    //                 to: converteHourToMinutes(element.to)
-    //             }
-    //         });
-
-    //         await transaction('class_schedule').insert(classSchedule);
-    //         await transaction.commit();
-    //     } catch (error) {
-    //         await transaction.rollback();
-    //         throw error;
-    //     }
-    // }
 }

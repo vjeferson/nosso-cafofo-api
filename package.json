@@ -4,10 +4,10 @@
   "description": "Api do Nosso Cafofo para suprir a Aplicação Web e Aplicativos Mobile.",
   "main": "server.js",
   "scripts": {
-    "start": "tsnd --transpile-only --ignore-watch node_modules --respawn src/server.ts",
+    "build": "tsc",
     "knex:migrate": "knex --knexfile knexfile.ts migrate:latest",
     "knex:migrate:rollback": "knex --knexfile knexfile.ts migrate:rollback",
-    "build": "tsc"
+    "start:dev": "tsnd --transpile-only --ignore-watch node_modules --respawn src/server.ts"
   },
   "repository": {
     "type": "git",
