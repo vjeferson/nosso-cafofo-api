@@ -13,6 +13,10 @@
         {
             "url": "http://localhost:3001",
             "description": "API de Desenvolvimento e Teste"
+        },
+        {
+            "url": "http://nosso-cafofo-api.herokuapp.com",
+            "description": "API de Produção"
         }
     ],
     "paths": {
