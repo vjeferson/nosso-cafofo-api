@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { IUsuario } from './usuario-interface';
+import { IUsuario } from '../../interfaces/usuario-interface';
 import UsuarioService from './usuario-service';
 
 export default class UsuarioController {
@@ -23,7 +23,7 @@ export default class UsuarioController {
             if (isNaN(+usuarioId) || usuarioId === null || usuarioId === undefined) {
                 throw new Error('Id (identificador) informado é inválido!');
             }
-            console.log(request.params)
+
             const service = new UsuarioService();
             const usuario = await service.findOne(+usuarioId);
             return response.status(200).send(usuario);
@@ -37,7 +37,7 @@ export default class UsuarioController {
             const data: IUsuario = request.body;
             const service = new UsuarioService();
             const novoUsuario = await service.create(data, response);
-            console.log(novoUsuario);
+
             return response.status(201).send(novoUsuario);
         } catch (error: any) {
             return response.status(400).json({ error: 'Erro ao criar usuário', message: error.message });

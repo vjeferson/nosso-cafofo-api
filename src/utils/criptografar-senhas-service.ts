@@ -1,6 +1,6 @@
 import * as crypto from 'crypto';
 
-export class CriptografarSenhasSerive {
+export default class CriptografarSenhasSerive {
 
     constructor() { };
 

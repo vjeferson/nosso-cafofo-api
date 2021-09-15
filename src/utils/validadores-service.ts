@@ -1,4 +1,4 @@
-export class ValidadoresSerive {
+export default class ValidadoresSerive {
 
     constructor() { };
 

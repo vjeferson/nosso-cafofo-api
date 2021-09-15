@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import AuthService from './auth-service';
-import { IAuthenticateBody } from './auth-body-interface';
-import { IAuthenticateResult } from './auth-result-model';
+import { IAuthenticateBody } from '../../interfaces/auth-body-interface';
+import { IAuthenticateResult } from '../../interfaces/auth-result-interface';
 
 export default class AuthController {
 

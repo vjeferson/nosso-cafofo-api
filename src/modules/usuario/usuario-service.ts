@@ -1,19 +1,20 @@
 import { Response } from 'express';
-import { IUsuario } from './usuario-interface';
 import database from '../../database/connection';
-import { CriptografarSenhasSerive } from '../../utils/criptografar-senhas-service';
-import { ValidadoresSerive } from '../../utils/validadores-service';
+import CriptografarSenhasSerive from '../../utils/criptografar-senhas-service';
+import ValidadoresSerive from '../../utils/validadores-service';
 import moment from 'moment';
+import { IUsuario } from '../../interfaces/usuario-interface';
 
 export default class UsuarioService {
     constructor() { };
 
     async find(filters: any): Promise<IUsuario[]> {
         try {
+            console.log('Segundo');
             // const tipoPerfil = !isNaN(+(filters.tipoPerfil as any)) && filters.tipoPerfil !== null && filters.tipoPerfil !== undefined ?
             //     +(filters.tipoPerfil as any) : null;
             // const descricao: string = filters.descricao as string;
-            console.log(filters);
+         
             const usuarios = await database('usuario')
                 .select(
                     'usuario.id as id',
@@ -112,7 +113,4 @@ export default class UsuarioService {
         }
     }
 
-    private validaSenha(senha: string) {
-
-    }
 }

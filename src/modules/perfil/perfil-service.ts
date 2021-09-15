@@ -1,5 +1,6 @@
 import database from '../../database/connection';
-import { IFiltroPerfil } from './perfil-filter-interface';
+import { IFiltroPerfil } from '../../interfaces/perfil-filter-interface';
+import { IPerfil } from '../../interfaces/perfil-interface';
 
 export default class PerfilService {
     constructor() { };
@@ -26,12 +27,22 @@ export default class PerfilService {
         }
     }
 
-    async findOne(perfilId: number) {
+    async findOne(perfilId: number): Promise<IPerfil | null> {
         try {
             const perfil = await database('perfil')
                 .select('perfil.*')
-                .where('perfil.id', perfilId);
-            return perfil;
+                .where('perfil.id', perfilId)
+                .limit(1)
+                .offset(0);
+
+            if (Array.isArray(perfil) && perfil.length > 0) {
+                return {
+                    id: perfil[0].id,
+                    descricao: perfil[0].descricao,
+                    tipoPerfil: perfil[0].tipo_perfil
+                } as IPerfil;
+            }
+            return null;
         } catch (error) {
             throw error;
         }

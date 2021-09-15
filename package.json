@@ -7,7 +7,8 @@
     "build": "tsc",
     "knex:migrate": "knex --knexfile knexfile.ts migrate:latest",
     "knex:migrate:rollback": "knex --knexfile knexfile.ts migrate:rollback",
-    "start:dev": "tsnd --transpile-only --ignore-watch node_modules --respawn src/server.ts"
+    "start:dev": "tsnd --transpile-only --ignore-watch node_modules --respawn src/server.ts",
+    "start": "node dist/src/server.js"
   },
   "repository": {
     "type": "git",
