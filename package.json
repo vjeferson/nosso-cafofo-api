@@ -5,11 +5,12 @@
   "main": "server.js",
   "scripts": {
     "build": "tsc",
-    "knex:migrate:dev": "knex --knexfile knexfile.ts migrate:latest",
-    "knex:migrate": "knex --knexfile dist/knexfile.js migrate:latest",
+    "knex:migrate:dev": "knex --knexfile dist/knexfile.js migrate:latest",
     "knex:migrate:rollback:dev": "knex --knexfile knexfile.ts migrate:rollback",
-    "start:dev": "tsnd --transpile-only --ignore-watch node_modules --respawn src/server.ts",
-    "start": "node dist/src/server.js"
+    "knex:migrate": "knex --knexfile dist/knexfile.js migrate:latest",
+    "knex:migrate:rollback": "knex --knexfile dist/knexfile.js migrate:rollback",
+    "start": "node dist/src/server.js",
+    "start:dev": "tsnd --transpile-only --ignore-watch node_modules --respawn src/server.ts"
   },
   "repository": {
     "type": "git",
