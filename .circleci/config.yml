@@ -1,9 +1,9 @@
 version: 2.1
 orbs:
-  heroku: circleci/heroku@0.0.10
+  heroku: circleci/heroku@1.2.6
 workflows:
-  heroku_deploy:
-    jobs:
-      - heroku/deploy-via-git:
-      post-steps:
-        - run: knex:migrate
+    heroku-prod:
+      jobs:
+        - heroku/deploy-via-git:
+            branch: main
+            app-name: nosso-cafofo-api
