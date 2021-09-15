@@ -10,11 +10,10 @@ export default class UsuarioService {
 
     async find(filters: any): Promise<IUsuario[]> {
         try {
-            console.log('Segundo');
             // const tipoPerfil = !isNaN(+(filters.tipoPerfil as any)) && filters.tipoPerfil !== null && filters.tipoPerfil !== undefined ?
             //     +(filters.tipoPerfil as any) : null;
             // const descricao: string = filters.descricao as string;
-         
+
             const usuarios = await database('usuario')
                 .select(
                     'usuario.id as id',

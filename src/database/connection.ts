@@ -3,8 +3,7 @@ import path from 'path';
 import dotenv from 'dotenv';
 
 dotenv.config();
-console.log('PATH database: ' + path.resolve(__dirname));
-console.log(process.env);
+
 const database = knex({
   client: process.env.DB_CONNECTION,
   connection: {
