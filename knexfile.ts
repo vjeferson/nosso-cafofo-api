@@ -2,8 +2,6 @@ import path from 'path';
 import dotenv from 'dotenv';
 dotenv.config();
 
-console.log(process.env.DB_HOST);
-
 module.exports = {
     client: process.env.DB_CONNECTION,
     connection: {
