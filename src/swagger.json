@@ -15,7 +15,7 @@
             "description": "API de Desenvolvimento e Teste"
         },
         {
-            "url": "http://nosso-cafofo-api.herokuapp.com",
+            "url": "https://nosso-cafofo-api.herokuapp.com",
             "description": "API de Produção"
         }
     ],
