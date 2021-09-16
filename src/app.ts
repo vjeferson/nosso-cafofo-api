@@ -43,7 +43,7 @@ export default class App {
     public start(): void {
         const porta = process.env.PORT || 3333;
         this.express.listen(porta, () => {
-            console.log(process.env.NODE_ENV == 'dev' ? `Server iniciado e escutando em http://localhost:${porta} !` : 'Server iniciado!');
+            console.log(process.env.NODE_ENV == 'development' ? `Server iniciado e escutando em http://localhost:${porta} !` : 'Server iniciado!');
         });
     }
 
