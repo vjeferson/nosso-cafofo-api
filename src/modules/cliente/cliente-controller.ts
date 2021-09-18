@@ -1,11 +1,9 @@
 import { Request, Response } from 'express';
-import { INovoCliente } from '../../interfaces/novo-cliente';
+import { INovoCliente } from '../../interfaces/novo-cliente-interface';
 import ClienteService from './cliente-service';
 import AuthService from '../auth/auth-service';
 import { IAuthenticateResult } from '../../interfaces/auth-result-interface';
 import { IAuthenticateBody } from '../../interfaces/auth-body-interface';
-import ValidadoresSerive from '../../utils/validadores-service';
-import CriptografarSenhasSerive from '../../utils/criptografar-senhas-service';
 
 export default class ClienteController {
 
@@ -17,12 +15,8 @@ export default class ClienteController {
             const authService = new AuthService();
             const dadosCliente: INovoCliente = request.body;
 
-            ValidadoresSerive.validaEmail(dadosCliente.email);
-            ValidadoresSerive.validaSenha(dadosCliente.senha);
-            const senha = dadosCliente.senha
-            dadosCliente.senha = CriptografarSenhasSerive.encrypt(dadosCliente.senha);
-
-            await clienteService.create(dadosCliente);
+            const senha = dadosCliente.senha;
+            await clienteService.create(dadosCliente, response);
 
             const result: IAuthenticateResult = await authService.authenticate(
                 {

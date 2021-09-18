@@ -13,7 +13,15 @@ const database = knex({
   migrations: {
     directory: path.resolve(__dirname, 'src', 'database', 'migrations')
   },
-  useNullAsDefault: true
+  useNullAsDefault: true,
+  // postProcessResponse: (result, queryContext) => {
+  //   // TODO: add special case for raw results (depends on dialect)
+  //   if (Array.isArray(result)) {
+  //     return result.map(row => convertToCamel(row));
+  //   } else {
+  //     return convertToCamel(result);
+  //   }
+  // }
 });
 
 export default database;

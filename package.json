@@ -29,6 +29,7 @@
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.95.11",
     "moment": "^2.29.1",
+    "objection": "^2.2.16",
     "pg": "^8.7.1",
     "swagger-ui-express": "^4.1.6",
     "uninstall": "0.0.0"

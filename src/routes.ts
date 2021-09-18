@@ -14,7 +14,7 @@ const perfilController = new PerfilController();
 const usuarioController = new UsuarioController();
 
 routes.get('/', pingController.ping);
-routes.post('/novo-cliente', clienteController.adicionarCliente);
+routes.post('/cliente', clienteController.adicionarCliente);
 routes.post('/authenticate', authController.authenticate);
 
 routes.get('/perfil', authMiddleware, perfilController.find);
@@ -24,6 +24,5 @@ routes.get('/usuario', authMiddleware, usuarioController.find);
 routes.get('/usuario/:id', authMiddleware, usuarioController.findOne);
 routes.post('/usuario', authMiddleware, usuarioController.create);
 routes.put('/usuario/:id', authMiddleware, usuarioController.upsert);
-routes.post('/cadastro-novo-cliente', usuarioController.createNewClient);
 
 export default routes;

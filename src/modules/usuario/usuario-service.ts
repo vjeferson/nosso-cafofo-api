@@ -59,8 +59,9 @@ export default class UsuarioService {
         }
     }
 
-    async create(data: IUsuario, response: Response): Promise<IUsuario> {
+    async create(data: IUsuario): Promise<IUsuario> {
         try {
+            ValidadoresSerive.validaEmail(data.email);
             ValidadoresSerive.validaSenha(data.senha as string);
             const senhaEncriptada = CriptografarSenhasSerive.encrypt(data.senha as string);
             const novoUsuario = await database('usuario').insert({
@@ -88,7 +89,7 @@ export default class UsuarioService {
         }
     }
 
-    async upsert(usuarioId: number, data: IUsuario, response: Response): Promise<boolean> {
+    async upsert(usuarioId: number, data: IUsuario): Promise<boolean> {
         try {
             const usuario = await database('usuario')
                 .select('usuario.*')

@@ -36,7 +36,7 @@ export default class UsuarioController {
         try {
             const data: IUsuario = request.body;
             const service = new UsuarioService();
-            const novoUsuario = await service.create(data, response);
+            const novoUsuario = await service.create(data);
 
             return response.status(201).send(novoUsuario);
         } catch (error: any) {
@@ -52,15 +52,11 @@ export default class UsuarioController {
             }
             const data: IUsuario = request.body;
             const service = new UsuarioService();
-            const retorno = await service.upsert(+usuarioId, data, response);
+            const retorno = await service.upsert(+usuarioId, data);
             return response.status(201).send(retorno);
         } catch (error: any) {
             return response.status(400).json({ error: 'Erro ao atualizar usuário', message: error.message });
         }
-    }
-
-    async createNewClient() {
-        return null;
     }
 
 }
