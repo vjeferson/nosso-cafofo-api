@@ -1,5 +1,6 @@
 import { Model } from 'objection';
 import { IUsuario } from '../../interfaces/usuario-interface';
+import { Perfil } from '../perfil/perfil-model';
 
 export class Usuario extends Model implements IUsuario {
     id?: number;
@@ -11,6 +12,8 @@ export class Usuario extends Model implements IUsuario {
     perfilId: number;
     republicaId?: number;
     moradorId?: number;
+
+    perfil?: Perfil;
 
     static get tableName() {
         return 'usuario';
@@ -32,6 +35,17 @@ export class Usuario extends Model implements IUsuario {
             moradorId: { type: ['integer', 'null'] }
         }
     }
+
+    static relationMappings = {
+        perfil: {
+            relation: Model.HasOneRelation,
+            modelClass: Perfil,
+            join: {
+                from: 'usuario.perfilId',
+                to: 'perfil.id'
+            }
+        }
+    };
 
     $beforeInsert() {
         this.createTime = new Date().toISOString();

@@ -1,4 +1,5 @@
 import express from 'express';
+import authAdministradorNossoCafofoMiddleware from './middlewares/authAdministradorNossoCafofoMiddleware';
 import authMiddleware from './middlewares/authMiddleware';
 import AuthController from './modules/auth/auth-controller';
 import ClienteController from './modules/cliente/cliente-controller';
@@ -17,8 +18,8 @@ routes.get('/', pingController.ping);
 routes.post('/cliente', clienteController.adicionarCliente);
 routes.post('/authenticate', authController.authenticate);
 
-routes.get('/perfil', authMiddleware, perfilController.find);
-routes.get('/perfil/:id', authMiddleware, perfilController.findOne);
+routes.get('/perfil', authMiddleware, authAdministradorNossoCafofoMiddleware, perfilController.find);
+routes.get('/perfil/:id', authMiddleware, authAdministradorNossoCafofoMiddleware, perfilController.findOne);
 
 routes.get('/usuario', authMiddleware, usuarioController.find);
 routes.get('/usuario/:id', authMiddleware, usuarioController.findOne);

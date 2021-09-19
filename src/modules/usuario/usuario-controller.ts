@@ -6,8 +6,6 @@ import { Usuario } from './usuario-model';
 
 export default class UsuarioController {
 
-    constructor() { };
-
     async find(request: Request, response: Response) {
         try {
             const filters = request.query;
@@ -26,7 +24,7 @@ export default class UsuarioController {
                 throw new Error('Id (identificador) informado é inválido!');
             }
 
-            const usuario = await Usuario.query().select().where('id', '=', usuarioId);
+            const usuario = await Usuario.query().findById(usuarioId);
             return response.status(200).send(usuario);
         } catch (error: any) {
             return response.status(400).json({ error: 'Erro ao consultar o usuário', message: error.message });
