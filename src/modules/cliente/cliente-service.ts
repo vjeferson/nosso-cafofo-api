@@ -4,7 +4,6 @@ import { INovoCliente } from '../../interfaces/novo-cliente-interface';
 import CriptografarSenhasSerive from '../../utils/criptografar-senhas-service';
 import { EnumTipoPerfil } from '../../utils/enums';
 import ValidadoresSerive from '../../utils/validadores-service';
-import UsuarioService from '../usuario/usuario-service';
 
 export default class ClienteService {
     constructor() { };
