@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
 import { IUsuario } from '../../interfaces/usuario-interface';
-import UsuarioService from './usuario-service';
+import CriptografarSenhasSerive from '../../utils/criptografar-senhas-service';
+import ValidadoresSerive from '../../utils/validadores-service';
+import { Usuario } from './usuario-model';
 
 export default class UsuarioController {
 
@@ -9,8 +11,8 @@ export default class UsuarioController {
     async find(request: Request, response: Response) {
         try {
             const filters = request.query;
-            const service = new UsuarioService();
-            const usuarios = await service.find(filters);
+
+            const usuarios = await Usuario.query().select();
             return response.status(200).send(usuarios);
         } catch (error: any) {
             return response.status(400).json({ error: 'Erro ao consultar usuários', message: error.message });
@@ -24,8 +26,7 @@ export default class UsuarioController {
                 throw new Error('Id (identificador) informado é inválido!');
             }
 
-            const service = new UsuarioService();
-            const usuario = await service.findOne(+usuarioId);
+            const usuario = await Usuario.query().select().where('id', '=', usuarioId);
             return response.status(200).send(usuario);
         } catch (error: any) {
             return response.status(400).json({ error: 'Erro ao consultar o usuário', message: error.message });
@@ -35,8 +36,18 @@ export default class UsuarioController {
     async create(request: Request, response: Response) {
         try {
             const data: IUsuario = request.body;
-            const service = new UsuarioService();
-            const novoUsuario = await service.create(data);
+
+            ValidadoresSerive.validaEmail(data.email);
+            ValidadoresSerive.validaSenha(data.senha as string);
+            const senhaEncriptada = CriptografarSenhasSerive.encrypt(data.senha as string);
+            const novoUsuario = await Usuario.query().insert({
+                nome: data.nome,
+                email: data.email,
+                senha: senhaEncriptada,
+                perfilId: data.perfilId,
+                republicaId: data.republicaId || null,
+                moradorId: data.moradorId || null
+            });
 
             return response.status(201).send(novoUsuario);
         } catch (error: any) {
@@ -50,10 +61,20 @@ export default class UsuarioController {
             if (isNaN(+usuarioId) || usuarioId === null || usuarioId === undefined) {
                 throw new Error('Id (identificador) informado é inválido!');
             }
+
             const data: IUsuario = request.body;
-            const service = new UsuarioService();
-            const retorno = await service.upsert(+usuarioId, data);
-            return response.status(201).send(retorno);
+
+            const usuarioAtualizado = await Usuario.query()
+                .findById(usuarioId)
+                .patch({
+                    nome: data.nome
+                });
+
+            if (!usuarioAtualizado) {
+                throw new Error('Não existe um usuário para o id (identificador) informado!');
+            }
+
+            return response.status(201).send(true);
         } catch (error: any) {
             return response.status(400).json({ error: 'Erro ao atualizar usuário', message: error.message });
         }

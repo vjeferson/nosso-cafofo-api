@@ -3,8 +3,8 @@ export interface IUsuario {
     nome: string;
     email: string;
     senha?: string;
-    createTime?: Date;
-    updateTime?: Date;
+    createTime?: string;
+    updateTime?: string;
     perfilId: number;
     republicaId?: number;
     moradorId?: number;

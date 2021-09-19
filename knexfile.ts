@@ -1,5 +1,6 @@
 import path from 'path';
 import dotenv from 'dotenv';
+import { knexSnakeCaseMappers } from 'objection';
 dotenv.config();
 
 module.exports = {
@@ -11,5 +12,6 @@ module.exports = {
     migrations: {
         directory: path.resolve(__dirname, 'src', 'database', 'migrations')
     },
-    useNullAsDefault: true
+    useNullAsDefault: true,
+    ...knexSnakeCaseMappers()
 };
