@@ -27,7 +27,7 @@ export class Usuario extends Model implements IUsuario {
             id: { type: 'integer' },
             nome: { type: 'string', maxLength: 50 },
             email: { type: 'string', maxLength: 70 },
-            senha: { type: 'string', maxLength: 70 },
+            senha: { type: ['string', 'null'], maxLength: 70 },
             createTime: { type: 'string', format: 'date-time' },
             updateTime: { type: 'string', format: 'date-time' },
             perfilId: { type: 'integer' },
@@ -47,11 +47,23 @@ export class Usuario extends Model implements IUsuario {
         }
     };
 
-    $beforeInsert() {
-        this.createTime = new Date().toISOString();
+    private async uniqueViolations() {
+        const usuario = await Usuario.query().select().where('email', '=', this.email);
+
+        if (Array.isArray(usuario) && usuario.length > 0) {
+            throw new Error('Já existe um úsuario com o email informado!');
+        }
     }
 
-    $beforeUpdate() {
-        this.updateTime = new Date().toISOString();
+    async $beforeInsert() {
+        this.createTime = new Date().toISOString();
+        await this.uniqueViolations();
+
     }
+
+    async $beforeUpdate() {
+        this.updateTime = new Date().toISOString();
+        await this.uniqueViolations();
+    }
+
 }

@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import RepublicaService from './republica-service';
 
 export default class UsuarioController {
 
