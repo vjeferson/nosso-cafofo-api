@@ -1,5 +1,6 @@
 import { Model } from 'objection';
 import { IUsuario } from '../../interfaces/usuario-interface';
+import { Morador } from '../morador/morador-model';
 import { Perfil } from '../perfil/perfil-model';
 import { Republica } from '../republica/republica.model';
 
@@ -52,6 +53,14 @@ export class Usuario extends Model implements IUsuario {
             join: {
                 from: 'usuario.republicaId',
                 to: 'republica.id'
+            }
+        },
+        morador: {
+            relation: Model.HasOneRelation,
+            modelClass: Morador,
+            join: {
+                from: 'usuario.moradorId',
+                to: 'morador.id'
             }
         }
     };

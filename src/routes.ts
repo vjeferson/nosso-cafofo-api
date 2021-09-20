@@ -23,8 +23,10 @@ routes.get('/', pingController.ping);
 routes.post('/cliente', clienteController.adicionarCliente);
 routes.post('/authenticate', authController.authenticate);
 
-routes.get('/perfil', authMiddleware, authAdministradorNossoCafofoMiddleware, perfilController.find);
-routes.get('/perfil/:id', authMiddleware, authAdministradorNossoCafofoMiddleware, perfilController.findOne);
+routes.get('/perfil', authMiddleware, perfilController.find);
+routes.get('/perfil/:id', authMiddleware, perfilController.findOne);
+routes.post('/perfil', authMiddleware, authAdministradorNossoCafofoMiddleware, perfilController.create);
+routes.put('/perfil/:id', authMiddleware, authAdministradorNossoCafofoMiddleware, perfilController.upsert);
 
 routes.get('/republica', authMiddleware, authAdministradorNossoCafofoMiddleware, republicaController.find);
 routes.get('/republica/:id', authMiddleware, republicaController.findOne);

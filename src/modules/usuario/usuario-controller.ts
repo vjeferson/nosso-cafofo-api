@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { IUsuario } from '../../interfaces/usuario-interface';
+import { IUpdateUsuario } from '../../interfaces/usuario-update-interface';
 import CriptografarSenhasSerive from '../../utils/criptografar-senhas-service';
 import { EnumTipoPerfil } from '../../utils/enums';
 import TenantsSerive from '../../utils/tenants-service';
@@ -80,13 +81,11 @@ export default class UsuarioController {
                 throw new Error('Id (identificador) informado é inválido!');
             }
 
-            const data: IUsuario = request.body;
+            const data: IUpdateUsuario = request.body;
 
-            const usuarioAtualizado = await Usuario.query()
-                .findById(usuarioId)
-                .patch({
-                    nome: data.nome
-                });
+            const usuarioAtualizado = await Usuario.query().findById(+usuarioId)
+                .skipUndefined()
+                .patch({ nome: data.nome });
 
             if (!usuarioAtualizado) {
                 throw new Error('Não existe um usuário para o id (identificador) informado!');
