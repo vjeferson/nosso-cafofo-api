@@ -1,7 +1,10 @@
 import { Request, Response } from 'express';
 import { IUsuario } from '../../interfaces/usuario-interface';
 import CriptografarSenhasSerive from '../../utils/criptografar-senhas-service';
+import { EnumTipoPerfil } from '../../utils/enums';
+import TenantsSerive from '../../utils/tenants-service';
 import ValidadoresSerive from '../../utils/validadores-service';
+import { Perfil } from '../perfil/perfil-model';
 import { Usuario } from './usuario-model';
 
 export default class UsuarioController {
@@ -10,7 +13,10 @@ export default class UsuarioController {
         try {
             const filters = request.query;
 
-            const usuarios = await Usuario.query().select();
+            const query = Usuario.query();
+            TenantsSerive.aplicarTenantRepublica(request.perfil.tipoPerfil, query, request.usuario.republicaId);
+            const usuarios = await query.select();
+
             return response.status(200).send(usuarios);
         } catch (error: any) {
             return response.status(400).json({ error: 'Erro ao consultar usuários', message: error.message });
@@ -24,8 +30,12 @@ export default class UsuarioController {
                 throw new Error('Id (identificador) informado é inválido!');
             }
 
-            const usuario = await Usuario.query().findById(usuarioId);
-            return response.status(200).send(usuario);
+            const query = Usuario.query();
+            TenantsSerive.aplicarTenantRepublica(request.perfil.tipoPerfil, query, request.usuario.republicaId);
+            query.where('id', usuarioId);
+            const usuario = await query.select();
+
+            return response.status(200).send(Array.isArray(usuario) && usuario.length > 0 ? usuario[0] : null);
         } catch (error: any) {
             return response.status(400).json({ error: 'Erro ao consultar o usuário', message: error.message });
         }
@@ -38,12 +48,22 @@ export default class UsuarioController {
             ValidadoresSerive.validaEmail(data.email);
             ValidadoresSerive.validaSenha(data.senha as string);
             const senhaEncriptada = CriptografarSenhasSerive.encrypt(data.senha as string);
+
+            if (request.perfil.tipoPerfil === EnumTipoPerfil.AdministradorNossoCafofo) {
+                data.perfilId = request.perfil.id;
+            } else {
+                const perfil = await Perfil.query().findById(data.perfilId);
+                if (!perfil || (perfil && perfil.tipoPerfil === EnumTipoPerfil.AdministradorNossoCafofo)) {
+                    throw new Error('Identificador de Perfil inválido!');
+                }
+            }
+
             const novoUsuario = await Usuario.query().insert({
                 nome: data.nome,
                 email: data.email,
                 senha: senhaEncriptada,
                 perfilId: data.perfilId,
-                republicaId: data.republicaId || null,
+                republicaId: request.republica ? request.republica.id : null,
                 moradorId: data.moradorId || null
             });
 

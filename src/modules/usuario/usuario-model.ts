@@ -1,6 +1,7 @@
 import { Model } from 'objection';
 import { IUsuario } from '../../interfaces/usuario-interface';
 import { Perfil } from '../perfil/perfil-model';
+import { Republica } from '../republica/republica.model';
 
 export class Usuario extends Model implements IUsuario {
     id?: number;
@@ -43,6 +44,14 @@ export class Usuario extends Model implements IUsuario {
             join: {
                 from: 'usuario.perfilId',
                 to: 'perfil.id'
+            }
+        },
+        republica: {
+            relation: Model.HasOneRelation,
+            modelClass: Republica,
+            join: {
+                from: 'usuario.republicaId',
+                to: 'republica.id'
             }
         }
     };

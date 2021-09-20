@@ -1,48 +1,61 @@
 import { Request, Response } from 'express';
+import database from '../../database/connection';
+import { IRepublica } from '../../interfaces/republica-interface';
+import { Republica } from './republica.model';
 
-export default class UsuarioController {
+export default class RepublicaController {
 
     constructor() { };
 
-    // async find(request: Request, response: Response) {
-    //     try {
-    //         const filters = request.query;
-    //         const service = new RepublicaService();
-    //         const usuarios = await service.find(filters);
-    //         return response.status(200).send(usuarios);
-    //     } catch (error: any) {
-    //         return response.status(400).json({ error: 'Erro ao consultar usuários', message: error.message });
-    //     }
-    // }
+    async find(request: Request, response: Response) {
+        try {
+            const filters = request.query;
+            const republicas = await Republica.query().select();
+            return response.status(200).send(republicas);
+        } catch (error: any) {
+            return response.status(400).json({ error: 'Erro ao consultar repúblicas', message: error.message });
+        }
+    }
 
-    // async findOne(request: Request, response: Response) {
-    //     try {
-    //         const usuarioId = request.params.id;
-    //         if (isNaN(+usuarioId) || usuarioId === null || usuarioId === undefined) {
-    //             throw new Error('Id (identificador) informado é inválido!');
-    //         }
+    async findOne(request: Request, response: Response) {
+        try {
+            const republicaId = request.params.id;
+            if (isNaN(+republicaId) || republicaId === null || republicaId === undefined) {
+                throw new Error('Id (identificador) informado é inválido!');
+            }
 
-    //         const service = new UsuarioService();
-    //         const usuario = await service.findOne(+usuarioId);
-    //         return response.status(200).send(usuario);
-    //     } catch (error: any) {
-    //         return response.status(400).json({ error: 'Erro ao consultar o usuário', message: error.message });
-    //     }
-    // }
+            const republica = await Republica.query().findById(republicaId);
+            return response.status(200).send(republica);
+        } catch (error: any) {
+            return response.status(400).json({ error: 'Erro ao consultar o república', message: error.message });
+        }
+    }
 
-    // async upsert(request: Request, response: Response) {
-    //     try {
-    //         const usuarioId = request.params.id;
-    //         if (isNaN(+usuarioId) || usuarioId === null || usuarioId === undefined) {
-    //             throw new Error('Id (identificador) informado é inválido!');
-    //         }
-    //         const data: IUsuario = request.body;
-    //         const service = new UsuarioService();
-    //         const retorno = await service.upsert(+usuarioId, data);
-    //         return response.status(201).send(retorno);
-    //     } catch (error: any) {
-    //         return response.status(400).json({ error: 'Erro ao atualizar usuário', message: error.message });
-    //     }
-    // }
+    async upsert(request: Request, response: Response) {
+        try {
+            const republicaId = request.params.id;
+            if (isNaN(+republicaId) || republicaId === null || republicaId === undefined) {
+                throw new Error('Id (identificador) informado é inválido!');
+            }
+
+            const dados: IRepublica = request.body;
+
+            const republicaAtualizada = await Republica.query()
+                .findById(republicaId)
+                .patch({
+                    nome: dados.nome,
+                    anoCriacao: dados.anoCriacao,
+                    dataPagamentoContas: dados.dataPagamentoContas
+                });
+
+            if (!republicaAtualizada) {
+                throw new Error('Não existe uma república para o id (identificador) informado!');
+            }
+
+            return response.status(201).send(true);
+        } catch (error: any) {
+            return response.status(400).json({ error: 'Erro ao atualizar república', message: error.message });
+        }
+    }
 
 }
