@@ -16,7 +16,7 @@ export class Perfil extends Model implements IPerfil {
 
         properties: {
             id: { type: 'integer' },
-            descricao: { type: 'string', maxLength: 50 },
+            descricao: { type: 'string', minLength: 5, maxLength: 50 },
             tipoPerfil: { type: 'integer' }
         }
     }

@@ -20,7 +20,7 @@ export default class App {
     private prepareEnv() {
         dotenv.config();
         if (process.env.OVERRIDE_ENV == 'true') {
-            const envConfig = dotenv.parse(fs.readFileSync('.env.test'))
+            const envConfig = dotenv.parse(fs.readFileSync('.env.prod'))
             for (const k in envConfig) {
                 process.env[k] = envConfig[k]
             }

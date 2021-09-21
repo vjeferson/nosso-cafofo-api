@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
-import { IUsuario } from '../../interfaces/usuario-interface';
+import { INovoUsuario } from '../../interfaces/usuario-create-interface';
+import { IFiltroUsuario } from '../../interfaces/usuario-filter-interface';
 import { IUpdateUsuario } from '../../interfaces/usuario-update-interface';
 import CriptografarSenhasSerive from '../../utils/criptografar-senhas-service';
 import { EnumTipoPerfil } from '../../utils/enums';
@@ -12,9 +13,14 @@ export default class UsuarioController {
 
     async find(request: Request, response: Response) {
         try {
-            const filters = request.query;
+            const filters: IFiltroUsuario = request.query as any;
 
             const query = Usuario.query();
+
+            if (filters.nome) {
+                query.where('nome', 'like', `${filters.nome}%`);
+            }
+
             TenantsSerive.aplicarTenantRepublica(request.perfil.tipoPerfil, query, request.usuario.republicaId);
             const usuarios = await query.select();
 
@@ -44,11 +50,11 @@ export default class UsuarioController {
 
     async create(request: Request, response: Response) {
         try {
-            const data: IUsuario = request.body;
+            const data: INovoUsuario = request.body;
 
             ValidadoresSerive.validaEmail(data.email);
             ValidadoresSerive.validaSenha(data.senha as string);
-            const senhaEncriptada = CriptografarSenhasSerive.encrypt(data.senha as string);
+            const senhaEncriptada = CriptografarSenhasSerive.encrypt(data.senha);
 
             if (request.perfil.tipoPerfil === EnumTipoPerfil.AdministradorNossoCafofo) {
                 data.perfilId = request.perfil.id;

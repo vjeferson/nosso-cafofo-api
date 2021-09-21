@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
+import { INovoPerfil } from '../../interfaces/perfil-create-interface';
 import { IFiltroPerfil } from '../../interfaces/perfil-filter-interface';
-import { IPerfil } from '../../interfaces/perfil-interface';
 import { IUpdatePerfil } from '../../interfaces/perfil-update-interface';
 import { EnumTipoPerfil } from '../../utils/enums';
 import { Perfil } from './perfil-model';
@@ -55,7 +55,7 @@ export default class PerfilController {
 
     async create(request: Request, response: Response) {
         try {
-            const dados: IPerfil = request.body;
+            const dados: INovoPerfil = request.body;
             const novoPerfil = await Perfil.query().insert({
                 descricao: dados.descricao,
                 tipoPerfil: dados.tipoPerfil

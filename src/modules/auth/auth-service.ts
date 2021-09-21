@@ -46,10 +46,8 @@ export default class AuthService {
     }
 
 
-    private signToken(dataToken: any, expires: string = '7d') {
-        const token = jwt.sign(dataToken, `${process.env.JWT_KEY}`
-            //, { expiresIn: expires }
-        );
+    private signToken(dataToken: any, expires: string = '14d') {
+        const token = jwt.sign(dataToken, `${process.env.JWT_KEY}`, { expiresIn: expires });
         const decoded = jwt.decode(token) as any;
         return { token, decoded };
     }

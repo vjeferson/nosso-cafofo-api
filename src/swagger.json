@@ -121,7 +121,7 @@
                                         "email": "joao@gmail.com",
                                         "senha": "senha$do$joao",
                                         "moradorId": null,
-                                        "republicaId": null
+                                        "perfilId": 2
                                     }
                                 }
                             }
@@ -241,7 +241,7 @@
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "Identificador do registro de usuário",
+                        "description": "Identificador do registro",
                         "required": true,
                         "schema": {
                             "type": "number"
@@ -299,7 +299,7 @@
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "Identificador do registro de usuário",
+                        "description": "Identificador do registro",
                         "required": true,
                         "schema": {
                             "type": "number"
@@ -338,6 +338,275 @@
                                     "erro": {
                                         "value": {
                                             "error": "Erro ao atualizar usuário",
+                                            "message": "Id (identificador) informado é inválido!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "boolean",
+                                    "value": true
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/perfil": {
+            "post": {
+                "summary": "Cadastro de Perfis",
+                "description": "Rota para criação de perfis no sistema (Apenas Administradores Nosso Cafofo).",
+                "tags": [
+                    "Perfis"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Novo Perfil"
+                            },
+                            "examples": {
+                                "usuario": {
+                                    "value": {
+                                        "descricao": "Teste Inserção",
+                                        "tipoPerfil": 2
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "400": {
+                        "description": "Erro ao criar perfil",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Erro"
+                                },
+                                "examples": {
+                                    "erro": {
+                                        "value": {
+                                            "error": "Erro ao criar perfil",
+                                            "message": "Descrição não informada!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "201": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Perfil"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "summary": "Consulta Perfis",
+                "description": "Rota para consulta de perfis.",
+                "tags": [
+                    "Perfis"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "descricao",
+                        "in": "query",
+                        "description": "Descrição do perfil",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "tipoPerfil",
+                        "in": "query",
+                        "description": "Tipo de perfil",
+                        "required": false,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "400": {
+                        "description": "Erro ao consultar perfil",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Erro"
+                                },
+                                "examples": {
+                                    "erro": {
+                                        "value": {
+                                            "error": "Erro ao consultar usuários",
+                                            "message": "Parâmetros inválidos!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Perfil"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/perfil/{id}": {
+            "get": {
+                "summary": "Consulta Perfil Específico",
+                "description": "Rota para consulta de perfil específico pelo id (identificação do registro).",
+                "tags": [
+                    "Perfis"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Identificador do registro",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "400": {
+                        "description": "Erro ao consultar o perfil",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Erro"
+                                },
+                                "examples": {
+                                    "erro": {
+                                        "value": {
+                                            "error": "Erro ao consultar o perfil",
+                                            "message": "Parâmetros inválidos!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Perfil"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "summary": "Alterar Perfil",
+                "description": "Rota para alteração de perfil.",
+                "tags": [
+                    "Perfis"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Identificador do registro",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Atualiza Perfil"
+                            },
+                            "examples": {
+                                "usuario": {
+                                    "value": {
+                                        "descricao": "Testa alteração"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "400": {
+                        "description": "Erro ao atualizar perfil",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Erro"
+                                },
+                                "examples": {
+                                    "erro": {
+                                        "value": {
+                                            "error": "Erro ao atualizar perfil",
                                             "message": "Id (identificador) informado é inválido!"
                                         }
                                     }
@@ -409,7 +678,7 @@
                     "moradorId": {
                         "type": "number"
                     },
-                    "republicaId": {
+                    "perfilId": {
                         "type": "number"
                     }
                 }
@@ -432,6 +701,39 @@
                         "type": "string"
                     },
                     "senha": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Perfil": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    },
+                    "descricao": {
+                        "type": "string"
+                    },
+                    "tipoPerfil": {
+                        "type": "number"
+                    }
+                }
+            },
+            "Novo Perfil": {
+                "type": "object",
+                "properties": {
+                    "descricao": {
+                        "type": "string"
+                    },
+                    "tipoPerfil": {
+                        "type": "number"
+                    }
+                }
+            },
+            "Atualiza Perfil": {
+                "type": "object",
+                "properties": {
+                    "descricao": {
                         "type": "string"
                     }
                 }
