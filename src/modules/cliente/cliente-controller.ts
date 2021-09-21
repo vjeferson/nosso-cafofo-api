@@ -65,7 +65,7 @@ export default class ClienteController {
                     senha: dadosCliente.senha
                 } as IAuthenticateBody
             );
-            return response.status(200).send(result);
+            return response.status(201).send(result);
         } catch (error: any) {
             if (transaction) {
                 await transaction.rollback();

@@ -4,7 +4,7 @@ export interface INovoCliente {
     senha: string;
 
     nomeRepublica: string;
-    anoCriacaoRepublica: string;
+    anoCriacaoRepublica: number;
     diaPagamentoContas: number;
     numero: string;
     logradouro: string;
