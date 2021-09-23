@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
-import { IMorador } from '../../interfaces/morador-interface';
-import ValidadoresSerive from '../../utils/validadores-service';
+import { INovoMorador } from '../../interfaces/morador-create-interface';
+import { IFiltroMorador } from '../../interfaces/morador-filter-interface';
+import { IUpdateMorador } from '../../interfaces/morador-update-interface';
+import TenantsSerive from '../../utils/tenants-service';
 import { Morador } from './morador-model';
 
 export default class MoradorController {
@@ -9,9 +11,26 @@ export default class MoradorController {
 
     async find(request: Request, response: Response) {
         try {
-            const filters = request.query;
+            const filters: IFiltroMorador = request.query as any;
 
-            const moradores = await Morador.query().select();
+            const query = Morador.query();
+
+            if (filters.nome) {
+                query.where('nome', 'like', `${filters.nome}%`);
+            }
+
+            if (!isNaN(+(filters.anoEntrada as any)) && filters.anoEntrada !== null && filters.anoEntrada !== undefined
+                && (filters.anoEntrada as any) !== '') {
+                query.where('anoEntrada', filters.anoEntrada);
+            }
+
+            if (filters.ativo !== null && filters.ativo !== undefined &&
+                (Boolean(filters.ativo) === true || Boolean(filters.ativo) === false)) {
+                query.where('ativo', filters.ativo);
+            }
+
+            TenantsSerive.aplicarTenantRepublica(request.perfil.tipoPerfil, query, request.usuario.republicaId);
+            const moradores = await query.select();
             return response.status(200).send(moradores);
         } catch (error: any) {
             return response.status(400).json({ error: 'Erro ao consultar moradores', message: error.message });
@@ -25,8 +44,12 @@ export default class MoradorController {
                 throw new Error('Id (identificador) informado é inválido!');
             }
 
-            const morador = await Morador.query().findById(moradorId);
-            return response.status(200).send(morador);
+            const query = Morador.query();
+            TenantsSerive.aplicarTenantRepublica(request.perfil.tipoPerfil, query, request.usuario.republicaId);
+            query.where('id', moradorId);
+            const morador = await query.select();
+
+            return response.status(200).send(Array.isArray(morador) && morador.length > 0 ? morador[0] : null);
         } catch (error: any) {
             return response.status(400).json({ error: 'Erro ao consultar o morador', message: error.message });
         }
@@ -34,7 +57,7 @@ export default class MoradorController {
 
     async create(request: Request, response: Response) {
         try {
-            const dados: IMorador = request.body;
+            const dados: INovoMorador = request.body;
             const novoMorador = await Morador.query().insert({
                 nome: dados.nome,
                 anoEntrada: dados.anoEntrada,
@@ -55,17 +78,23 @@ export default class MoradorController {
                 throw new Error('Id (identificador) informado é inválido!');
             }
 
-            const dados: IMorador = request.body;
+            const dados: IUpdateMorador = request.body;
 
-            const usuarioAtualizado = await Morador.query()
-                .findById(moradorId)
-                .patch({
-                    nome: dados.nome,
-                    anoEntrada: dados.anoEntrada,
-                    ativo: dados.ativo
-                });
+            const morador = await Morador.query().findById(moradorId);
 
-            if (!usuarioAtualizado) {
+            if (morador) {
+                if (+request.usuario.republicaId !== +morador.republicaId) {
+                    return response.status(401).send('Seu usuário não pode alterar informações do morador informado!');
+                }
+
+                await Morador.query()
+                    .findById(moradorId)
+                    .patch({
+                        nome: dados.nome,
+                        anoEntrada: dados.anoEntrada,
+                        ativo: dados.ativo
+                    });
+            } else {
                 throw new Error('Não existe um morador para o id (identificador) informado!');
             }
 

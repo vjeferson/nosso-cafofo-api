@@ -50,4 +50,9 @@ routes.get('/usuario/:id', authMiddleware, usuarioController.findOne);
 routes.post('/usuario', authMiddleware, authAdministradoresMiddleware, usuarioController.create);
 routes.put('/usuario/:id', authMiddleware, usuarioController.upsert);
 
+routes.get('/morador', authMiddleware, moradorController.find);
+routes.get('/morador/:id', authMiddleware, moradorController.findOne);
+routes.post('/morador', authMiddleware, moradorController.create);
+routes.put('/morador/:id', authMiddleware, moradorController.upsert);
+
 export default routes;

@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
-import database from '../../database/connection';
 import { IFiltroRepublica } from '../../interfaces/republica-filter-interface';
-import { IRepublica } from '../../interfaces/republica-interface';
+import { IUpdateRepublica } from '../../interfaces/republica-update-interface';
 import { EnumTipoPerfil } from '../../utils/enums';
 import { Republica } from './republica.model';
 
@@ -63,7 +62,7 @@ export default class RepublicaController {
                 throw new Error('Id (identificador) informado é inválido!');
             }
 
-            const dados: IRepublica = request.body;
+            const dados: IUpdateRepublica = request.body;
 
             if (+request.usuario.republicaId !== +republicaId) {
                 return response.status(401).send('Seu usuário não possui permissão para alterar informações da república informada!');
