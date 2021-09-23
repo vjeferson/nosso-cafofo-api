@@ -10,6 +10,7 @@ import MoradorController from './modules/morador/morador-controller';
 import PerfilController from './modules/perfil/perfil-controller';
 import PingController from './modules/ping/ping-controller';
 import RepublicaController from './modules/republica/republica-controller';
+import ReuniaoController from './modules/reuniao/reuniao-controller';
 import UsuarioController from './modules/usuario/usuario-controller';
 
 const routes = express.Router();
@@ -25,6 +26,7 @@ const authController = new AuthController();
 const republicaController = new RepublicaController();
 const usuarioController = new UsuarioController();
 const moradorController = new MoradorController();
+const reuniaoController = new ReuniaoController();
 
 routes.get('/', pingController.ping);
 routes.post('/cliente', clienteController.adicionarCliente);
@@ -38,7 +40,6 @@ routes.get('/cidade/:id', authMiddleware, cidadeController.findOne);
 
 routes.get('/perfil', authMiddleware, perfilController.find);
 routes.get('/perfil/:id', authMiddleware, perfilController.findOne);
-routes.post('/perfil', authMiddleware, authAdministradorNossoCafofoMiddleware, perfilController.create);
 routes.put('/perfil/:id', authMiddleware, authAdministradorNossoCafofoMiddleware, perfilController.upsert);
 
 routes.get('/republica', authMiddleware, authAdministradorNossoCafofoMiddleware, republicaController.find);
@@ -54,5 +55,11 @@ routes.get('/morador', authMiddleware, moradorController.find);
 routes.get('/morador/:id', authMiddleware, moradorController.findOne);
 routes.post('/morador', authMiddleware, moradorController.create);
 routes.put('/morador/:id', authMiddleware, moradorController.upsert);
+
+routes.get('/reuniao', authMiddleware, reuniaoController.find);
+routes.get('/reuniao/:id', authMiddleware, reuniaoController.findOne);
+routes.post('/reuniao', authMiddleware, reuniaoController.create);
+routes.put('/reuniao/:id', authMiddleware, reuniaoController.upsert);
+routes.delete('/reuniao/:id', authMiddleware, reuniaoController.delete);
 
 export default routes;

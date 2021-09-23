@@ -88,7 +88,7 @@ export default class MoradorController {
                 }
 
                 await Morador.query()
-                    .findById(moradorId)
+                    .findById(morador.id as number)
                     .patch({
                         nome: dados.nome,
                         anoEntrada: dados.anoEntrada,
@@ -98,7 +98,7 @@ export default class MoradorController {
                 throw new Error('Não existe um morador para o id (identificador) informado!');
             }
 
-            return response.status(201).send(true);
+            return response.status(200).send(true);
         } catch (error: any) {
             return response.status(400).json({ error: 'Erro ao atualizar morador', message: error.message });
         }
