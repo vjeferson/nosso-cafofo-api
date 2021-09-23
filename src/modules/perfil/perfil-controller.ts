@@ -53,20 +53,6 @@ export default class PerfilController {
         }
     }
 
-    async create(request: Request, response: Response) {
-        try {
-            const dados: INovoPerfil = request.body;
-            const novoPerfil = await Perfil.query().insert({
-                descricao: dados.descricao,
-                tipoPerfil: dados.tipoPerfil
-            });
-
-            return response.status(201).send(novoPerfil);
-        } catch (error: any) {
-            return response.status(400).json({ error: 'Erro ao criar perfil', message: error.message });
-        }
-    }
-
     async upsert(request: Request, response: Response) {
         try {
             const perfilId = +request.params.id;

@@ -1,5 +1,6 @@
 import { Model } from 'objection';
 import { IMorador } from '../../interfaces/morador-interface';
+import { Republica } from '../republica/republica.model';
 
 export class Morador extends Model implements IMorador {
     id?: number;
@@ -24,5 +25,16 @@ export class Morador extends Model implements IMorador {
             republicaId: { type: 'integer' }
         }
     }
+
+    static relationMappings = {
+        republica: {
+            relation: Model.HasOneRelation,
+            modelClass: Republica,
+            join: {
+                from: 'morador.republicaId',
+                to: 'republica.id'
+            }
+        }
+    };
 
 }
