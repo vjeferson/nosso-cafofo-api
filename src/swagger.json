@@ -376,6 +376,307 @@
                 }
             }
         },
+        "/plano/tipo-planos": {
+            "get": {
+                "summary": "Consulta Tipos de Planos",
+                "description": "Rota para consulta de tipos de planos.",
+                "tags": [
+                    "Planos"
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Erro ao consultar tipos de planos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Erro"
+                                },
+                                "examples": {
+                                    "erro": {
+                                        "value": {
+                                            "error": "Erro ao consultar tipos de planos",
+                                            "message": "Serviço indisponível!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Tipo Plano"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/plano": {
+            "post": {
+                "summary": "Cadastro de Plano",
+                "description": "Rota para criação de planos no sistema. Apenas Administradores Nosso Cafofo.",
+                "tags": [
+                    "Planos"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Novo Plano"
+                            },
+                            "examples": {
+                                "plano": {
+                                    "value": {
+                                        "tipoPlano": 4,
+                                        "recorrencia": "Teste inserção plano promocional",
+                                        "descricao": "Plano promocional de teste em 3x.",
+                                        "numeroMaximoParcelasPagamento": 3,
+                                        "valorPlano": 50
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "400": {
+                        "description": "Erro ao criar plano",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Erro"
+                                },
+                                "examples": {
+                                    "erro": {
+                                        "value": {
+                                            "error": "Erro ao criar plano",
+                                            "message": "Descrição não foi informada!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "201": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Plano"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "summary": "Consulta Planos",
+                "description": "Rota para consulta de Planos.",
+                "tags": [
+                    "Planos"
+                ],
+                "parameters": [
+                    {
+                        "name": "tipoPlano",
+                        "in": "query",
+                        "description": "Código/Tipo do plano",
+                        "required": false,
+                        "schema": {
+                            "type": "number"
+                        }
+                    },
+                    {
+                        "name": "ativo",
+                        "in": "query",
+                        "description": "Situação do plano. Plano esta ativo?",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Erro ao consultar planos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Erro"
+                                },
+                                "examples": {
+                                    "erro": {
+                                        "value": {
+                                            "error": "Erro ao consultar planos",
+                                            "message": "Parâmetros inválidos!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Plano"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/plano/{id}": {
+            "get": {
+                "summary": "Consulta Plano Específico",
+                "description": "Rota para consulta de plano específico pelo id (identificação/sigla do registro).",
+                "tags": [
+                    "Planos"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Identificador/Sigla do registro",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Erro ao consultar o plano",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Erro"
+                                },
+                                "examples": {
+                                    "erro": {
+                                        "value": {
+                                            "error": "Erro ao consultar o plano",
+                                            "message": "Parâmetros inválidos!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Plano"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "summary": "Alterar Plano",
+                "description": "Rota para alteração de plano. Apenas Administradores Nosso Cafofo.",
+                "tags": [
+                    "Planos"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Identificador do registro",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Atualiza Plano"
+                            },
+                            "examples": {
+                                "usuario": {
+                                    "value": {
+                                        "recorrencia": "Plano alterado",
+                                        "descricao": "Teste alteração promocional 3x.",
+                                        "ativo": true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "400": {
+                        "description": "Erro ao atualizar plano",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Erro"
+                                },
+                                "examples": {
+                                    "erro": {
+                                        "value": {
+                                            "error": "Erro ao atualizar plano",
+                                            "message": "Id (identificador) informado é inválido!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "boolean",
+                                    "value": true
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/cliente": {
             "post": {
                 "summary": "Cadastro de Novos Cliente (Padrão).",
@@ -1825,6 +2126,77 @@
                     },
                     "estadoId": {
                         "type": "string"
+                    }
+                }
+            },
+            "Tipo Plano": {
+                "type": "object",
+                "properties": {
+                    "descricao": {
+                        "type": "string"
+                    },
+                    "codigoTipoPlano": {
+                        "type": "number"
+                    }
+                }
+            },
+            "Novo Plano": {
+                "type": "object",
+                "properties": {
+                    "tipoPlano": {
+                        "type": "number"
+                    },
+                    "descricao": {
+                        "type": "string"
+                    },
+                    "recorrencia": {
+                        "type": "string"
+                    },
+                    "numeroMaximoParcelasPagamento": {
+                        "type": "number"
+                    },
+                    "valorPlano": {
+                        "type": "number"
+                    }
+                }
+            },
+            "Plano": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    },
+                    "tipoPlano": {
+                        "type": "number"
+                    },
+                    "descricao": {
+                        "type": "string"
+                    },
+                    "recorrencia": {
+                        "type": "string"
+                    },
+                    "numeroMaximoParcelasPagamento": {
+                        "type": "number"
+                    },
+                    "valorPlano": {
+                        "type": "number"
+                    },
+                    "ativo:": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "Atualiza Plano": {
+                "type": "object",
+                "properties": {
+                    "descricao": {
+                        "type": "string"
+                    },
+                    "recorrencia": {
+                        "type": "string"
+                    },
+                    "ativo:": {
+                        "type": "boolean"
                     }
                 }
             },

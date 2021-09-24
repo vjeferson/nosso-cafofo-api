@@ -11,105 +11,87 @@ import {
     DataError
 } from 'objection';
 
-export default function errorHandlerObjection(err: any, response: Response) {
+const mapConstraints: { [key: string]: string } = {
+    'unique_tipo_plano_ativo': 'Não é possível ter ativo mais de um Plano para cada tipo de plano ao mesmo tempo!'
+};
+
+export default function errorHandlerObjection(err: any, response: Response,
+    messagemErroAdicional: string) {
     if (err instanceof ValidationError) {
         switch (err.type) {
             case 'ModelValidation':
                 response.status(400).send({
                     message: err.message,
-                    type: err.type,
-                    data: err.data
+                    error: err.type
                 });
                 break;
             case 'RelationExpression':
                 response.status(400).send({
                     message: err.message,
-                    type: 'RelationExpression',
-                    data: {}
+                    error: 'RelationExpression'
                 });
                 break;
             case 'UnallowedRelation':
                 response.status(400).send({
                     message: err.message,
-                    type: err.type,
-                    data: {}
+                    error: err.type
                 });
                 break;
             case 'InvalidGraph':
                 response.status(400).send({
                     message: err.message,
-                    type: err.type,
-                    data: {}
+                    error: err.type
                 });
                 break;
             default:
                 response.status(400).send({
                     message: err.message,
-                    type: 'UnknownValidationError',
-                    data: {}
+                    error: 'UnknownValidationError'
                 });
                 break;
         }
     } else if (err instanceof NotFoundError) {
-        response.status(404).send({
+        response.status(400).send({
             message: err.message,
-            type: 'NotFound',
-            data: {}
+            type: 'NotFound'
         });
     } else if (err instanceof UniqueViolationError) {
-        response.status(409).send({
-            message: err.message,
-            type: 'UniqueViolation',
-            data: {
-                columns: err.columns,
-                table: err.table,
-                constraint: err.constraint
-            }
+        response.status(400).send({
+            message:
+                mapConstraints[err.constraint] ?
+                    `${mapConstraints[err.constraint]} Colunas: ${err.columns}` :
+                    `${err.message} Colunas: ${err.columns}`,
+            error: `${messagemErroAdicional}: UniqueViolation`
         });
     } else if (err instanceof NotNullViolationError) {
         response.status(400).send({
             message: err.message,
-            type: 'NotNullViolation',
-            data: {
-                column: err.column,
-                table: err.table
-            }
+            error: 'NotNullViolation'
         });
     } else if (err instanceof ForeignKeyViolationError) {
-        response.status(409).send({
+        response.status(400).send({
             message: err.message,
-            type: 'ForeignKeyViolation',
-            data: {
-                table: err.table,
-                constraint: err.constraint
-            }
+            error: 'ForeignKeyViolation'
         });
     } else if (err instanceof CheckViolationError) {
         response.status(400).send({
             message: err.message,
-            type: 'CheckViolation',
-            data: {
-                table: err.table,
-                constraint: err.constraint
-            }
+            error: 'CheckViolation'
         });
     } else if (err instanceof DataError) {
         response.status(400).send({
             message: err.message,
-            type: 'InvalidData',
-            data: {}
+            error: 'InvalidData'
         });
     } else if (err instanceof DBError) {
-        response.status(500).send({
+        response.status(400).send({
             message: err.message,
-            type: 'UnknownDatabaseError',
-            data: {}
+            error: 'UnknownDatabaseError'
         });
     } else {
-        response.status(500).send({
+        response.status(400).send({
             message: err.message,
-            type: 'UnknownError',
-            data: {}
+            error: 'UnknownError'
         });
     }
 }

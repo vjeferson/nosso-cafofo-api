@@ -2,6 +2,7 @@ import express from 'express';
 import authAdministradoresMiddleware from './middlewares/authAdministradoresMiddleware';
 import authAdministradorNossoCafofoMiddleware from './middlewares/authAdministradorNossoCafofoMiddleware';
 import authMiddleware from './middlewares/authMiddleware';
+import AssinaturaController from './modules/assinatura/assinatura-controller';
 import AuthController from './modules/auth/auth-controller';
 import CidadeController from './modules/cidade/cidade-controller';
 import ClienteController from './modules/cliente/cliente-controller';
@@ -9,6 +10,7 @@ import EstadoController from './modules/estado/estado-controller';
 import MoradorController from './modules/morador/morador-controller';
 import PerfilController from './modules/perfil/perfil-controller';
 import PingController from './modules/ping/ping-controller';
+import PlanoController from './modules/plano/plano-controller';
 import RepublicaController from './modules/republica/republica-controller';
 import ReuniaoController from './modules/reuniao/reuniao-controller';
 import UsuarioController from './modules/usuario/usuario-controller';
@@ -27,6 +29,9 @@ const republicaController = new RepublicaController();
 const usuarioController = new UsuarioController();
 const moradorController = new MoradorController();
 const reuniaoController = new ReuniaoController();
+
+const assinaturaController = new AssinaturaController();
+const planoController = new PlanoController();
 
 routes.get('/', pingController.ping);
 routes.post('/cliente', clienteController.adicionarCliente);
@@ -61,5 +66,16 @@ routes.get('/reuniao/:id', authMiddleware, reuniaoController.findOne);
 routes.post('/reuniao', authMiddleware, reuniaoController.create);
 routes.put('/reuniao/:id', authMiddleware, reuniaoController.upsert);
 routes.delete('/reuniao/:id', authMiddleware, reuniaoController.delete);
+
+routes.get('/plano/tipo-planos', planoController.tiposPlanos);
+routes.get('/plano', planoController.find);
+routes.get('/plano/:id', planoController.findOne);
+routes.post('/plano', authMiddleware, authAdministradorNossoCafofoMiddleware, planoController.create);
+routes.put('/plano/:id', authMiddleware, authAdministradorNossoCafofoMiddleware, planoController.upsert);
+
+routes.get('/assinatura', authMiddleware, assinaturaController.find);
+routes.get('/assinatura/:id', authMiddleware, assinaturaController.findOne);
+routes.post('/assinatura', authMiddleware, assinaturaController.create);
+routes.put('/assinatura/:id', authMiddleware, assinaturaController.upsert);
 
 export default routes;
