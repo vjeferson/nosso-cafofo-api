@@ -11,6 +11,7 @@ import { Republica } from '../republica/republica.model';
 import { Morador } from '../morador/morador-model';
 import { EnumTipoPerfil } from '../../utils/enums';
 import { Perfil } from '../perfil/perfil-model';
+import { Assinatura } from '../assinatura/assinatura-model';
 
 export default class ClienteController {
 
@@ -54,6 +55,12 @@ export default class ClienteController {
                 senha: senhaEncriptada,
                 perfilId: perfil[0].id,
                 moradorId: morador.id,
+                republicaId: republica.id
+            });
+
+            await Assinatura.query(transaction).insert({
+                ativa: true,
+                planoId: dadosCliente.planoId,
                 republicaId: republica.id
             });
 

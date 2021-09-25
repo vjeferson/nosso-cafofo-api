@@ -704,7 +704,8 @@
                                         "complemento": "Casa de cima",
                                         "estadoId": "MG",
                                         "cidadeId": 2246,
-                                        "anoEntradaMorador": 2005
+                                        "anoEntradaMorador": 2005,
+                                        "planoId": 14
                                     }
                                 }
                             }
@@ -1439,6 +1440,202 @@
                 }
             }
         },
+        "/assinatura/assinar-plano": {
+            "post": {
+                "summary": "Assinar Plano",
+                "description": "Rota para assinar plano.",
+                "tags": [
+                    "Assinaturas"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Nova Assinatura"
+                            },
+                            "examples": {
+                                "novaAssinatura": {
+                                    "value": {
+                                        "planoId": 4
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "400": {
+                        "description": "Erro ao assinar plano",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Erro"
+                                },
+                                "examples": {
+                                    "erro": {
+                                        "value": {
+                                            "error": "Erro ao assinar plano",
+                                            "message": "Plano não existe!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "201": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Assinatura"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/assinatura": {
+            "get": {
+                "summary": "Consulta Assinaturas",
+                "description": "Rota para consulta de assinaturas.",
+                "tags": [
+                    "Assinaturas"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "planoId",
+                        "in": "query",
+                        "description": "Identificador(id) do Plano",
+                        "required": false,
+                        "schema": {
+                            "type": "number"
+                        }
+                    },
+                    {
+                        "name": "ativa",
+                        "in": "query",
+                        "description": "Situação da assinatura. Assinatura esta ativa?",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    }
+                ],
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "400": {
+                        "description": "Erro ao consultar assinaturas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Erro"
+                                },
+                                "examples": {
+                                    "erro": {
+                                        "value": {
+                                            "error": "Erro ao consultar assinaturas",
+                                            "message": "Parâmetros inválidos!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Assinatura"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/assinatura/{id}": {
+            "get": {
+                "summary": "Consulta Assinatura Específica",
+                "description": "Rota para consulta de assinatura específica pelo id (identificação do registro).",
+                "tags": [
+                    "Assinaturas"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Identificador do registro",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "400": {
+                        "description": "Erro ao consultar assinatura",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Erro"
+                                },
+                                "examples": {
+                                    "erro": {
+                                        "value": {
+                                            "error": "Erro ao consultar assinatura",
+                                            "message": "Parâmetros inválidos!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Assinatura"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/morador": {
             "post": {
                 "summary": "Cadastro de Morador",
@@ -2101,6 +2298,9 @@
                     },
                     "anoEntradaMorador": {
                         "type": "number"
+                    },
+                    "planoId": {
+                        "type": "number"
                     }
                 }
             },
@@ -2324,6 +2524,37 @@
                         "type": "number"
                     },
                     "dataPagamentoContas": {
+                        "type": "number"
+                    }
+                }
+            },
+            "Nova Assinatura": {
+                "type": "object",
+                "properties": {
+                    "planoId": {
+                        "type": "number"
+                    }
+                }
+            },
+            "Assinatura": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    },
+                    "validadePlano": {
+                        "type": "string"
+                    },
+                    "dataAssinatura": {
+                        "type": "string"
+                    },
+                    "ativo": {
+                        "type": "boolean"
+                    },
+                    "planoId": {
+                        "type": "number"
+                    },
+                    "republicaId": {
                         "type": "number"
                     }
                 }

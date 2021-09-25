@@ -2,6 +2,7 @@ import express from 'express';
 import authAdministradoresMiddleware from './middlewares/authAdministradoresMiddleware';
 import authAdministradorNossoCafofoMiddleware from './middlewares/authAdministradorNossoCafofoMiddleware';
 import authMiddleware from './middlewares/authMiddleware';
+import authMoradorAdministradorMiddleware from './middlewares/authMoradorAdministradorMiddleware';
 import AssinaturaController from './modules/assinatura/assinatura-controller';
 import AuthController from './modules/auth/auth-controller';
 import CidadeController from './modules/cidade/cidade-controller';
@@ -75,7 +76,6 @@ routes.put('/plano/:id', authMiddleware, authAdministradorNossoCafofoMiddleware,
 
 routes.get('/assinatura', authMiddleware, assinaturaController.find);
 routes.get('/assinatura/:id', authMiddleware, assinaturaController.findOne);
-routes.post('/assinatura', authMiddleware, assinaturaController.create);
-routes.put('/assinatura/:id', authMiddleware, assinaturaController.upsert);
+routes.post('/assinatura/assinar-plano', authMiddleware, authMoradorAdministradorMiddleware, assinaturaController.assinar);
 
 export default routes;

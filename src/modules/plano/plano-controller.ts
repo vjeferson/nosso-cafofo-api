@@ -14,6 +14,10 @@ export default class PlanoController {
     async tiposPlanos(request: Request, response: Response) {
         const tiposPlanos: ITipoPlano[] = [
             {
+                descricao: 'Plano Grátis',
+                codigoTipoPlano: EnumTipoPlano.Free
+            },
+            {
                 descricao: 'Plano Mensal',
                 codigoTipoPlano: EnumTipoPlano.Mensal
             },

@@ -8,7 +8,8 @@ export enum EnumTipoPlano {
     Mensal = 1,
     Semestral,
     Anual,
-    PromocionalAnual
+    PromocionalAnual,
+    Free = 99
 }
 
 export enum EnumTipoMovimentoEntradaSaida {
