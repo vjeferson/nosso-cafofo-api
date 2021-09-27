@@ -8,6 +8,7 @@ import AuthController from './modules/auth/auth-controller';
 import CidadeController from './modules/cidade/cidade-controller';
 import ClienteController from './modules/cliente/cliente-controller';
 import EstadoController from './modules/estado/estado-controller';
+import FestaController from './modules/festa/festa-controller';
 import MoradorController from './modules/morador/morador-controller';
 import PerfilController from './modules/perfil/perfil-controller';
 import PingController from './modules/ping/ping-controller';
@@ -33,6 +34,8 @@ const reuniaoController = new ReuniaoController();
 
 const assinaturaController = new AssinaturaController();
 const planoController = new PlanoController();
+
+const festaController = new FestaController();
 
 routes.get('/', pingController.ping);
 routes.post('/cliente', clienteController.adicionarCliente);
@@ -77,5 +80,11 @@ routes.put('/plano/:id', authMiddleware, authAdministradorNossoCafofoMiddleware,
 routes.get('/assinatura', authMiddleware, assinaturaController.find);
 routes.get('/assinatura/:id', authMiddleware, assinaturaController.findOne);
 routes.post('/assinatura/assinar-plano', authMiddleware, authMoradorAdministradorMiddleware, assinaturaController.assinar);
+
+routes.get('/festa', authMiddleware, festaController.find);
+routes.get('/festa/:id', authMiddleware, festaController.findOne);
+routes.post('/festa', authMiddleware, festaController.create);
+routes.put('/festa/:id', authMiddleware, festaController.upsert);
+routes.delete('/festa/:id', authMiddleware, festaController.delete);
 
 export default routes;

@@ -2256,6 +2256,346 @@
                     }
                 }
             }
+        },
+        "/festa": {
+            "post": {
+                "summary": "Cadastro de Festa",
+                "description": "Rota para criação de festas no sistema.",
+                "tags": [
+                    "Festas"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Nova Festa"
+                            },
+                            "examples": {
+                                "morador": {
+                                    "value": {
+                                        "descricao": "Festinha Dezembro",
+                                        "data": "2021-12-04T09:00:00.000Z"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "400": {
+                        "description": "Erro ao criar festa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Erro"
+                                },
+                                "examples": {
+                                    "erro": {
+                                        "value": {
+                                            "error": "Erro ao criar festa",
+                                            "message": "Descrição não foi informada!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "201": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Festa"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "summary": "Consulta Festas",
+                "description": "Rota para consulta de festas.",
+                "tags": [
+                    "Festas"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "descricao",
+                        "in": "query",
+                        "description": "Descrição da reunião",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "situacao",
+                        "in": "query",
+                        "description": "Código situação",
+                        "required": false,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "400": {
+                        "description": "Erro ao consultar festas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Erro"
+                                },
+                                "examples": {
+                                    "erro": {
+                                        "value": {
+                                            "error": "Erro ao consultar festas",
+                                            "message": "Parâmetros inválidos!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Festa"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/festa/{id}": {
+            "get": {
+                "summary": "Consulta Festa Específica",
+                "description": "Rota para consulta de festa específica pelo id (identificação do registro).",
+                "tags": [
+                    "Festas"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Identificador do registro",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "400": {
+                        "description": "Erro ao consultar o festa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Erro"
+                                },
+                                "examples": {
+                                    "erro": {
+                                        "value": {
+                                            "error": "Erro ao consultar o festa",
+                                            "message": "Parâmetros inválidos!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Festa"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "summary": "Alterar Festa",
+                "description": "Rota para alteração de festa.",
+                "tags": [
+                    "Festas"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Identificador do registro",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Atualiza Festa"
+                            },
+                            "examples": {
+                                "usuario": {
+                                    "value": {
+                                        "descricao": "Nova Festinha Dezembro Testa Alteracao",
+                                        "situacao": 0,
+                                        "data": "2021-12-20T16:00:00.000Z"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "400": {
+                        "description": "Erro ao atualizar festa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Erro"
+                                },
+                                "examples": {
+                                    "erro": {
+                                        "value": {
+                                            "error": "Erro ao atualizar reunião",
+                                            "message": "Id (identificador) informado é inválido!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "boolean",
+                                    "value": true
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Deleta Festa",
+                "description": "Rota para deletar/remover uma festa pelo id (identificação do registro).",
+                "tags": [
+                    "Festas"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Identificador do registro",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "400": {
+                        "description": "Erro ao deletar a festa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Erro"
+                                },
+                                "examples": {
+                                    "erro": {
+                                        "value": {
+                                            "error": "Erro ao deletar a festa",
+                                            "message": "Id (identificador) informado é inválido!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": "No Content",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "string",
+                                    "value": "Não existe uma festa para o id (identificador) informado!"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "boolean",
+                                    "value": true
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -2649,6 +2989,54 @@
                     },
                     "data": {
                         "type": "string"
+                    }
+                }
+            },
+            "Festa": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    },
+                    "descricao": {
+                        "type": "string"
+                    },
+                    "data": {
+                        "type": "string"
+                    },
+                    "situacao": {
+                        "type": "number"
+                    },
+                    "valorTotal": {
+                        "type": "number"
+                    },
+                    "republicaId": {
+                        "type": "number"
+                    }
+                }
+            },
+            "Nova Festa": {
+                "type": "object",
+                "properties": {
+                    "descricao": {
+                        "type": "string"
+                    },
+                    "data": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Atualiza Festa": {
+                "type": "object",
+                "properties": {
+                    "descricao": {
+                        "type": "string"
+                    },
+                    "data": {
+                        "type": "string"
+                    },
+                    "situacao": {
+                        "type": "number"
                     }
                 }
             },

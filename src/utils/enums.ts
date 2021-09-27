@@ -22,3 +22,24 @@ export enum EnumSituacaoValoresMensaisMorador {
     Pago,
     Atrasado
 }
+
+export enum EnumSituacaoFesta {
+    EmAberto,
+    Finalizada
+}
+
+export enum EnumSituacaoPagamentoParticipanteFesta {
+    EmAberto,
+    Pago,
+    Devolvido
+}
+
+export enum EnumLoteFesta {
+    Promocional,
+    Primeiro,
+    Segundo,
+    Terceiro,
+    Quarto,
+    Quinto,
+    Extra
+}
