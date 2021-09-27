@@ -1,6 +1,6 @@
-import { Model, raw } from 'objection';
+import { Model, QueryContext, raw } from 'objection';
 import { IFesta } from '../../interfaces/festa-interface';
-import { EnumSituacaoFesta } from '../../utils/enums';
+import { EnumSituacaoFesta, EnumSituacaoPagamentoParticipanteFesta } from '../../utils/enums';
 import { ParticipantesFesta } from '../festa-participantes/participantes-festa-model';
 import { Republica } from '../republica/republica.model';
 
@@ -49,11 +49,20 @@ export class Festa extends Model implements IFesta {
         this.data = new Date(this.data).toISOString();
     }
 
-    async $beforeDelete() {
+    async $beforeDelete(queryContext: QueryContext) {
         if (this.situacao !== EnumSituacaoFesta.EmAberto) {
             throw new Error('Festa não pode ser excluída, pois não se encontra mais em aberto!');
         } else {
-            await ParticipantesFesta.query().delete().where('festaId', '=', this.id).where('republicaId', '=', this.republicaId);
+            const participantes = await ParticipantesFesta.query(queryContext.transaction).select()
+                .where('festaId', '=', this.id)
+                .where('republicaId', '=', this.republicaId)
+                .where('situacao', '=', EnumSituacaoPagamentoParticipanteFesta.Pago);
+
+            if (Array.isArray(participantes) && participantes.length > 0) {
+                throw new Error('Existem Participantes com status de Pago, não é possível excluir registro da Festa!');
+            } else {
+                await ParticipantesFesta.query(queryContext.transacting).delete().where('festaId', '=', this.id).where('republicaId', '=', this.republicaId);
+            }
         }
     }
 

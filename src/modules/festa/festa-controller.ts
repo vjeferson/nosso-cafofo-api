@@ -19,7 +19,8 @@ export default class FestaController {
                 query.where('descricao', 'like', `${filters.descricao}%`);
             }
 
-            if (!isNaN(+filters.situacao) && filters.situacao !== null && filters.situacao !== undefined) {
+            if (!isNaN(+filters.situacao) && filters.situacao !== null && filters.situacao !== undefined
+                && (filters.situacao as any) !== '') {
                 query.where('situacao', filters.situacao);
             }
 
@@ -111,7 +112,7 @@ export default class FestaController {
                     return response.status(401).send('Seu usuário não pode deletar a reunião informado!');
                 }
 
-                await Festa.query().deleteById(festa.id as number);
+                await festa.$query().delete();
             } else {
                 return response.status(204).send('Não existe uma festa para o id (identificador) informado!');
             }

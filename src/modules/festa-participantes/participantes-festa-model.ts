@@ -58,14 +58,9 @@ export class ParticipantesFesta extends Model implements IParticipantesFesta {
         }
     };
 
-    async $beforeDelete() {
-        const participantes = await ParticipantesFesta.query().select()
-            .where('festaId', '=', this.festaId)
-            .where('republicaId', '=', this.republicaId)
-            .where('situacao', '=', EnumSituacaoPagamentoParticipanteFesta.Pago);
-
-        if (Array.isArray(participantes) && participantes.length > 0) {
-            throw new Error('Existe(m) Participante(s) com status de Pago, não é possível excluir!');
+    $beforeDelete() {
+        if (this.situacao == EnumSituacaoPagamentoParticipanteFesta.Pago) {
+            throw new Error('Participante com situação de pagamento com status de Pago, não é possível excluir!');
         }
     }
 

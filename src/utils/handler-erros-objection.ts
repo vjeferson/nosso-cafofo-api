@@ -15,6 +15,10 @@ const mapConstraints: { [key: string]: string } = {
     'unique_tipo_plano_ativo': 'Não é possível ter ativo mais de um Plano para cada tipo de plano ao mesmo tempo!'
 };
 
+const mapForeignkeys: { [key: string]: string } = {
+    'participantes_festa_festa_id_foreign': 'Festa para o Id (identificador) informado não existe!'
+};
+
 export default function errorHandlerObjection(err: any, response: Response,
     messagemErroAdicional: string) {
     if (err instanceof ValidationError) {
@@ -70,8 +74,8 @@ export default function errorHandlerObjection(err: any, response: Response,
         });
     } else if (err instanceof ForeignKeyViolationError) {
         response.status(400).send({
-            message: err.message,
-            error: 'ForeignKeyViolation'
+            message: mapForeignkeys[err.constraint] ? mapForeignkeys[err.constraint] : err.message,
+            error: `${messagemErroAdicional}: ForeignKeyViolation`
         });
     } else if (err instanceof CheckViolationError) {
         response.status(400).send({
