@@ -2506,7 +2506,7 @@
                                 "examples": {
                                     "erro": {
                                         "value": {
-                                            "error": "Erro ao atualizar reunião",
+                                            "error": "Erro ao atualizar festa",
                                             "message": "Id (identificador) informado é inválido!"
                                         }
                                     }
@@ -2970,6 +2970,371 @@
                                 "schema": {
                                     "type": "string",
                                     "value": "Não existe um participante para o id (identificador) informado!"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "boolean",
+                                    "value": true
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/conta": {
+            "post": {
+                "summary": "Cadastro de Conta",
+                "description": "Rota para criação de contas no sistema.",
+                "tags": [
+                    "Contas"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Nova Conta"
+                            },
+                            "examples": {
+                                "conta": {
+                                    "value": {
+                                        "descricao": "Aluguelzin Dezembro",
+                                        "valor": 1500,
+                                        "mesAnoConta": "122021",
+                                        "divisaoPorIgualEntreMoradores": true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "400": {
+                        "description": "Erro ao criar conta",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Erro"
+                                },
+                                "examples": {
+                                    "erro": {
+                                        "value": {
+                                            "error": "Erro ao criar conta",
+                                            "message": "Descrição não foi informada!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "201": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Conta"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "summary": "Consulta Contas",
+                "description": "Rota para consulta de contas.",
+                "tags": [
+                    "Contas"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "descricao",
+                        "in": "query",
+                        "description": "Descrição da Conta",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "situacao",
+                        "in": "query",
+                        "description": "Código situação",
+                        "required": false,
+                        "schema": {
+                            "type": "number",
+                            "enum": [
+                                0,
+                                1,
+                                2
+                            ]
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit da consulta (para paginação: máximo de 50 registros padrão por consulta)",
+                        "required": false,
+                        "schema": {
+                            "type": "number"
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Offset da consulta (para paginação: padrão 0)",
+                        "required": false,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "400": {
+                        "description": "Erro ao consultar contas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Erro"
+                                },
+                                "examples": {
+                                    "erro": {
+                                        "value": {
+                                            "error": "Erro ao consultar contas",
+                                            "message": "Parâmetros inválidos!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Conta"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/conta/{id}": {
+            "get": {
+                "summary": "Consulta Conta Específica",
+                "description": "Rota para consulta de conta específica pelo id (identificação do registro).",
+                "tags": [
+                    "Contas"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Identificador do registro",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "400": {
+                        "description": "Erro ao consultar conta",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Erro"
+                                },
+                                "examples": {
+                                    "erro": {
+                                        "value": {
+                                            "error": "Erro ao consultar conta",
+                                            "message": "Parâmetros inválidos!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Conta"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "summary": "Alterar Conta",
+                "description": "Rota para alteração de conta.",
+                "tags": [
+                    "Contas"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Identificador do registro",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Atualiza Conta"
+                            },
+                            "examples": {
+                                "conta": {
+                                    "value": {
+                                        "descricao": "Aluguelzin alterado mais caro",
+                                        "situacao": 0,
+                                        "valor": 1850.50
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "400": {
+                        "description": "Erro ao atualizar conta",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Erro"
+                                },
+                                "examples": {
+                                    "erro": {
+                                        "value": {
+                                            "error": "Erro ao atualizar conta",
+                                            "message": "Id (identificador) informado é inválido!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "boolean",
+                                    "value": true
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Deleta Conta",
+                "description": "Rota para deletar/remover uma conta pelo id (identificação do registro).",
+                "tags": [
+                    "Contas"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Identificador do registro",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "400": {
+                        "description": "Erro ao deletar a conta",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Erro"
+                                },
+                                "examples": {
+                                    "erro": {
+                                        "value": {
+                                            "error": "Erro ao deletar a conta",
+                                            "message": "Id (identificador) informado é inválido!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": "No Content",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "string",
+                                    "value": "Não existe uma conta para o id (identificador) informado!"
                                 }
                             }
                         }
@@ -3490,6 +3855,63 @@
                         "type": "number"
                     },
                     "valor": {
+                        "type": "number"
+                    }
+                }
+            },
+            "Conta": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    },
+                    "descricao": {
+                        "type": "string"
+                    },
+                    "valor": {
+                        "type": "number"
+                    },
+                    "situacao": {
+                        "type": "number"
+                    },
+                    "mesAnoConta": {
+                        "type": "string"
+                    },
+                    "divisaoPorIgualEntreMoradores": {
+                        "type": "boolean"
+                    },
+                    "republicaId": {
+                        "type": "number"
+                    }
+                }
+            },
+            "Nova Conta": {
+                "type": "object",
+                "properties": {
+                    "descricao": {
+                        "type": "string"
+                    },
+                    "valor": {
+                        "type": "number"
+                    },
+                    "mesAnoConta": {
+                        "type": "string"
+                    },
+                    "divisaoPorIgualEntreMoradores": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "Atualiza Conta": {
+                "type": "object",
+                "properties": {
+                    "descricao": {
+                        "type": "string"
+                    },
+                    "valor": {
+                        "type": "number"
+                    },
+                    "situacao": {
                         "type": "number"
                     }
                 }

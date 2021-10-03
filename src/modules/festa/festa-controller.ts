@@ -109,7 +109,7 @@ export default class FestaController {
 
             if (festa) {
                 if (+request.usuario.republicaId !== +festa.republicaId) {
-                    return response.status(401).send('Seu usuário não pode deletar a reunião informado!');
+                    return response.status(401).send('Seu usuário não pode deletar a festa informado!');
                 }
 
                 await festa.$query().delete();

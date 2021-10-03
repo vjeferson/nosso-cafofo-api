@@ -43,3 +43,9 @@ export enum EnumLoteFesta {
     Quinto,
     Extra
 }
+
+export enum EnumSituacaoConta {
+    EmAberto,
+    PagamentoParcial,
+    Pago
+}
