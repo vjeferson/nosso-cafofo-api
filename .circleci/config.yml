@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-  heroku: circleci/heroku@1.2.6
+  heroku: circleci/heroku@0.0.10
 workflows:
     heroku-prod:
       jobs:
