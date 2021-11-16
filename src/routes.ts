@@ -1,4 +1,5 @@
 import express from 'express';
+import swaggerDocs from './swagger.json';
 import authAdministradoresMiddleware from './middlewares/authAdministradoresMiddleware';
 import authAdministradorNossoCafofoMiddleware from './middlewares/authAdministradorNossoCafofoMiddleware';
 import authMiddleware from './middlewares/authMiddleware';
@@ -43,6 +44,15 @@ const participantesFestaController = new ParticipantesFestaController();
 const contaController = new ContaController();
 
 routes.get('/', pingController.ping);
+
+routes.get('/api-docs.json', (request, response) => {
+    if(swaggerDocs){
+        delete (swaggerDocs as any).openapi;
+        (swaggerDocs as any).swagger = '2.0';
+    }
+    response.send(swaggerDocs);
+});
+
 routes.post('/cliente', clienteController.adicionarCliente);
 routes.post('/authenticate', authController.authenticate);
 

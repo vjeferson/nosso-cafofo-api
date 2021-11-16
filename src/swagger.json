@@ -25,7 +25,7 @@
                 "summary": "Rota para autenticação na API",
                 "description": "Rota para autenticar e validar o usuário para acesso.",
                 "tags": [
-                    "Authenticação"
+                    "Autenticacao"
                 ],
                 "requestBody": {
                     "content": {
@@ -966,7 +966,7 @@
                 "summary": "Cadastro de Usuário",
                 "description": "Rota para criação de usuários no sistema.",
                 "tags": [
-                    "Usuários"
+                    "Usuarios"
                 ],
                 "security": [
                     {
@@ -1033,7 +1033,7 @@
                 "summary": "Consulta Usuários",
                 "description": "Rota para consulta de usuários.",
                 "tags": [
-                    "Usuários"
+                    "Usuarios"
                 ],
                 "security": [
                     {
@@ -1095,7 +1095,7 @@
                 "summary": "Consulta Usuário Específico",
                 "description": "Rota para consulta de usuário específico pelo id (identificação do registro).",
                 "tags": [
-                    "Usuários"
+                    "Usuarios"
                 ],
                 "security": [
                     {
@@ -1153,7 +1153,7 @@
                 "summary": "Alterar Usuário",
                 "description": "Rota para alteração de usuário.",
                 "tags": [
-                    "Usuários"
+                    "Usuarios"
                 ],
                 "security": [
                     {
@@ -1229,7 +1229,7 @@
                 "summary": "Consulta Repúblicas",
                 "description": "Rota para consulta de repúblicas. Apenas Administradores Nosso Cafofo.",
                 "tags": [
-                    "Repúblicas"
+                    "Republicas"
                 ],
                 "security": [
                     {
@@ -1309,7 +1309,7 @@
                 "summary": "Consulta República Específico",
                 "description": "Rota para consulta de república específica pelo id (identificação do registro).",
                 "tags": [
-                    "Repúblicas"
+                    "Republicas"
                 ],
                 "security": [
                     {
@@ -1367,7 +1367,7 @@
                 "summary": "Alterar República",
                 "description": "Rota para alteração de república.",
                 "tags": [
-                    "Repúblicas"
+                    "Republicas"
                 ],
                 "security": [
                     {
@@ -1921,7 +1921,7 @@
                 "summary": "Cadastro de Reunião",
                 "description": "Rota para criação de reuniões no sistema.",
                 "tags": [
-                    "Reuniões"
+                    "Reunioes"
                 ],
                 "security": [
                     {
@@ -1986,7 +1986,7 @@
                 "summary": "Consulta Reuniões",
                 "description": "Rota para consulta de reuniões.",
                 "tags": [
-                    "Reuniões"
+                    "Reunioes"
                 ],
                 "security": [
                     {
@@ -2057,7 +2057,7 @@
                 "summary": "Consulta Reunião Específica",
                 "description": "Rota para consulta de reunião específica pelo id (identificação do registro).",
                 "tags": [
-                    "Reuniões"
+                    "Reunioes"
                 ],
                 "security": [
                     {
@@ -2115,7 +2115,7 @@
                 "summary": "Alterar Reunião",
                 "description": "Rota para alteração de reunião.",
                 "tags": [
-                    "Reuniões"
+                    "Reunioes"
                 ],
                 "security": [
                     {
@@ -2191,7 +2191,7 @@
                 "summary": "Deleta Reunião",
                 "description": "Rota para deletar/remover uma reunião pelo id (identificação do registro).",
                 "tags": [
-                    "Reuniões"
+                    "Reunioes"
                 ],
                 "security": [
                     {
