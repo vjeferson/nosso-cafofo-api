@@ -24,22 +24,28 @@
             "post": {
                 "summary": "Rota para autenticação na API",
                 "description": "Rota para autenticar e validar o usuário para acesso.",
+                "consumes": "application/json",
                 "tags": [
                     "Autenticacao"
+                ],
+                "parameters": [
+                    {
+                        "name": "parametros",
+                        "in": "body",
+                        "description": "Parametros para Autenticação",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/Autenticar"
+                        }
+                    }
                 ],
                 "requestBody": {
                     "content": {
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "properties": {
-                                    "email": {
-                                        "type": "string"
-                                    },
-                                    "senha": {
-                                        "type": "string"
-                                    }
-                                }
+                                "$ref": "#/components/schemas/Autenticar"
                             },
                             "examples": {
                                 "informacaoUsuario": {
@@ -62,7 +68,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Erro"
+                                    "$ref": "#/definitions/Erro"
                                 },
                                 "examples": {
                                     "erro": {
@@ -81,14 +87,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "properties": {
-                                        "token": {
-                                            "type": "string"
-                                        },
-                                        "expiresIn": {
-                                            "type": "string"
-                                        }
-                                    }
+                                    "$ref": "#/definitions/RetornoAutenticacao"
                                 }
                             }
                         }
@@ -3354,8 +3353,62 @@
             }
         }
     },
+    "definitions": {
+        "Autenticar": {
+            "type": "object",
+            "required": [
+                "email",
+                "senha"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "senha": {
+                    "type": "string"
+                }
+            }
+        },
+        "RetornoAutenticacao": {
+            "type": "object",
+            "properties": {
+                "token": {
+                    "type": "string"
+                },
+                "expiresIn": {
+                    "type": "string"
+                }
+            }
+        },
+        "Erro": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        }
+    },
     "components": {
         "schemas": {
+            "Autenticar": {
+                "type": "object",
+                "required": [
+                    "email",
+                    "senha"
+                ],
+                "properties": {
+                    "email": {
+                        "type": "string"
+                    },
+                    "senha": {
+                        "type": "string"
+                    }
+                }
+            },
             "Novo Cliente": {
                 "type": "object",
                 "properties": {
