@@ -46,7 +46,7 @@ const contaController = new ContaController();
 routes.get('/', pingController.ping);
 
 routes.get('/api-docs.json', (request, response) => {
-    if(swaggerDocs){
+    if (swaggerDocs) {
         delete (swaggerDocs as any).openapi;
         (swaggerDocs as any).swagger = '2.0';
     }
@@ -56,11 +56,11 @@ routes.get('/api-docs.json', (request, response) => {
 routes.post('/cliente', clienteController.adicionarCliente);
 routes.post('/authenticate', authController.authenticate);
 
-routes.get('/estado', authMiddleware, estadoController.find);
-routes.get('/estado/:id', authMiddleware, estadoController.findOne);
+routes.get('/estado', estadoController.find);
+routes.get('/estado/:id', estadoController.findOne);
 
-routes.get('/cidade', authMiddleware, cidadeController.find);
-routes.get('/cidade/:id', authMiddleware, cidadeController.findOne);
+routes.get('/cidade', cidadeController.find);
+routes.get('/cidade/:id', cidadeController.findOne);
 
 routes.get('/perfil', authMiddleware, perfilController.find);
 routes.get('/perfil/:id', authMiddleware, perfilController.findOne);

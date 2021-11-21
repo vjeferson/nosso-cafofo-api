@@ -102,11 +102,6 @@
                 "tags": [
                     "Estados"
                 ],
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ],
                 "parameters": [
                     {
                         "name": "id",
@@ -173,11 +168,6 @@
                 "tags": [
                     "Estados"
                 ],
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ],
                 "parameters": [
                     {
                         "name": "id",
@@ -232,11 +222,6 @@
                 "description": "Rota para consulta de cidades.",
                 "tags": [
                     "Cidades"
-                ],
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
                 ],
                 "parameters": [
                     {
@@ -321,11 +306,6 @@
                 "description": "Rota para consulta de cidades específica pelo id (identificação do registro).",
                 "tags": [
                     "Cidades"
-                ],
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
                 ],
                 "parameters": [
                     {

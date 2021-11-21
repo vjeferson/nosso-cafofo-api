@@ -9,7 +9,6 @@ export default class EstadoController {
     async find(request: Request, response: Response) {
         try {
             const filters: IFiltroEstado = request.query as any;
-
             const query = Estado.query();
 
             if (filters.estado) {
@@ -20,7 +19,7 @@ export default class EstadoController {
                 query.where('id', 'like', `${filters.id.toUpperCase()}%`);
             }
 
-            const estados = await query.select();
+            const estados = await query.select().orderBy('estado', 'ASC');
 
             return response.status(200).send(estados);
         } catch (error: any) {

@@ -24,7 +24,7 @@ export default class CidadeController {
                 query.where('cidade', 'like', `${filters.cidade}%`);
             }
 
-            const cidades = await query.select().limit(limit).offset(offset);
+            const cidades = await query.select().limit(limit).offset(offset).orderBy('cidade', 'ASC');;
 
             return response.status(200).send(cidades);
         } catch (error: any) {
