@@ -8,6 +8,8 @@ import database from '../../database/connection';
 import ValidadoresSerive from '../../utils/validadores-service';
 import { IAuthenticateResult } from '../../interfaces/auth-result-interface';
 import { IUsuario } from '../../interfaces/usuario-interface';
+import { Perfil } from '../perfil/perfil-model';
+import { IPerfil } from '../../interfaces/perfil-interface';
 
 dotenv.config();
 
@@ -19,20 +21,29 @@ export default class AuthService {
             ValidadoresSerive.validaEmail(filters.email);
             ValidadoresSerive.validaSenha(filters.senha);
 
-            const usuario = await database('usuario')
+            const usuario: IUsuario[] = await database('usuario')
                 .select('usuario.*')
-                .where('email', filters.email)
+                .where('usuario.email', filters.email)
                 .limit(1)
                 .offset(0);
 
             if (Array.isArray(usuario) && usuario.length > 0) {
+                const perfil: IPerfil = await Perfil.query().findById(usuario[0].perfilId);
+
                 const senhaIsValid = CriptografarSenhasSerive.decrypt(filters.senha, (usuario[0] as IUsuario).senha as string);
                 if (senhaIsValid) {
                     const { token, decoded } = this.signToken({ id: usuario[0].id });
 
                     return {
                         token,
-                        expiresIn: moment.unix(decoded.exp).toDate()
+                        expiresIn: moment.unix(decoded.exp).toDate(),
+                        usuario: {
+                            id: usuario[0].id,
+                            nome: usuario[0].nome,
+                            email: usuario[0].email,
+                            descricaoPerfil: perfil.descricao,
+                            tipoPerfil: perfil.tipoPerfil
+                        }
                     } as IAuthenticateResult;
                 } else {
                     throw new Error('Credenciais inválidas!');
