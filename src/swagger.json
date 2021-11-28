@@ -474,6 +474,33 @@
                 ],
                 "parameters": [
                     {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit da consulta (para paginação: máximo de 50 registros por consulta)",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Offset da consulta (para paginação)",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    },
+                    {
+                        "name": "descricao",
+                        "in": "query",
+                        "description": "Descrição do plano",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
                         "name": "tipoPlano",
                         "in": "query",
                         "description": "Código/Tipo do plano",
@@ -517,10 +544,8 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/Plano"
-                                    }
+                                    "type": "object",
+                                    "$ref": "#/definitions/RetornoPlanos"
                                 }
                             }
                         }
@@ -3377,6 +3402,20 @@
                             "type": "number"
                         }
                     }
+                }
+            }
+        },
+        "RetornoPlanos": {
+            "type": "object",
+            "properties": {
+                "rows": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/components/schemas/Plano"
+                    }
+                },
+                "count": {
+                    "type": "number"
                 }
             }
         },
