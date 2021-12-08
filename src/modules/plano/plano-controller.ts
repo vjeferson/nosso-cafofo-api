@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { Transaction } from 'objection';
 import { INovoPlano } from '../../interfaces/plano-create-interface';
 import { IFiltroPlano } from '../../interfaces/plano-filter-interface';
 import { IUpdatePlano } from '../../interfaces/plano-update-interface';
@@ -63,7 +64,7 @@ export default class PlanoController {
                 queryCount.where('ativo', filters.ativo);
             }
 
-            const planos = await query.select().limit(limit).offset(offset);
+            const planos = await query.select().limit(limit).offset(offset).orderBy('id', 'ASC');;
             const countPlanos: any[] = await queryCount.select().count();
             return response.status(200).send({ rows: planos, count: Array.isArray(countPlanos) && countPlanos.length > 0 ? +countPlanos[0].count : 0 });
         } catch (error: any) {
@@ -126,6 +127,61 @@ export default class PlanoController {
             return response.status(200).send(true);
         } catch (error: any) {
             return response.status(400).json({ error: 'Erro ao atualizar plano', message: error.message });
+        }
+    }
+
+    async ativar(request: Request, response: Response) {
+        let transaction: Transaction;
+        try {
+            const planoId = request.params.id;
+            if (isNaN(+planoId) || planoId === null || planoId === undefined) {
+                throw new Error('Id (identificador) informado é inválido!');
+            }
+
+            transaction = await Plano.startTransaction();
+
+            const plano = await Plano.query(transaction).findById(planoId);
+            if (!plano) {
+                throw new Error('Não existe um plano para o id (identificador) informado!');
+            }
+
+            await Plano.query(transaction)
+                .patch({ ativo: null })
+                .where('tipoPlano', '=', plano.tipoPlano)
+                .where('id', '!=', plano.id);
+
+            await Plano.query(transaction)
+                .patch({ ativo: true })
+                .where('id', '=', plano.id);
+
+            await transaction.commit();
+            return response.status(200).send(true);
+        } catch (error: any) {
+            if (transaction) {
+                await transaction.rollback();
+            }
+            errorHandlerObjection(error, response, 'Erro ao ativar plano');
+        }
+    }
+
+    async desativar(request: Request, response: Response) {
+        try {
+            const planoId = request.params.id;
+            if (isNaN(+planoId) || planoId === null || planoId === undefined) {
+                throw new Error('Id (identificador) informado é inválido!');
+            }
+
+            const planoDesativado = await Plano.query()
+                .patch({ ativo: null })
+                .where('id', '=', planoId);
+
+            if (!planoDesativado) {
+                throw new Error('Não existe um plano para o id (identificador) informado!');
+            }
+
+            return response.status(200).send(true);
+        } catch (error: any) {
+            errorHandlerObjection(error, response, 'Erro ao ativar plano');
         }
     }
 

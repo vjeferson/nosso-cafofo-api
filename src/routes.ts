@@ -91,6 +91,8 @@ routes.get('/plano', planoController.find);
 routes.get('/plano/:id', planoController.findOne);
 routes.post('/plano', authMiddleware, authAdministradorNossoCafofoMiddleware, planoController.create);
 routes.put('/plano/:id', authMiddleware, authAdministradorNossoCafofoMiddleware, planoController.upsert);
+routes.put('/plano/ativar/:id', authMiddleware, authAdministradorNossoCafofoMiddleware, planoController.ativar);
+routes.put('/plano/desativar/:id', authMiddleware, authAdministradorNossoCafofoMiddleware, planoController.desativar);
 
 routes.get('/assinatura', authMiddleware, assinaturaController.find);
 routes.get('/assinatura/:id', authMiddleware, assinaturaController.findOne);
