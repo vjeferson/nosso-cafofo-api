@@ -63,8 +63,8 @@ export default function errorHandlerObjection(err: any, response: Response,
         response.status(400).send({
             message:
                 mapConstraints[err.constraint] ?
-                    `${mapConstraints[err.constraint]} Colunas: ${err.columns}` :
-                    `${err.message} Colunas: ${err.columns}`,
+                    `${mapConstraints[err.constraint]}` :
+                    `${err.message}`,
             error: `${messagemErroAdicional}: UniqueViolation`
         });
     } else if (err instanceof NotNullViolationError) {

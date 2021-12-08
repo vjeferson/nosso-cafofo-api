@@ -116,8 +116,7 @@ export default class PlanoController {
                 .findById(planoId)
                 .patch({
                     recorrencia: dados.recorrencia,
-                    descricao: dados.descricao,
-                    ativo: dados.ativo
+                    descricao: dados.descricao
                 });
 
             if (!planoAtualizado) {

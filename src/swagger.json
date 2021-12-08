@@ -36,7 +36,7 @@
                         "required": true,
                         "schema": {
                             "type": "object",
-                            "$ref": "#/definitions/Autenticar"
+                            "$ref": "#/components/schemas/Autenticar"
                         }
                     }
                 ],
@@ -410,11 +410,23 @@
                         "bearerAuth": []
                     }
                 ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Informações do novo plano",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/components/schemas/NovoPlano"
+                        }
+                    }
+                ],
                 "requestBody": {
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Novo Plano"
+                                "$ref": "#/components/schemas/NovoPlano"
                             },
                             "examples": {
                                 "plano": {
@@ -567,7 +579,7 @@
                         "description": "Identificador/Sigla do registro",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "type": "number"
                         }
                     }
                 ],
@@ -624,13 +636,23 @@
                         "schema": {
                             "type": "number"
                         }
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Novas informações do plano",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/components/schemas/AtualizaPlano"
+                        }
                     }
                 ],
                 "requestBody": {
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Atualiza Plano"
+                                "$ref": "#/components/schemas/AtualizaPlano"
                             },
                             "examples": {
                                 "usuario": {
@@ -3419,6 +3441,48 @@
                 }
             }
         },
+        "NovoPlano": {
+            "type": "object",
+            "required": [
+                "tipoPlano",
+                "descricao",
+                "recorrencia",
+                "numeroMaximoParcelasPagamento",
+                "valorPlano"
+            ],
+            "properties": {
+                "tipoPlano": {
+                    "type": "number"
+                },
+                "descricao": {
+                    "type": "string"
+                },
+                "recorrencia": {
+                    "type": "string"
+                },
+                "numeroMaximoParcelasPagamento": {
+                    "type": "number"
+                },
+                "valorPlano": {
+                    "type": "number"
+                }
+            }
+        },
+        "AtualizaPlano": {
+            "type": "object",
+            "required": [
+                "descricao",
+                "recorrencia"
+            ],
+            "properties": {
+                "descricao": {
+                    "type": "string"
+                },
+                "recorrencia": {
+                    "type": "string"
+                }
+            }
+        },
         "Erro": {
             "type": "object",
             "properties": {
@@ -3528,8 +3592,15 @@
                     }
                 }
             },
-            "Novo Plano": {
+            "NovoPlano": {
                 "type": "object",
+                "required": [
+                    "tipoPlano",
+                    "descricao",
+                    "recorrencia",
+                    "numeroMaximoParcelasPagamento",
+                    "valorPlano"
+                ],
                 "properties": {
                     "tipoPlano": {
                         "type": "number"
@@ -3569,22 +3640,23 @@
                     "valorPlano": {
                         "type": "number"
                     },
-                    "ativo:": {
+                    "ativo": {
                         "type": "boolean"
                     }
                 }
             },
-            "Atualiza Plano": {
+            "AtualizaPlano": {
                 "type": "object",
+                "required": [
+                    "descricao",
+                    "recorrencia"
+                ],
                 "properties": {
                     "descricao": {
                         "type": "string"
                     },
                     "recorrencia": {
                         "type": "string"
-                    },
-                    "ativo:": {
-                        "type": "boolean"
                     }
                 }
             },
