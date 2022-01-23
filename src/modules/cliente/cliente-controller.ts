@@ -9,9 +9,10 @@ import ValidadoresSerive from '../../utils/validadores-service';
 import CriptografarSenhasSerive from '../../utils/criptografar-senhas-service';
 import { Republica } from '../republica/republica.model';
 import { Morador } from '../morador/morador-model';
-import { EnumTipoPerfil } from '../../utils/enums';
+import { EnumTipoPerfil, EnumTipoPlano } from '../../utils/enums';
 import { Perfil } from '../perfil/perfil-model';
 import { Assinatura } from '../assinatura/assinatura-model';
+import { Plano } from '../plano/plano-model';
 
 export default class ClienteController {
 
@@ -58,9 +59,27 @@ export default class ClienteController {
                 republicaId: republica.id
             });
 
+            let plano: Plano[];
+            if (!dadosCliente.planoId) {
+                plano = await Plano.query(transaction)
+                    .select('id')
+                    .where('tipoPlano', '=', EnumTipoPlano.Free)
+                    .where('ativo', '=', true);
+
+                if (!Array.isArray(plano) || plano.length == 0) {
+                    throw Error('Cadastro de clientes temporariamente indisponível, entre em contato com o Suporte para obter mais informações!');
+                }
+            } else {
+                plano = await Plano.query(transaction).select().where('id', dadosCliente.planoId);
+            }
+
+            if (!plano || plano.length == 0) {
+                throw Error('Cadastro de clientes temporariamente indisponível, entre em contato com o Suporte para obter mais informações!');
+            }
+
             await Assinatura.query(transaction).insert({
                 ativa: true,
-                planoId: dadosCliente.planoId,
+                planoId: plano[0].id,
                 republicaId: republica.id
             });
 

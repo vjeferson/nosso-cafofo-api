@@ -830,11 +830,23 @@
                 "tags": [
                     "Clientes"
                 ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Informações do novo cliente",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/components/schemas/NovoCliente"
+                        }
+                    }
+                ],
                 "requestBody": {
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Novo Cliente"
+                                "$ref": "#/components/schemas/NovoCliente"
                             },
                             "examples": {
                                 "cliente": {
@@ -859,9 +871,6 @@
                     }
                 },
                 "responses": {
-                    "401": {
-                        "description": "Unauthorized"
-                    },
                     "400": {
                         "description": "Erro ao criar cadastro",
                         "content": {
@@ -3603,6 +3612,63 @@
                 }
             }
         },
+        "NovoCliente": {
+            "type": "object",
+            "required": [
+                "nome",
+                "email",
+                "senha",
+                "nomeRepublica",
+                "anoCriacaoRepublica",
+                "diaPagamentoContas",
+                "numero",
+                "logradouro",
+                "estadoId",
+                "cidadeId",
+                "anoEntradaMorador"
+            ],
+            "properties": {
+                "nome": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "senha": {
+                    "type": "string"
+                },
+                "nomeRepublica": {
+                    "type": "string"
+                },
+                "anoCriacaoRepublica": {
+                    "type": "number"
+                },
+                "diaPagamentoContas": {
+                    "type": "number"
+                },
+                "numero": {
+                    "type": "string"
+                },
+                "logradouro": {
+                    "type": "string"
+                },
+                "complemento": {
+                    "type": "string"
+                },
+                "estadoId": {
+                    "type": "string"
+                },
+                "cidadeId": {
+                    "type": "number"
+                },
+                "anoEntradaMorador": {
+                    "type": "number"
+                },
+                "planoId": {
+                    "type": "number"
+                }
+            }
+        },
         "Erro": {
             "type": "object",
             "properties": {
@@ -3632,8 +3698,21 @@
                     }
                 }
             },
-            "Novo Cliente": {
+            "NovoCliente": {
                 "type": "object",
+                "required": [
+                    "nome",
+                    "email",
+                    "senha",
+                    "nomeRepublica",
+                    "anoCriacaoRepublica",
+                    "diaPagamentoContas",
+                    "numero",
+                    "logradouro",
+                    "estadoId",
+                    "cidadeId",
+                    "anoEntradaMorador"
+                ],
                 "properties": {
                     "nome": {
                         "type": "string"

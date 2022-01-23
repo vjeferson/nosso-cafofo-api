@@ -12,6 +12,5 @@ export interface INovoCliente {
     estadoId: string;
     cidadeId: number;
     anoEntradaMorador: number;
-
-    planoId: number;
+    planoId?: number;
 }
