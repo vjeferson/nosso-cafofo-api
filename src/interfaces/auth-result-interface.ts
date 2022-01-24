@@ -4,6 +4,7 @@ export interface IUsuarioAutenticado {
     email: string;
     descricaoPerfil: string;
     tipoPerfil: number;
+    anoEntradaRepublica: number;
 }
 
 export interface IAuthenticateResult {
