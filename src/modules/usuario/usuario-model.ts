@@ -65,11 +65,19 @@ export class Usuario extends Model implements IUsuario {
         }
     };
 
-    private async uniqueViolations() {
-        const usuario = await Usuario.query().select().where('email', '=', this.email);
+    private async uniqueViolations(update: boolean = false) {
+        let usuarios: Usuario[];
+        if (update) {
+            usuarios = await Usuario.query().select()
+                .where('id', '!=', this.id)
+                .where('email', '=', this.email);
+        } else {
+            usuarios = await Usuario.query().select()
+                .where('email', '=', this.email);
+        }
 
-        if (Array.isArray(usuario) && usuario.length > 0) {
-            throw new Error('Já existe um úsuario com o email informado!');
+        if (Array.isArray(usuarios) && usuarios.length > 0) {
+            throw new Error('Já existe um usuário com o email informado!');
         }
     }
 
@@ -81,7 +89,7 @@ export class Usuario extends Model implements IUsuario {
 
     async $beforeUpdate() {
         this.updateTime = new Date().toISOString();
-        await this.uniqueViolations();
+        await this.uniqueViolations(true);
     }
 
 }

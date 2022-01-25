@@ -91,7 +91,7 @@ export default class UsuarioController {
 
             const usuarioAtualizado = await Usuario.query().findById(+usuarioId)
                 .skipUndefined()
-                .patch({ nome: data.nome });
+                .patch({ id: +usuarioId, nome: data.nome, email: data.email });
 
             if (!usuarioAtualizado) {
                 throw new Error('Não existe um usuário para o id (identificador) informado!');

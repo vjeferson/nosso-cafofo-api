@@ -1324,6 +1324,16 @@
                         "schema": {
                             "type": "number"
                         }
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Novas informações do Usuário",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/AtualizaUsuario"
+                        }
                     }
                 ],
                 "requestBody": {
@@ -1335,7 +1345,8 @@
                             "examples": {
                                 "usuario": {
                                     "value": {
-                                        "nome": "João de Barro"
+                                        "nome": "João de Barro",
+                                        "email": "joaozin123@gmail.com"
                                     }
                                 }
                             }
@@ -3859,8 +3870,15 @@
         },
         "AtualizaUsuario": {
             "type": "object",
+            "required": [
+                "nome",
+                "email"
+            ],
             "properties": {
                 "nome": {
+                    "type": "string"
+                },
+                "email": {
                     "type": "string"
                 }
             }
@@ -3946,14 +3964,14 @@
                 "estadoId": {
                     "type": "string"
                 },
-                "estado":{
+                "estado": {
                     "type": "object",
                     "$ref": "#/definitions/Estado"
                 },
                 "cidadeId": {
                     "type": "number"
                 },
-                "cidade":{
+                "cidade": {
                     "type": "object",
                     "$ref": "#/definitions/Cidade"
                 }
@@ -3961,7 +3979,7 @@
         },
         "AtualizaRepublica": {
             "type": "object",
-            "required":[
+            "required": [
                 "nome",
                 "anoCriacao",
                 "dataPagamentoContas",
