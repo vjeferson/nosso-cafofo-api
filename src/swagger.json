@@ -1404,6 +1404,24 @@
                 ],
                 "parameters": [
                     {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit da consulta (para paginação: máximo de 50 registros por consulta)",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Offset da consulta (para paginação)",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    },
+                    {
                         "name": "nome",
                         "in": "query",
                         "description": "Nome da república",
@@ -1425,6 +1443,15 @@
                         "name": "dataPagamentoContas",
                         "in": "query",
                         "description": "Dia (número) de pagamento das contas",
+                        "required": false,
+                        "schema": {
+                            "type": "number"
+                        }
+                    },
+                    {
+                        "name": "tipoPlanoAtivo",
+                        "in": "query",
+                        "description": "Tipo de plano assinado/ativo",
                         "required": false,
                         "schema": {
                             "type": "number"

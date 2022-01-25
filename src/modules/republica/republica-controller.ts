@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { IFiltroRepublica } from '../../interfaces/republica-filter-interface';
 import { IUpdateRepublica } from '../../interfaces/republica-update-interface';
+import { LIMIT_DEFAULT, LIMIT_MAXIMO } from '../../utils/consts';
 import { EnumTipoPerfil } from '../../utils/enums';
 import { Cidade } from '../cidade/cidade-model';
 import { Estado } from '../estado/estado.model';
@@ -13,26 +14,33 @@ export default class RepublicaController {
     async find(request: Request, response: Response) {
         try {
             const filters: IFiltroRepublica = request.query as any;
+            const limit: number = filters.limit && !isNaN(+filters.limit) && filters.limit < LIMIT_MAXIMO ?
+                +filters.limit : LIMIT_DEFAULT;
+            const offset: number = filters.offset || 0;
 
             const query = Republica.query();
+            const queryCount = Republica.query();
 
             if (filters.nome) {
                 query.where('nome', 'like', `${filters.nome}%`);
+                queryCount.where('nome', 'like', `${filters.nome}%`);
             }
 
             if (!isNaN(+(filters.anoCriacao as any)) && filters.anoCriacao !== null && filters.anoCriacao !== undefined
                 && (filters.anoCriacao as any) !== '') {
                 query.where('anoCriacao', filters.anoCriacao);
+                queryCount.where('anoCriacao', filters.anoCriacao);
             }
 
             if (!isNaN(+(filters.dataPagamentoContas as any)) && filters.dataPagamentoContas !== null && filters.dataPagamentoContas !== undefined
                 && (filters.dataPagamentoContas as any) !== '') {
                 query.where('dataPagamentoContas', filters.dataPagamentoContas);
+                queryCount.where('dataPagamentoContas', filters.dataPagamentoContas);
             }
 
-            const republicas = await query.select();
-
-            return response.status(200).send(republicas);
+            const republicas = await query.select().limit(limit).offset(offset).orderBy('id', 'ASC');;
+            const count: any[] = await queryCount.select().count();
+            return response.status(200).send({ rows: republicas, count: Array.isArray(count) && count.length > 0 ? +count[0].count : 0 });
         } catch (error: any) {
             return response.status(400).json({ error: 'Erro ao consultar repúblicas', message: error.message });
         }

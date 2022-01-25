@@ -43,7 +43,8 @@ export default class PlanoController {
     async find(request: Request, response: Response) {
         try {
             const filters: IFiltroPlano = request.query as any;
-            const limit: number = filters.limit && !isNaN(+filters.limit) && filters.limit < LIMIT_MAXIMO ? +filters.limit : LIMIT_DEFAULT;
+            const limit: number = filters.limit && !isNaN(+filters.limit) && filters.limit < LIMIT_MAXIMO ?
+                +filters.limit : LIMIT_DEFAULT;
             const offset: number = filters.offset || 0;
             const query = Plano.query();
             const queryCount = Plano.query();
