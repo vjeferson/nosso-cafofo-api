@@ -68,6 +68,7 @@ routes.put('/perfil/:id', authMiddleware, authAdministradorNossoCafofoMiddleware
 
 routes.get('/republica', authMiddleware, authAdministradorNossoCafofoMiddleware, republicaController.find);
 routes.get('/republica/:id', authMiddleware, republicaController.findOne);
+routes.get('/republica/informacoes-cadastro/:id', authMiddleware, republicaController.informacoesCadastro);
 routes.put('/republica/:id', authMiddleware, republicaController.upsert);
 
 routes.get('/usuario', authMiddleware, usuarioController.find);

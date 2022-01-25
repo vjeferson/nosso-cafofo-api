@@ -36,7 +36,7 @@
                         "required": true,
                         "schema": {
                             "type": "object",
-                            "$ref": "#/components/schemas/Autenticar"
+                            "$ref": "#/definitions/Autenticar"
                         }
                     }
                 ],
@@ -45,7 +45,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "$ref": "#/components/schemas/Autenticar"
+                                "$ref": "#/definitions/Autenticar"
                             },
                             "examples": {
                                 "informacaoUsuario": {
@@ -132,7 +132,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Erro"
+                                    "$ref": "#/definitions/Erro"
                                 },
                                 "examples": {
                                     "erro": {
@@ -152,7 +152,7 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/Estado"
+                                        "$ref": "#/definitions/Estado"
                                     }
                                 }
                             }
@@ -189,7 +189,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Erro"
+                                    "$ref": "#/definitions/Erro"
                                 },
                                 "examples": {
                                     "erro": {
@@ -208,7 +208,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Estado"
+                                    "$ref": "#/definitions/Estado"
                                 }
                             }
                         }
@@ -271,7 +271,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Erro"
+                                    "$ref": "#/definitions/Erro"
                                 },
                                 "examples": {
                                     "erro": {
@@ -291,7 +291,7 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/Cidade"
+                                        "$ref": "#/definitions/Cidade"
                                     }
                                 }
                             }
@@ -328,7 +328,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Erro"
+                                    "$ref": "#/definitions/Erro"
                                 },
                                 "examples": {
                                     "erro": {
@@ -347,7 +347,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Cidade"
+                                    "$ref": "#/definitions/Cidade"
                                 }
                             }
                         }
@@ -369,7 +369,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Erro"
+                                    "$ref": "#/definitions/Erro"
                                 },
                                 "examples": {
                                     "erro": {
@@ -389,7 +389,7 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/Tipo Plano"
+                                        "$ref": "#/definitions/TipoPlano"
                                     }
                                 }
                             }
@@ -418,7 +418,7 @@
                         "required": true,
                         "schema": {
                             "type": "object",
-                            "$ref": "#/components/schemas/NovoPlano"
+                            "$ref": "#/definitions/NovoPlano"
                         }
                     }
                 ],
@@ -426,7 +426,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/NovoPlano"
+                                "$ref": "#/definitions/NovoPlano"
                             },
                             "examples": {
                                 "plano": {
@@ -452,7 +452,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Erro"
+                                    "$ref": "#/definitions/Erro"
                                 },
                                 "examples": {
                                     "erro": {
@@ -471,7 +471,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Plano"
+                                    "$ref": "#/definitions/Plano"
                                 }
                             }
                         }
@@ -538,7 +538,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Erro"
+                                    "$ref": "#/definitions/Erro"
                                 },
                                 "examples": {
                                     "erro": {
@@ -590,7 +590,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Erro"
+                                    "$ref": "#/definitions/Erro"
                                 },
                                 "examples": {
                                     "erro": {
@@ -609,7 +609,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Plano"
+                                    "$ref": "#/definitions/Plano"
                                 }
                             }
                         }
@@ -644,7 +644,7 @@
                         "required": true,
                         "schema": {
                             "type": "object",
-                            "$ref": "#/components/schemas/AtualizaPlano"
+                            "$ref": "#/definitions/AtualizaPlano"
                         }
                     }
                 ],
@@ -652,7 +652,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/AtualizaPlano"
+                                "$ref": "#/definitions/AtualizaPlano"
                             },
                             "examples": {
                                 "usuario": {
@@ -676,7 +676,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Erro"
+                                    "$ref": "#/definitions/Erro"
                                 },
                                 "examples": {
                                     "erro": {
@@ -736,7 +736,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Erro"
+                                    "$ref": "#/definitions/Erro"
                                 },
                                 "examples": {
                                     "erro": {
@@ -796,7 +796,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Erro"
+                                    "$ref": "#/definitions/Erro"
                                 },
                                 "examples": {
                                     "erro": {
@@ -838,7 +838,7 @@
                         "required": true,
                         "schema": {
                             "type": "object",
-                            "$ref": "#/components/schemas/NovoCliente"
+                            "$ref": "#/definitions/NovoCliente"
                         }
                     }
                 ],
@@ -846,7 +846,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/NovoCliente"
+                                "$ref": "#/definitions/NovoCliente"
                             },
                             "examples": {
                                 "cliente": {
@@ -877,7 +877,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Erro"
+                                    "$ref": "#/definitions/Erro"
                                 },
                                 "examples": {
                                     "erro": {
@@ -953,7 +953,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Erro"
+                                    "$ref": "#/definitions/Erro"
                                 },
                                 "examples": {
                                     "erro": {
@@ -973,7 +973,7 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/Perfil"
+                                        "$ref": "#/definitions/Perfil"
                                     }
                                 }
                             }
@@ -1015,7 +1015,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Erro"
+                                    "$ref": "#/definitions/Erro"
                                 },
                                 "examples": {
                                     "erro": {
@@ -1034,7 +1034,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Perfil"
+                                    "$ref": "#/definitions/Perfil"
                                 }
                             }
                         }
@@ -1067,7 +1067,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Atualiza Perfil"
+                                "$ref": "#/definitions/AtualizaPerfil"
                             },
                             "examples": {
                                 "usuario": {
@@ -1089,7 +1089,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Erro"
+                                    "$ref": "#/definitions/Erro"
                                 },
                                 "examples": {
                                     "erro": {
@@ -1132,7 +1132,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Novo Usuario"
+                                "$ref": "#/definitions/NovoUsuario"
                             },
                             "examples": {
                                 "usuario": {
@@ -1158,7 +1158,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Erro"
+                                    "$ref": "#/definitions/Erro"
                                 },
                                 "examples": {
                                     "erro": {
@@ -1177,7 +1177,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Usuario"
+                                    "$ref": "#/definitions/Usuario"
                                 }
                             }
                         }
@@ -1216,7 +1216,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Erro"
+                                    "$ref": "#/definitions/Erro"
                                 },
                                 "examples": {
                                     "erro": {
@@ -1236,7 +1236,7 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/Usuario"
+                                        "$ref": "#/definitions/Usuario"
                                     }
                                 }
                             }
@@ -1278,7 +1278,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Erro"
+                                    "$ref": "#/definitions/Erro"
                                 },
                                 "examples": {
                                     "erro": {
@@ -1297,7 +1297,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Usuario"
+                                    "$ref": "#/definitions/Usuario"
                                 }
                             }
                         }
@@ -1330,7 +1330,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Atualiza Usuario"
+                                "$ref": "#/definitions/AtualizaUsuario"
                             },
                             "examples": {
                                 "usuario": {
@@ -1352,7 +1352,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Erro"
+                                    "$ref": "#/definitions/Erro"
                                 },
                                 "examples": {
                                     "erro": {
@@ -1430,7 +1430,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Erro"
+                                    "$ref": "#/definitions/Erro"
                                 },
                                 "examples": {
                                     "erro": {
@@ -1450,7 +1450,7 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/Republica"
+                                        "$ref": "#/definitions/Republica"
                                     }
                                 }
                             }
@@ -1492,7 +1492,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Erro"
+                                    "$ref": "#/definitions/Erro"
                                 },
                                 "examples": {
                                     "erro": {
@@ -1511,7 +1511,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Republica"
+                                    "$ref": "#/definitions/Republica"
                                 }
                             }
                         }
@@ -1538,20 +1538,34 @@
                         "schema": {
                             "type": "number"
                         }
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Novas informações da República",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/AtualizaRepublica"
+                        }
                     }
                 ],
                 "requestBody": {
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Atualiza Republica"
+                                "$ref": "#/definitions/AtualizaRepublica"
                             },
                             "examples": {
-                                "usuario": {
+                                "republica": {
                                     "value": {
                                         "nome": "República Testa alteração",
                                         "anoCriacao": 2001,
-                                        "dataPagamentoContas": 12
+                                        "dataPagamentoContas": 12,
+                                        "numero": "123",
+                                        "logradouro": "Ruas dos Joãozin",
+                                        "estadoId": "MG",
+                                        "cidadeId": 2534
                                     }
                                 }
                             }
@@ -1568,7 +1582,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Erro"
+                                    "$ref": "#/definitions/Erro"
                                 },
                                 "examples": {
                                     "erro": {
@@ -1611,7 +1625,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Nova Assinatura"
+                                "$ref": "#/definitions/NovaAssinatura"
                             },
                             "examples": {
                                 "novaAssinatura": {
@@ -1633,7 +1647,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Erro"
+                                    "$ref": "#/definitions/Erro"
                                 },
                                 "examples": {
                                     "erro": {
@@ -1652,7 +1666,67 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Assinatura"
+                                    "$ref": "#/definitions/Assinatura"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/republica/informacoes-cadastro/{id}": {
+            "get": {
+                "summary": "Consulta informações de Cadastro da República Específico trazendo informações adicionais",
+                "description": "Rota para consulta de república específica pelo id (identificação do registro), trazendo informações adicionais de cadastro.",
+                "tags": [
+                    "Republicas"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Identificador do registro",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "400": {
+                        "description": "Erro ao consultar a república",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/definitions/Erro"
+                                },
+                                "examples": {
+                                    "erro": {
+                                        "value": {
+                                            "error": "Erro ao consultar a república",
+                                            "message": "Parâmetros inválidos!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/definitions/RepublicaInfoAdicional"
                                 }
                             }
                         }
@@ -1702,7 +1776,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Erro"
+                                    "$ref": "#/definitions/Erro"
                                 },
                                 "examples": {
                                     "erro": {
@@ -1722,7 +1796,7 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/Assinatura"
+                                        "$ref": "#/definitions/Assinatura"
                                     }
                                 }
                             }
@@ -1764,7 +1838,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Erro"
+                                    "$ref": "#/definitions/Erro"
                                 },
                                 "examples": {
                                     "erro": {
@@ -1783,7 +1857,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Assinatura"
+                                    "$ref": "#/definitions/Assinatura"
                                 }
                             }
                         }
@@ -1807,7 +1881,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Novo Morador"
+                                "$ref": "#/definitions/NovoMorador"
                             },
                             "examples": {
                                 "morador": {
@@ -1830,7 +1904,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Erro"
+                                    "$ref": "#/definitions/Erro"
                                 },
                                 "examples": {
                                     "erro": {
@@ -1849,7 +1923,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Morador"
+                                    "$ref": "#/definitions/Morador"
                                 }
                             }
                         }
@@ -1906,7 +1980,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Erro"
+                                    "$ref": "#/definitions/Erro"
                                 },
                                 "examples": {
                                     "erro": {
@@ -1926,7 +2000,7 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/Morador"
+                                        "$ref": "#/definitions/Morador"
                                     }
                                 }
                             }
@@ -1968,7 +2042,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Erro"
+                                    "$ref": "#/definitions/Erro"
                                 },
                                 "examples": {
                                     "erro": {
@@ -1987,7 +2061,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Morador"
+                                    "$ref": "#/definitions/Morador"
                                 }
                             }
                         }
@@ -2020,7 +2094,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Atualiza Morador"
+                                "$ref": "#/definitions/AtualizaMorador"
                             },
                             "examples": {
                                 "usuario": {
@@ -2044,7 +2118,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Erro"
+                                    "$ref": "#/definitions/Erro"
                                 },
                                 "examples": {
                                     "erro": {
@@ -2087,7 +2161,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Nova Reuniao"
+                                "$ref": "#/definitions/NovaReuniao"
                             },
                             "examples": {
                                 "morador": {
@@ -2111,7 +2185,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Erro"
+                                    "$ref": "#/definitions/Erro"
                                 },
                                 "examples": {
                                     "erro": {
@@ -2130,7 +2204,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Reuniao"
+                                    "$ref": "#/definitions/Reuniao"
                                 }
                             }
                         }
@@ -2178,7 +2252,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Erro"
+                                    "$ref": "#/definitions/Erro"
                                 },
                                 "examples": {
                                     "erro": {
@@ -2198,7 +2272,7 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/Reuniao"
+                                        "$ref": "#/definitions/Reuniao"
                                     }
                                 }
                             }
@@ -2240,7 +2314,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Erro"
+                                    "$ref": "#/definitions/Erro"
                                 },
                                 "examples": {
                                     "erro": {
@@ -2259,7 +2333,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Reuniao"
+                                    "$ref": "#/definitions/Reuniao"
                                 }
                             }
                         }
@@ -2292,7 +2366,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Atualiza Reuniao"
+                                "$ref": "#/definitions/AtualizaReuniao"
                             },
                             "examples": {
                                 "usuario": {
@@ -2316,7 +2390,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Erro"
+                                    "$ref": "#/definitions/Erro"
                                 },
                                 "examples": {
                                     "erro": {
@@ -2374,7 +2448,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Erro"
+                                    "$ref": "#/definitions/Erro"
                                 },
                                 "examples": {
                                     "erro": {
@@ -2428,7 +2502,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Nova Festa"
+                                "$ref": "#/definitions/NovaFesta"
                             },
                             "examples": {
                                 "festa": {
@@ -2451,7 +2525,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Erro"
+                                    "$ref": "#/definitions/Erro"
                                 },
                                 "examples": {
                                     "erro": {
@@ -2470,7 +2544,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Festa"
+                                    "$ref": "#/definitions/Festa"
                                 }
                             }
                         }
@@ -2518,7 +2592,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Erro"
+                                    "$ref": "#/definitions/Erro"
                                 },
                                 "examples": {
                                     "erro": {
@@ -2538,7 +2612,7 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/Festa"
+                                        "$ref": "#/definitions/Festa"
                                     }
                                 }
                             }
@@ -2580,7 +2654,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Erro"
+                                    "$ref": "#/definitions/Erro"
                                 },
                                 "examples": {
                                     "erro": {
@@ -2599,7 +2673,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Festa"
+                                    "$ref": "#/definitions/Festa"
                                 }
                             }
                         }
@@ -2632,7 +2706,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Atualiza Festa"
+                                "$ref": "#/definitions/AtualizaFesta"
                             },
                             "examples": {
                                 "festa": {
@@ -2656,7 +2730,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Erro"
+                                    "$ref": "#/definitions/Erro"
                                 },
                                 "examples": {
                                     "erro": {
@@ -2714,7 +2788,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Erro"
+                                    "$ref": "#/definitions/Erro"
                                 },
                                 "examples": {
                                     "erro": {
@@ -2768,7 +2842,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Novo Participante Festa"
+                                "$ref": "#/definitions/NovoParticipanteFesta"
                             },
                             "examples": {
                                 "participante": {
@@ -2794,7 +2868,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Erro"
+                                    "$ref": "#/definitions/Erro"
                                 },
                                 "examples": {
                                     "erro": {
@@ -2813,7 +2887,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Participante Festa"
+                                    "$ref": "#/definitions/ParticipanteFesta"
                                 }
                             }
                         }
@@ -2881,7 +2955,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Erro"
+                                    "$ref": "#/definitions/Erro"
                                 },
                                 "examples": {
                                     "erro": {
@@ -2901,7 +2975,7 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/Participante Festa"
+                                        "$ref": "#/definitions/ParticipanteFesta"
                                     }
                                 }
                             }
@@ -2952,7 +3026,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Erro"
+                                    "$ref": "#/definitions/Erro"
                                 },
                                 "examples": {
                                     "erro": {
@@ -2971,7 +3045,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Participante Festa"
+                                    "$ref": "#/definitions/ParticipanteFesta"
                                 }
                             }
                         }
@@ -3013,7 +3087,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Atualiza Participante Festa"
+                                "$ref": "#/definitions/AtualizaParticipanteFesta"
                             },
                             "examples": {
                                 "participante": {
@@ -3038,7 +3112,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Erro"
+                                    "$ref": "#/definitions/Erro"
                                 },
                                 "examples": {
                                     "erro": {
@@ -3105,7 +3179,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Erro"
+                                    "$ref": "#/definitions/Erro"
                                 },
                                 "examples": {
                                     "erro": {
@@ -3159,7 +3233,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Nova Conta"
+                                "$ref": "#/definitions/NovaConta"
                             },
                             "examples": {
                                 "conta": {
@@ -3184,7 +3258,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Erro"
+                                    "$ref": "#/definitions/Erro"
                                 },
                                 "examples": {
                                     "erro": {
@@ -3203,7 +3277,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Conta"
+                                    "$ref": "#/definitions/Conta"
                                 }
                             }
                         }
@@ -3274,7 +3348,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Erro"
+                                    "$ref": "#/definitions/Erro"
                                 },
                                 "examples": {
                                     "erro": {
@@ -3294,7 +3368,7 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/Conta"
+                                        "$ref": "#/definitions/Conta"
                                     }
                                 }
                             }
@@ -3336,7 +3410,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Erro"
+                                    "$ref": "#/definitions/Erro"
                                 },
                                 "examples": {
                                     "erro": {
@@ -3355,7 +3429,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Conta"
+                                    "$ref": "#/definitions/Conta"
                                 }
                             }
                         }
@@ -3388,7 +3462,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Atualiza Conta"
+                                "$ref": "#/definitions/AtualizaConta"
                             },
                             "examples": {
                                 "conta": {
@@ -3412,7 +3486,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Erro"
+                                    "$ref": "#/definitions/Erro"
                                 },
                                 "examples": {
                                     "erro": {
@@ -3470,7 +3544,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/Erro"
+                                    "$ref": "#/definitions/Erro"
                                 },
                                 "examples": {
                                     "erro": {
@@ -3562,7 +3636,7 @@
                 "rows": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/components/schemas/Plano"
+                        "$ref": "#/definitions/Plano"
                     }
                 },
                 "count": {
@@ -3669,6 +3743,552 @@
                 }
             }
         },
+        "Estado": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "estado": {
+                    "type": "string"
+                }
+            }
+        },
+        "Cidade": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "number"
+                },
+                "cidade": {
+                    "type": "string"
+                },
+                "estadoId": {
+                    "type": "string"
+                }
+            }
+        },
+        "TipoPlano": {
+            "type": "object",
+            "properties": {
+                "descricao": {
+                    "type": "string"
+                },
+                "codigoTipoPlano": {
+                    "type": "number"
+                }
+            }
+        },
+        "Plano": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "number"
+                },
+                "tipoPlano": {
+                    "type": "number"
+                },
+                "descricao": {
+                    "type": "string"
+                },
+                "recorrencia": {
+                    "type": "string"
+                },
+                "numeroMaximoParcelasPagamento": {
+                    "type": "number"
+                },
+                "valorPlano": {
+                    "type": "number"
+                },
+                "ativo": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "Usuario": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "number"
+                },
+                "nome": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "senha": {
+                    "type": "string"
+                },
+                "moradorId": {
+                    "type": "number"
+                },
+                "republicaId": {
+                    "type": "number"
+                },
+                "createTime": {
+                    "type": "string"
+                },
+                "updateTime": {
+                    "type": "string"
+                },
+                "perfilId": {
+                    "type": "number"
+                }
+            }
+        },
+        "NovoUsuario": {
+            "type": "object",
+            "properties": {
+                "nome": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "senha": {
+                    "type": "string"
+                },
+                "moradorId": {
+                    "type": "number"
+                },
+                "perfilId": {
+                    "type": "number"
+                }
+            }
+        },
+        "AtualizaUsuario": {
+            "type": "object",
+            "properties": {
+                "nome": {
+                    "type": "string"
+                }
+            }
+        },
+        "Perfil": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "number"
+                },
+                "descricao": {
+                    "type": "string"
+                },
+                "tipoPerfil": {
+                    "type": "number"
+                }
+            }
+        },
+        "AtualizaPerfil": {
+            "type": "object",
+            "properties": {
+                "descricao": {
+                    "type": "string"
+                }
+            }
+        },
+        "Republica": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "number"
+                },
+                "nome": {
+                    "type": "string"
+                },
+                "anoCriacao": {
+                    "type": "number"
+                },
+                "dataPagamentoContas": {
+                    "type": "number"
+                },
+                "numero": {
+                    "type": "string"
+                },
+                "logradouro": {
+                    "type": "string"
+                },
+                "complemento": {
+                    "type": "string"
+                },
+                "estadoId": {
+                    "type": "string"
+                },
+                "cidadeId": {
+                    "type": "number"
+                }
+            }
+        },
+        "RepublicaInfoAdicional": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "number"
+                },
+                "nome": {
+                    "type": "string"
+                },
+                "anoCriacao": {
+                    "type": "number"
+                },
+                "dataPagamentoContas": {
+                    "type": "number"
+                },
+                "numero": {
+                    "type": "string"
+                },
+                "logradouro": {
+                    "type": "string"
+                },
+                "complemento": {
+                    "type": "string"
+                },
+                "estadoId": {
+                    "type": "string"
+                },
+                "estado":{
+                    "type": "object",
+                    "$ref": "#/definitions/Estado"
+                },
+                "cidadeId": {
+                    "type": "number"
+                },
+                "cidade":{
+                    "type": "object",
+                    "$ref": "#/definitions/Cidade"
+                }
+            }
+        },
+        "AtualizaRepublica": {
+            "type": "object",
+            "required":[
+                "nome",
+                "anoCriacao",
+                "dataPagamentoContas",
+                "logradouro",
+                "numero",
+                "estadoId",
+                "cidadeId"
+            ],
+            "properties": {
+                "nome": {
+                    "type": "string"
+                },
+                "anoCriacao": {
+                    "type": "number"
+                },
+                "dataPagamentoContas": {
+                    "type": "number"
+                },
+                "numero": {
+                    "type": "string"
+                },
+                "logradouro": {
+                    "type": "string"
+                },
+                "complemento": {
+                    "type": "string"
+                },
+                "estadoId": {
+                    "type": "string"
+                },
+                "cidadeId": {
+                    "type": "number"
+                }
+            }
+        },
+        "NovaAssinatura": {
+            "type": "object",
+            "properties": {
+                "planoId": {
+                    "type": "number"
+                }
+            }
+        },
+        "Assinatura": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "number"
+                },
+                "validadePlano": {
+                    "type": "string"
+                },
+                "dataAssinatura": {
+                    "type": "string"
+                },
+                "ativo": {
+                    "type": "boolean"
+                },
+                "planoId": {
+                    "type": "number"
+                },
+                "republicaId": {
+                    "type": "number"
+                }
+            }
+        },
+        "Morador": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "number"
+                },
+                "nome": {
+                    "type": "string"
+                },
+                "anoEntrada": {
+                    "type": "number"
+                },
+                "ativo": {
+                    "type": "boolean"
+                },
+                "republicaId": {
+                    "type": "number"
+                }
+            }
+        },
+        "NovoMorador": {
+            "type": "object",
+            "properties": {
+                "nome": {
+                    "type": "string"
+                },
+                "anoEntrada": {
+                    "type": "number"
+                }
+            }
+        },
+        "AtualizaMorador": {
+            "type": "object",
+            "properties": {
+                "nome": {
+                    "type": "string"
+                },
+                "anoEntrada": {
+                    "type": "number"
+                },
+                "ativo": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "Reuniao": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "number"
+                },
+                "descricao": {
+                    "type": "string"
+                },
+                "anotacoes": {
+                    "type": "string"
+                },
+                "data": {
+                    "type": "string"
+                },
+                "republicaId": {
+                    "type": "number"
+                }
+            }
+        },
+        "NovaReuniao": {
+            "type": "object",
+            "properties": {
+                "descricao": {
+                    "type": "string"
+                },
+                "anotacoes": {
+                    "type": "string"
+                },
+                "data": {
+                    "type": "string"
+                }
+            }
+        },
+        "AtualizaReuniao": {
+            "type": "object",
+            "properties": {
+                "descricao": {
+                    "type": "string"
+                },
+                "anotacoes": {
+                    "type": "string"
+                },
+                "data": {
+                    "type": "string"
+                }
+            }
+        },
+        "Festa": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "number"
+                },
+                "descricao": {
+                    "type": "string"
+                },
+                "data": {
+                    "type": "string"
+                },
+                "situacao": {
+                    "type": "number"
+                },
+                "valorTotal": {
+                    "type": "number"
+                },
+                "republicaId": {
+                    "type": "number"
+                }
+            }
+        },
+        "NovaFesta": {
+            "type": "object",
+            "properties": {
+                "descricao": {
+                    "type": "string"
+                },
+                "data": {
+                    "type": "string"
+                }
+            }
+        },
+        "AtualizaFesta": {
+            "type": "object",
+            "properties": {
+                "descricao": {
+                    "type": "string"
+                },
+                "data": {
+                    "type": "string"
+                },
+                "situacao": {
+                    "type": "number"
+                }
+            }
+        },
+        "ParticipanteFesta": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "number"
+                },
+                "nome": {
+                    "type": "string"
+                },
+                "lote": {
+                    "type": "number"
+                },
+                "situacao": {
+                    "type": "number"
+                },
+                "valor": {
+                    "type": "number"
+                },
+                "festaId": {
+                    "type": "number"
+                },
+                "republicaId": {
+                    "type": "number"
+                }
+            }
+        },
+        "NovoParticipanteFesta": {
+            "type": "object",
+            "properties": {
+                "nome": {
+                    "type": "string"
+                },
+                "lote": {
+                    "type": "number"
+                },
+                "situacao": {
+                    "type": "number"
+                },
+                "valor": {
+                    "type": "number"
+                },
+                "festaId": {
+                    "type": "number"
+                }
+            }
+        },
+        "AtualizaParticipanteFesta": {
+            "type": "object",
+            "properties": {
+                "nome": {
+                    "type": "string"
+                },
+                "lote": {
+                    "type": "number"
+                },
+                "situacao": {
+                    "type": "number"
+                },
+                "valor": {
+                    "type": "number"
+                }
+            }
+        },
+        "Conta": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "number"
+                },
+                "descricao": {
+                    "type": "string"
+                },
+                "valor": {
+                    "type": "number"
+                },
+                "situacao": {
+                    "type": "number"
+                },
+                "mesAnoConta": {
+                    "type": "string"
+                },
+                "divisaoPorIgualEntreMoradores": {
+                    "type": "boolean"
+                },
+                "republicaId": {
+                    "type": "number"
+                }
+            }
+        },
+        "NovaConta": {
+            "type": "object",
+            "properties": {
+                "descricao": {
+                    "type": "string"
+                },
+                "valor": {
+                    "type": "number"
+                },
+                "mesAnoConta": {
+                    "type": "string"
+                },
+                "divisaoPorIgualEntreMoradores": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "AtualizaConta": {
+            "type": "object",
+            "properties": {
+                "descricao": {
+                    "type": "string"
+                },
+                "valor": {
+                    "type": "number"
+                },
+                "situacao": {
+                    "type": "number"
+                }
+            }
+        },
         "Erro": {
             "type": "object",
             "properties": {
@@ -3682,615 +4302,7 @@
         }
     },
     "components": {
-        "schemas": {
-            "Autenticar": {
-                "type": "object",
-                "required": [
-                    "email",
-                    "senha"
-                ],
-                "properties": {
-                    "email": {
-                        "type": "string"
-                    },
-                    "senha": {
-                        "type": "string"
-                    }
-                }
-            },
-            "NovoCliente": {
-                "type": "object",
-                "required": [
-                    "nome",
-                    "email",
-                    "senha",
-                    "nomeRepublica",
-                    "anoCriacaoRepublica",
-                    "diaPagamentoContas",
-                    "numero",
-                    "logradouro",
-                    "estadoId",
-                    "cidadeId",
-                    "anoEntradaMorador"
-                ],
-                "properties": {
-                    "nome": {
-                        "type": "string"
-                    },
-                    "email": {
-                        "type": "string"
-                    },
-                    "senha": {
-                        "type": "string"
-                    },
-                    "nomeRepublica": {
-                        "type": "string"
-                    },
-                    "anoCriacaoRepublica": {
-                        "type": "number"
-                    },
-                    "diaPagamentoContas": {
-                        "type": "number"
-                    },
-                    "numero": {
-                        "type": "string"
-                    },
-                    "logradouro": {
-                        "type": "string"
-                    },
-                    "complemento": {
-                        "type": "string"
-                    },
-                    "estadoId": {
-                        "type": "string"
-                    },
-                    "cidadeId": {
-                        "type": "number"
-                    },
-                    "anoEntradaMorador": {
-                        "type": "number"
-                    },
-                    "planoId": {
-                        "type": "number"
-                    }
-                }
-            },
-            "Estado": {
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "type": "string"
-                    },
-                    "estado": {
-                        "type": "string"
-                    }
-                }
-            },
-            "Cidade": {
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "type": "number"
-                    },
-                    "cidade": {
-                        "type": "string"
-                    },
-                    "estadoId": {
-                        "type": "string"
-                    }
-                }
-            },
-            "Tipo Plano": {
-                "type": "object",
-                "properties": {
-                    "descricao": {
-                        "type": "string"
-                    },
-                    "codigoTipoPlano": {
-                        "type": "number"
-                    }
-                }
-            },
-            "NovoPlano": {
-                "type": "object",
-                "required": [
-                    "tipoPlano",
-                    "descricao",
-                    "recorrencia",
-                    "numeroMaximoParcelasPagamento",
-                    "valorPlano"
-                ],
-                "properties": {
-                    "tipoPlano": {
-                        "type": "number"
-                    },
-                    "descricao": {
-                        "type": "string"
-                    },
-                    "recorrencia": {
-                        "type": "string"
-                    },
-                    "numeroMaximoParcelasPagamento": {
-                        "type": "number"
-                    },
-                    "valorPlano": {
-                        "type": "number"
-                    }
-                }
-            },
-            "Plano": {
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "type": "number"
-                    },
-                    "tipoPlano": {
-                        "type": "number"
-                    },
-                    "descricao": {
-                        "type": "string"
-                    },
-                    "recorrencia": {
-                        "type": "string"
-                    },
-                    "numeroMaximoParcelasPagamento": {
-                        "type": "number"
-                    },
-                    "valorPlano": {
-                        "type": "number"
-                    },
-                    "ativo": {
-                        "type": "boolean"
-                    }
-                }
-            },
-            "AtualizaPlano": {
-                "type": "object",
-                "required": [
-                    "descricao",
-                    "recorrencia"
-                ],
-                "properties": {
-                    "descricao": {
-                        "type": "string"
-                    },
-                    "recorrencia": {
-                        "type": "string"
-                    }
-                }
-            },
-            "Usuario": {
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "type": "number"
-                    },
-                    "nome": {
-                        "type": "string"
-                    },
-                    "email": {
-                        "type": "string"
-                    },
-                    "senha": {
-                        "type": "string"
-                    },
-                    "moradorId": {
-                        "type": "number"
-                    },
-                    "republicaId": {
-                        "type": "number"
-                    },
-                    "createTime": {
-                        "type": "string"
-                    },
-                    "updateTime": {
-                        "type": "string"
-                    },
-                    "perfilId": {
-                        "type": "number"
-                    }
-                }
-            },
-            "Novo Usuario": {
-                "type": "object",
-                "properties": {
-                    "nome": {
-                        "type": "string"
-                    },
-                    "email": {
-                        "type": "string"
-                    },
-                    "senha": {
-                        "type": "string"
-                    },
-                    "moradorId": {
-                        "type": "number"
-                    },
-                    "perfilId": {
-                        "type": "number"
-                    }
-                }
-            },
-            "Atualiza Usuario": {
-                "type": "object",
-                "properties": {
-                    "nome": {
-                        "type": "string"
-                    }
-                }
-            },
-            "Perfil": {
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "type": "number"
-                    },
-                    "descricao": {
-                        "type": "string"
-                    },
-                    "tipoPerfil": {
-                        "type": "number"
-                    }
-                }
-            },
-            "Atualiza Perfil": {
-                "type": "object",
-                "properties": {
-                    "descricao": {
-                        "type": "string"
-                    }
-                }
-            },
-            "Republica": {
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "type": "number"
-                    },
-                    "nome": {
-                        "type": "string"
-                    },
-                    "anoCriacao": {
-                        "type": "number"
-                    },
-                    "dataPagamentoContas": {
-                        "type": "number"
-                    },
-                    "numero": {
-                        "type": "string"
-                    },
-                    "logradouro": {
-                        "type": "string"
-                    },
-                    "complemento": {
-                        "type": "string"
-                    },
-                    "estadoId": {
-                        "type": "string"
-                    },
-                    "cidadeId": {
-                        "type": "number"
-                    }
-                }
-            },
-            "Atualiza Republica": {
-                "type": "object",
-                "properties": {
-                    "nome": {
-                        "type": "string"
-                    },
-                    "anoCriacao": {
-                        "type": "number"
-                    },
-                    "dataPagamentoContas": {
-                        "type": "number"
-                    }
-                }
-            },
-            "Nova Assinatura": {
-                "type": "object",
-                "properties": {
-                    "planoId": {
-                        "type": "number"
-                    }
-                }
-            },
-            "Assinatura": {
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "type": "number"
-                    },
-                    "validadePlano": {
-                        "type": "string"
-                    },
-                    "dataAssinatura": {
-                        "type": "string"
-                    },
-                    "ativo": {
-                        "type": "boolean"
-                    },
-                    "planoId": {
-                        "type": "number"
-                    },
-                    "republicaId": {
-                        "type": "number"
-                    }
-                }
-            },
-            "Morador": {
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "type": "number"
-                    },
-                    "nome": {
-                        "type": "string"
-                    },
-                    "anoEntrada": {
-                        "type": "number"
-                    },
-                    "ativo": {
-                        "type": "boolean"
-                    },
-                    "republicaId": {
-                        "type": "number"
-                    }
-                }
-            },
-            "Novo Morador": {
-                "type": "object",
-                "properties": {
-                    "nome": {
-                        "type": "string"
-                    },
-                    "anoEntrada": {
-                        "type": "number"
-                    }
-                }
-            },
-            "Atualiza Morador": {
-                "type": "object",
-                "properties": {
-                    "nome": {
-                        "type": "string"
-                    },
-                    "anoEntrada": {
-                        "type": "number"
-                    },
-                    "ativo": {
-                        "type": "boolean"
-                    }
-                }
-            },
-            "Reuniao": {
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "type": "number"
-                    },
-                    "descricao": {
-                        "type": "string"
-                    },
-                    "anotacoes": {
-                        "type": "string"
-                    },
-                    "data": {
-                        "type": "string"
-                    },
-                    "republicaId": {
-                        "type": "number"
-                    }
-                }
-            },
-            "Nova Reuniao": {
-                "type": "object",
-                "properties": {
-                    "descricao": {
-                        "type": "string"
-                    },
-                    "anotacoes": {
-                        "type": "string"
-                    },
-                    "data": {
-                        "type": "string"
-                    }
-                }
-            },
-            "Atualiza Reuniao": {
-                "type": "object",
-                "properties": {
-                    "descricao": {
-                        "type": "string"
-                    },
-                    "anotacoes": {
-                        "type": "string"
-                    },
-                    "data": {
-                        "type": "string"
-                    }
-                }
-            },
-            "Festa": {
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "type": "number"
-                    },
-                    "descricao": {
-                        "type": "string"
-                    },
-                    "data": {
-                        "type": "string"
-                    },
-                    "situacao": {
-                        "type": "number"
-                    },
-                    "valorTotal": {
-                        "type": "number"
-                    },
-                    "republicaId": {
-                        "type": "number"
-                    }
-                }
-            },
-            "Nova Festa": {
-                "type": "object",
-                "properties": {
-                    "descricao": {
-                        "type": "string"
-                    },
-                    "data": {
-                        "type": "string"
-                    }
-                }
-            },
-            "Atualiza Festa": {
-                "type": "object",
-                "properties": {
-                    "descricao": {
-                        "type": "string"
-                    },
-                    "data": {
-                        "type": "string"
-                    },
-                    "situacao": {
-                        "type": "number"
-                    }
-                }
-            },
-            "Participante Festa": {
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "type": "number"
-                    },
-                    "nome": {
-                        "type": "string"
-                    },
-                    "lote": {
-                        "type": "number"
-                    },
-                    "situacao": {
-                        "type": "number"
-                    },
-                    "valor": {
-                        "type": "number"
-                    },
-                    "festaId": {
-                        "type": "number"
-                    },
-                    "republicaId": {
-                        "type": "number"
-                    }
-                }
-            },
-            "Novo Participante Festa": {
-                "type": "object",
-                "properties": {
-                    "nome": {
-                        "type": "string"
-                    },
-                    "lote": {
-                        "type": "number"
-                    },
-                    "situacao": {
-                        "type": "number"
-                    },
-                    "valor": {
-                        "type": "number"
-                    },
-                    "festaId": {
-                        "type": "number"
-                    }
-                }
-            },
-            "Atualiza Participante Festa": {
-                "type": "object",
-                "properties": {
-                    "nome": {
-                        "type": "string"
-                    },
-                    "lote": {
-                        "type": "number"
-                    },
-                    "situacao": {
-                        "type": "number"
-                    },
-                    "valor": {
-                        "type": "number"
-                    }
-                }
-            },
-            "Conta": {
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "type": "number"
-                    },
-                    "descricao": {
-                        "type": "string"
-                    },
-                    "valor": {
-                        "type": "number"
-                    },
-                    "situacao": {
-                        "type": "number"
-                    },
-                    "mesAnoConta": {
-                        "type": "string"
-                    },
-                    "divisaoPorIgualEntreMoradores": {
-                        "type": "boolean"
-                    },
-                    "republicaId": {
-                        "type": "number"
-                    }
-                }
-            },
-            "Nova Conta": {
-                "type": "object",
-                "properties": {
-                    "descricao": {
-                        "type": "string"
-                    },
-                    "valor": {
-                        "type": "number"
-                    },
-                    "mesAnoConta": {
-                        "type": "string"
-                    },
-                    "divisaoPorIgualEntreMoradores": {
-                        "type": "boolean"
-                    }
-                }
-            },
-            "Atualiza Conta": {
-                "type": "object",
-                "properties": {
-                    "descricao": {
-                        "type": "string"
-                    },
-                    "valor": {
-                        "type": "number"
-                    },
-                    "situacao": {
-                        "type": "number"
-                    }
-                }
-            },
-            "Erro": {
-                "type": "object",
-                "properties": {
-                    "error": {
-                        "type": "string"
-                    },
-                    "message": {
-                        "type": "string"
-                    }
-                }
-            }
-        },
+        "schemas": {},
         "securitySchemes": {
             "bearerAuth": {
                 "type": "http",
