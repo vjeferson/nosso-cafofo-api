@@ -4,6 +4,8 @@ export interface IUsuarioAutenticado {
     email: string;
     descricaoPerfil: string;
     tipoPerfil: number;
+    republicaId: number;
+    moradorId: number;
     anoEntradaRepublica: number;
 }
 

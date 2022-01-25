@@ -11,6 +11,10 @@ import { IUsuario } from '../../interfaces/usuario-interface';
 import { Perfil } from '../perfil/perfil-model';
 import { IPerfil } from '../../interfaces/perfil-interface';
 import { IMorador } from '../../interfaces/morador-interface';
+import { Usuario } from '../usuario/usuario-model';
+import { Republica } from '../republica/republica.model';
+import { IRepublica } from '../../interfaces/republica-interface';
+import { Morador } from '../morador/morador-model';
 
 dotenv.config();
 
@@ -22,7 +26,7 @@ export default class AuthService {
             ValidadoresSerive.validaEmail(filters.email);
             ValidadoresSerive.validaSenha(filters.senha);
 
-            const usuario: IUsuario[] = await database('usuario')
+            const usuario: Usuario[] = await database('usuario')
                 .select('usuario.*')
                 .where('usuario.email', filters.email)
                 .limit(1)
@@ -30,14 +34,14 @@ export default class AuthService {
 
             if (Array.isArray(usuario) && usuario.length > 0) {
                 const perfil: IPerfil = await Perfil.query().findById(usuario[0].perfilId);
+                let republica!: IRepublica;
+                if (usuario[0].republicaId) {
+                    republica = await Republica.query().findById(usuario[0].republicaId);
+                }
 
-                let morador!: IMorador[];
+                let morador!: IMorador;
                 if (usuario[0].moradorId) {
-                    morador = await database('morador')
-                        .select('morador.anoEntrada')
-                        .where('morador.id', usuario[0].moradorId)
-                        .limit(1)
-                        .offset(0);
+                    morador = await Morador.query().findById(usuario[0].moradorId);
                 }
 
                 const senhaIsValid = CriptografarSenhasSerive.decrypt(filters.senha, (usuario[0] as IUsuario).senha as string);
@@ -53,7 +57,9 @@ export default class AuthService {
                             email: usuario[0].email,
                             descricaoPerfil: perfil.descricao,
                             tipoPerfil: perfil.tipoPerfil,
-                            anoEntradaRepublica: Array.isArray(morador) && morador.length > 0 ? morador[0].anoEntrada : null
+                            republicaId: republica ? republica.id : null,
+                            moradorId: morador ? morador.id : null,
+                            anoEntradaRepublica: morador ? morador.anoEntrada : null
                         }
                     } as IAuthenticateResult;
                 } else {

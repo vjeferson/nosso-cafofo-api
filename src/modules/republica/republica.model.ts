@@ -1,5 +1,7 @@
 import { Model } from 'objection';
 import { IRepublica } from '../../interfaces/republica-interface';
+import { Cidade } from '../cidade/cidade-model'
+import { Estado } from '../estado/estado.model';
 
 export class Republica extends Model implements IRepublica {
     id?: number;
@@ -32,5 +34,24 @@ export class Republica extends Model implements IRepublica {
             cidadeId: { type: 'integer' }
         }
     }
+
+    static relationMappings = {
+        estado: {
+            relation: Model.HasOneRelation,
+            modelClass: Estado,
+            join: {
+                from: 'republica.estadoId',
+                to: 'estado.id'
+            }
+        },
+        cidade: {
+            relation: Model.HasOneRelation,
+            modelClass: Cidade,
+            join: {
+                from: 'republica.cidadeId',
+                to: 'cidade.id'
+            }
+        }
+    };
 
 }
