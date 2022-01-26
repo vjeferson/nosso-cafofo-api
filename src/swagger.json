@@ -1486,10 +1486,8 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/definitions/Republica"
-                                    }
+                                    "type": "object",
+                                    "$ref": "#/definitions/RetornoRepublicas"
                                 }
                             }
                         }
@@ -3960,6 +3958,20 @@
                     "type": "string"
                 },
                 "cidadeId": {
+                    "type": "number"
+                }
+            }
+        },
+        "RetornoRepublicas": {
+            "type": "object",
+            "properties": {
+                "rows": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Republica"
+                    }
+                },
+                "count": {
                     "type": "number"
                 }
             }
