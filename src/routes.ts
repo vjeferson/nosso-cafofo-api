@@ -122,5 +122,6 @@ routes.delete('/conta/:id', authMiddleware, contaController.delete);
 
 routes.get('/estatisticas/count-assinantes', authMiddleware, authAdministradorNossoCafofoMiddleware, estatisticasController.countAssinantes);
 routes.get('/estatisticas/count-pagamentos', authMiddleware, authAdministradorNossoCafofoMiddleware, estatisticasController.countPagamentos);
+routes.get('/estatisticas/ultima-reuniao', authMiddleware, estatisticasController.ultimaReuniao);
 
 export default routes;
