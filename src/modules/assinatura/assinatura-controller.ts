@@ -123,4 +123,29 @@ export default class AssinaturaController {
         }
     }
 
+
+    async findAssinanteEspecifico(request: Request, response: Response) {
+        try {
+            const assinaturaId = request.params.id;
+            if (isNaN(+assinaturaId) || assinaturaId === null || assinaturaId === undefined) {
+                throw new Error('Id (identificador) informado é inválido!');
+            }
+
+            const query = Assinatura.query().alias('a');
+            query.where('a.id', '=', assinaturaId)
+            const assinante = await query.select(
+                'a.id',
+                'r.nome',
+                'r.anoCriacao',
+                'r.dataPagamentoContas',
+                'p.tipoPlano')
+                .joinRelated('republica', { alias: 'r' })
+                .joinRelated('plano', { alias: 'p' });
+
+            return response.status(200).send(Array.isArray(assinante) && assinante.length > 0 ? assinante[0] : null);
+        } catch (error: any) {
+            return response.status(400).json({ error: 'Erro ao consultar o assinatura', message: error.message });
+        }
+    }
+
 }
