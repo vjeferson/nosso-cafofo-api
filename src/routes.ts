@@ -19,6 +19,7 @@ import PlanoController from './modules/plano/plano-controller';
 import RepublicaController from './modules/republica/republica-controller';
 import ReuniaoController from './modules/reuniao/reuniao-controller';
 import UsuarioController from './modules/usuario/usuario-controller';
+import EstatisticasController from './modules/estatisticas/estatisticas.controller';
 
 const routes = express.Router();
 const pingController = new PingController();
@@ -42,6 +43,7 @@ const festaController = new FestaController();
 const participantesFestaController = new ParticipantesFestaController();
 
 const contaController = new ContaController();
+const estatisticasController = new EstatisticasController();
 
 routes.get('/', pingController.ping);
 
@@ -117,5 +119,8 @@ routes.get('/conta', authMiddleware, contaController.find);
 routes.get('/conta/:id', authMiddleware, contaController.findOne);
 routes.put('/conta/:id', authMiddleware, contaController.upsert);
 routes.delete('/conta/:id', authMiddleware, contaController.delete);
+
+routes.get('/estatisticas/count-assinantes', authMiddleware, authAdministradorNossoCafofoMiddleware, estatisticasController.countAssinantes);
+routes.get('/estatisticas/count-pagamentos', authMiddleware, authAdministradorNossoCafofoMiddleware, estatisticasController.countPagamentos);
 
 export default routes;
