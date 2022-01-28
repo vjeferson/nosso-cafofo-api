@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
+import { IFiltroAssinantes } from '../../interfaces/assinantes-filter-interface';
 import { INovaAssinatura } from '../../interfaces/assinatura-create-interface';
 import { IFiltroAssinatura } from '../../interfaces/assinatura-filter-interface';
+import { LIMIT_DEFAULT, LIMIT_MAXIMO } from '../../utils/consts';
 import TenantsSerive from '../../utils/tenants-service';
 import { Assinatura } from './assinatura-model';
 
@@ -62,6 +64,60 @@ export default class AssinaturaController {
                 republicaId: request.republica.id
             });
             return response.status(201).send(novaAssinatura);
+        } catch (error: any) {
+            return response.status(400).json({ error: 'Erro ao assinar plano', message: error.message });
+        }
+    }
+
+    async findAssinantes(request: Request, response: Response) {
+        try {
+            const filters: IFiltroAssinantes = request.query as any;
+            const limit: number = filters.limit && !isNaN(+filters.limit) && filters.limit < LIMIT_MAXIMO ?
+                +filters.limit : LIMIT_DEFAULT;
+            const offset: number = filters.offset || 0;
+
+            const query = Assinatura.query().alias('a');
+            const queryCount = Assinatura.query().alias('a');
+
+            if (filters.nome) {
+                query.where('r.nome', 'like', `${filters.nome}%`);
+                queryCount.where('r.nome', 'like', `${filters.nome}%`);
+            }
+
+            if (!isNaN(+(filters.anoCriacao as any)) && filters.anoCriacao !== null
+                && filters.anoCriacao !== undefined && (filters.anoCriacao as any) !== '') {
+                query.where('r.anoCriacao', filters.anoCriacao);
+                queryCount.where('r.anoCriacao', filters.anoCriacao);
+            }
+
+            if (!isNaN(+(filters.dataPagamentoContas as any)) && filters.dataPagamentoContas !== null
+                && filters.dataPagamentoContas !== undefined && (filters.dataPagamentoContas as any) !== '') {
+                query.where('r.dataPagamentoContas', filters.dataPagamentoContas);
+                queryCount.where('r.dataPagamentoContas', filters.dataPagamentoContas);
+            }
+
+            if (!isNaN(+(filters.tipoPlanoAtivo as any)) && filters.tipoPlanoAtivo !== null
+                && filters.tipoPlanoAtivo !== undefined && (filters.tipoPlanoAtivo as any) !== '') {
+                query.where('p.tipoPlano', filters.tipoPlanoAtivo);
+                queryCount.where('p.tipoPlano', filters.tipoPlanoAtivo);
+            }
+
+            const assinantes = await query.select(
+                'a.id',
+                'r.nome',
+                'r.anoCriacao',
+                'r.dataPagamentoContas',
+                'p.tipoPlano')
+                .joinRelated('republica', { alias: 'r' })
+                .joinRelated('plano', { alias: 'p' })
+                .limit(limit).offset(offset).orderBy('a.id', 'ASC');
+
+            const count: any[] = await queryCount.select()
+                .joinRelated('republica', { alias: 'r' })
+                .joinRelated('plano', { alias: 'p' })
+                .count();
+
+            return response.status(200).send({ rows: assinantes, count: Array.isArray(count) && count.length > 0 ? +count[0].count : 0 });
         } catch (error: any) {
             return response.status(400).json({ error: 'Erro ao assinar plano', message: error.message });
         }

@@ -98,6 +98,7 @@ routes.put('/plano/desativar/:id', authMiddleware, authAdministradorNossoCafofoM
 routes.get('/assinatura', authMiddleware, assinaturaController.find);
 routes.get('/assinatura/:id', authMiddleware, assinaturaController.findOne);
 routes.post('/assinatura/assinar-plano', authMiddleware, authMoradorAdministradorMiddleware, assinaturaController.assinar);
+routes.get('/assinantes', authMiddleware, authAdministradorNossoCafofoMiddleware, assinaturaController.findAssinantes);
 
 routes.post('/festa', authMiddleware, festaController.create);
 routes.get('/festa', authMiddleware, festaController.find);
