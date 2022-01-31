@@ -77,7 +77,9 @@ export default class AssinaturaController {
             const offset: number = filters.offset || 0;
 
             const query = Assinatura.query().alias('a');
+            query.where('a.ativa', '=', true);
             const queryCount = Assinatura.query().alias('a');
+            queryCount.where('a.ativa', '=', true);
 
             if (filters.nome) {
                 query.where('r.nome', 'like', `${filters.nome}%`);
@@ -132,9 +134,12 @@ export default class AssinaturaController {
             }
 
             const query = Assinatura.query().alias('a');
-            query.where('a.id', '=', assinaturaId)
+            query.where('a.id', '=', assinaturaId);
+            query.where('a.ativa', '=', true);
+
             const assinante = await query.select(
                 'a.id',
+                'a.dataAssinatura',
                 'r.nome',
                 'r.anoCriacao',
                 'r.dataPagamentoContas',

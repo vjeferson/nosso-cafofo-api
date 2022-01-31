@@ -4,4 +4,5 @@ export interface IResultAssinante {
     anoCriacao: number;
     dataPagamentoContas: number;
     tipoPlano: number;
+    dataAssinatura: string;
 }
