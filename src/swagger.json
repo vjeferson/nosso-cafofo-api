@@ -4160,6 +4160,12 @@
                         },
                         "anoEntradaRepublica": {
                             "type": "number"
+                        },
+                        "facebookVinculado": {
+                            "type": "boolean"
+                        },
+                        "googleVinculado": {
+                            "type": "boolean"
                         }
                     }
                 }

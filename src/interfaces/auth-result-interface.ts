@@ -8,6 +8,8 @@ export interface IUsuarioAutenticado {
     moradorId?: number;
     assinaturaId?: number;
     anoEntradaRepublica: number;
+    facebookVinculado: boolean;
+    googleVinculado: boolean;
 }
 
 export interface IAuthenticateResult {
