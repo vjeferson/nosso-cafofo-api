@@ -40,10 +40,16 @@ export default class AssinaturaController {
                 throw new Error('Id (identificador) informado é inválido!');
             }
 
-            const query = Assinatura.query();
+            const query = Assinatura.query().alias('a');
             TenantsSerive.aplicarTenantRepublica(request.perfil.tipoPerfil, query, request.usuario.republicaId);
-            query.where('id', assinaturaId);
-            const assinatura = await query.select();
+            query.where('a.id', assinaturaId);
+            const assinatura = await query.select('a.*',
+                'p.tipoPlano',
+                'p.recorrencia',
+                'p.descricao',
+                'p.numeroMaximoParcelasPagamento',
+                'p.valorPlano'
+            ).joinRelated('plano', { alias: 'p' });
 
             return response.status(200).send(Array.isArray(assinatura) && assinatura.length > 0 ? assinatura[0] : null);
         } catch (error: any) {

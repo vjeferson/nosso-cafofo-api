@@ -4398,13 +4398,28 @@
                 "dataAssinatura": {
                     "type": "string"
                 },
-                "ativo": {
+                "ativa": {
                     "type": "boolean"
                 },
                 "planoId": {
                     "type": "number"
                 },
                 "republicaId": {
+                    "type": "number"
+                },
+                "tipoPlano": {
+                    "type": "number"
+                },
+                "descricao": {
+                    "type": "string"
+                },
+                "recorrencia": {
+                    "type": "string"
+                },
+                "numeroMaximoParcelasPagamento": {
+                    "type": "number"
+                },
+                "valorPlano": {
                     "type": "number"
                 }
             }
