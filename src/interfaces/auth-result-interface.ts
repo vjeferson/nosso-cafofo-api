@@ -5,7 +5,8 @@ export interface IUsuarioAutenticado {
     descricaoPerfil: string;
     tipoPerfil: number;
     republicaId: number;
-    moradorId: number;
+    moradorId?: number;
+    assinaturaId?: number;
     anoEntradaRepublica: number;
 }
 

@@ -15,6 +15,8 @@ import { Usuario } from '../usuario/usuario-model';
 import { Republica } from '../republica/republica.model';
 import { IRepublica } from '../../interfaces/republica-interface';
 import { Morador } from '../morador/morador-model';
+import { Assinatura } from '../assinatura/assinatura-model';
+import { IAssinatura } from '../../interfaces/assinatura-interface';
 
 dotenv.config();
 
@@ -35,8 +37,14 @@ export default class AuthService {
             if (Array.isArray(usuario) && usuario.length > 0) {
                 const perfil: IPerfil = await Perfil.query().findById(usuario[0].perfilId);
                 let republica!: IRepublica;
+                let assinatura!: IAssinatura[];
                 if (usuario[0].republicaId) {
                     republica = await Republica.query().findById(usuario[0].republicaId);
+                    if (republica) {
+                        assinatura = await Assinatura.query().select('a.id').alias('a')
+                            .where('a.ativa', '=', true)
+                            .where('a.republicaId', '=', republica.id);
+                    }
                 }
 
                 let morador!: IMorador;
@@ -59,6 +67,7 @@ export default class AuthService {
                             tipoPerfil: perfil.tipoPerfil,
                             republicaId: republica ? republica.id : null,
                             moradorId: morador ? morador.id : null,
+                            assinaturaId: Array.isArray(assinatura) && assinatura.length > 0 ? assinatura[0].id : null,
                             anoEntradaRepublica: morador ? morador.anoEntrada : null
                         }
                     } as IAuthenticateResult;

@@ -3973,6 +3973,18 @@
                         },
                         "tipoPerfil": {
                             "type": "number"
+                        },
+                        "republicaId": {
+                            "type": "number"
+                        },
+                        "moradorId": {
+                            "type": "number"
+                        },
+                        "assinaturaId": {
+                            "type": "number"
+                        },
+                        "anoEntradaRepublica": {
+                            "type": "number"
                         }
                     }
                 }
