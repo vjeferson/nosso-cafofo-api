@@ -3,6 +3,7 @@ import { ITrocaSenhaAcesso } from '../../interfaces/troca-senha-interface';
 import { INovoUsuario } from '../../interfaces/usuario-create-interface';
 import { IFiltroUsuario } from '../../interfaces/usuario-filter-interface';
 import { IUpdateUsuario } from '../../interfaces/usuario-update-interface';
+import { IVinculaAccountSocialData } from '../../interfaces/vincula-account-social-interface';
 import CriptografarSenhasSerive from '../../utils/criptografar-senhas-service';
 import { EnumTipoPerfil } from '../../utils/enums';
 import TenantsSerive from '../../utils/tenants-service';
@@ -142,6 +143,44 @@ export default class UsuarioController {
             }
         } catch (error: any) {
             return response.status(400).json({ error: 'Erro ao atualizar senha de acesso do usuário', message: error.message });
+        }
+    }
+
+    async vincularAccountSocial(request: Request, response: Response) {
+        try {
+            const body: IVinculaAccountSocialData = request.body;
+
+            const usuarioId = request.params.id;
+            if (isNaN(+usuarioId) || usuarioId === null || usuarioId === undefined) {
+                throw new Error('Id (identificador) informado é inválido!');
+            }
+
+            const query = Usuario.query();
+            TenantsSerive.aplicarTenantRepublica(request.perfil.tipoPerfil, query, request.usuario.republicaId);
+            query.where('id', usuarioId);
+            const usuario = (await query.select())[0] || null;
+
+            if (usuario) {
+                const mapSocialTypeColumn: any = {
+                    'facebook': 'facebookId',
+                    'google': 'googleId'
+                };
+                let objetoAlteracaoUsuario: any = { id: +usuarioId, email: usuario.email }
+                if (!mapSocialTypeColumn[body.socialType]) {
+                    throw new Error('Tipo de conta para vinculação inválida!')
+                }
+
+                objetoAlteracaoUsuario[mapSocialTypeColumn[body.socialType]] = body.id;
+                await Usuario.query().findById(+usuarioId)
+                    .skipUndefined()
+                    .patch(objetoAlteracaoUsuario);
+
+                return response.status(200).send(true);
+            } else {
+                throw new Error('Usuário para o identificador não foi encontrado');
+            }
+        } catch (error: any) {
+            return response.status(400).json({ error: 'Erro ao vincular conta social', message: error.message });
         }
     }
 

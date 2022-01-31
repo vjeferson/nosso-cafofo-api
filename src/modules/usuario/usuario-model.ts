@@ -14,6 +14,8 @@ export class Usuario extends Model implements IUsuario {
     perfilId: number;
     republicaId?: number;
     moradorId?: number;
+    facebookId?: string;
+    googleId?: string;
 
     perfil?: Perfil;
 
