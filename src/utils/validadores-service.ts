@@ -7,7 +7,7 @@ export default class ValidadoresSerive {
             throw new Error('Senha não foi informada!');
         }
         if (senha.length < 8) {
-            throw new Error('A senha deve possuir no minimo de 8 caracteres!');
+            throw new Error('A senha deve possuir o mínimo de 8 caracteres!');
         }
     }
 

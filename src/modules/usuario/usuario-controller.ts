@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { ITrocaSenhaAcesso } from '../../interfaces/troca-senha-interface';
 import { INovoUsuario } from '../../interfaces/usuario-create-interface';
 import { IFiltroUsuario } from '../../interfaces/usuario-filter-interface';
 import { IUpdateUsuario } from '../../interfaces/usuario-update-interface';
@@ -100,6 +101,47 @@ export default class UsuarioController {
             return response.status(201).send(true);
         } catch (error: any) {
             return response.status(400).json({ error: 'Erro ao atualizar usuário', message: error.message });
+        }
+    }
+
+    async trocaSenha(request: Request, response: Response) {
+        try {
+            const data: ITrocaSenhaAcesso = request.body;
+
+            const usuarioId = request.params.id;
+            if (isNaN(+usuarioId) || usuarioId === null || usuarioId === undefined) {
+                throw new Error('Id (identificador) informado é inválido!');
+            }
+
+            const query = Usuario.query();
+            TenantsSerive.aplicarTenantRepublica(request.perfil.tipoPerfil, query, request.usuario.republicaId);
+            query.where('id', usuarioId);
+            const usuario = (await query.select())[0] || null;
+
+            const senhaAtualCriptografada = CriptografarSenhasSerive.encrypt(data.senhaAtual);
+            if (usuario) {
+                if (senhaAtualCriptografada !== usuario.senha) {
+                    throw new Error('Senha atual não confere!');
+                }
+
+                ValidadoresSerive.validaSenha(data.novaSenha);
+
+                if (data.novaSenha !== data.confirmarSenha) {
+                    throw new Error('Nova senha não confere com a confirmação!');
+                }
+
+                const novaSenhaCriptografada = CriptografarSenhasSerive.encrypt(data.novaSenha);
+
+                await Usuario.query().findById(+usuarioId)
+                    .skipUndefined()
+                    .patch({ id: +usuarioId, email: usuario.email, senha: novaSenhaCriptografada });
+
+                return response.status(200).send(true);
+            } else {
+                throw new Error('Usuário para o identificador não foi encontrado');
+            }
+        } catch (error: any) {
+            return response.status(400).json({ error: 'Erro ao atualizar senha de acesso do usuário', message: error.message });
         }
     }
 

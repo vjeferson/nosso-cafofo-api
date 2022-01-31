@@ -77,6 +77,7 @@ routes.get('/usuario', authMiddleware, usuarioController.find);
 routes.get('/usuario/:id', authMiddleware, usuarioController.findOne);
 routes.post('/usuario', authMiddleware, authAdministradoresMiddleware, usuarioController.create);
 routes.put('/usuario/:id', authMiddleware, usuarioController.upsert);
+routes.put('/usuario/:id/troca-senha', authMiddleware, usuarioController.trocaSenha);
 
 routes.get('/morador', authMiddleware, moradorController.find);
 routes.get('/morador/:id', authMiddleware, moradorController.findOne);
