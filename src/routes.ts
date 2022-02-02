@@ -79,6 +79,7 @@ routes.post('/usuario', authMiddleware, authAdministradoresMiddleware, usuarioCo
 routes.put('/usuario/:id', authMiddleware, usuarioController.upsert);
 routes.put('/usuario/:id/troca-senha', authMiddleware, usuarioController.trocaSenha);
 routes.put('/usuario/:id/vincular-account-social', authMiddleware, usuarioController.vincularAccountSocial);
+routes.put('/usuario/:id/desvincular-account-social', authMiddleware, usuarioController.desvincularAccountSocial);
 
 routes.get('/morador', authMiddleware, moradorController.find);
 routes.get('/morador/:id', authMiddleware, moradorController.findOne);
