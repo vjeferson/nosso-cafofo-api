@@ -2339,6 +2339,18 @@
                         "bearerAuth": []
                     }
                 ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Informações do novo morador",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/NovoMorador"
+                        }
+                    }
+                ],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -2349,7 +2361,12 @@
                                 "morador": {
                                     "value": {
                                         "nome": "João de Sabará",
-                                        "anoEntrada": 2021
+                                        "anoEntrada": 2021,
+                                        "realizarCadastroDeUsuario": false,
+                                        "email": null,
+                                        "senha": null,
+                                        "confirmarSenha":null,
+                                        "perfilId":null
                                     }
                                 }
                             }
@@ -2404,6 +2421,24 @@
                     }
                 ],
                 "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit da consulta (para paginação: máximo de 50 registros por consulta)",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Offset da consulta (para paginação)",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    },
                     {
                         "name": "nome",
                         "in": "query",
@@ -2549,6 +2584,16 @@
                         "required": true,
                         "schema": {
                             "type": "number"
+                        }
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Novas informações do Morador",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/AtualizaMorador"
                         }
                     }
                 ],
@@ -4792,17 +4837,42 @@
         },
         "NovoMorador": {
             "type": "object",
+            "required": [
+                "nome",
+                "anoEntrada",
+                "realizarCadastroDeUsuario"
+            ],
             "properties": {
                 "nome": {
                     "type": "string"
                 },
                 "anoEntrada": {
                     "type": "number"
+                },
+                "realizarCadastroDeUsuario": {
+                    "type": "boolean"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "senha": {
+                    "type": "string"
+                },
+                "confirmarSenha": {
+                    "type": "string"
+                },
+                "perfilId": {
+                    "type": "number"
                 }
             }
         },
         "AtualizaMorador": {
             "type": "object",
+            "required": [
+                "nome",
+                "anoEntrada",
+                "ativo"
+            ],
             "properties": {
                 "nome": {
                     "type": "string"
