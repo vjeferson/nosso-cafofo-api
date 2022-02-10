@@ -65,7 +65,7 @@ export default class PlanoController {
                 queryCount.where('ativo', filters.ativo);
             }
 
-            const planos = await query.select().limit(limit).offset(offset).orderBy('id', 'ASC');;
+            const planos = await query.select().limit(limit).offset(offset).orderBy('id', 'ASC');
             const countPlanos: any[] = await queryCount.select().count();
             return response.status(200).send({ rows: planos, count: Array.isArray(countPlanos) && countPlanos.length > 0 ? +countPlanos[0].count : 0 });
         } catch (error: any) {

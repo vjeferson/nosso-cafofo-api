@@ -12,7 +12,7 @@ export default class ValidadoresSerive {
     }
 
     static validaEmail(email: string) {
-        if (!email) {
+        if (!email || email == '') {
             throw new Error('Email não foi informado!');
         }
     }
