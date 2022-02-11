@@ -44,7 +44,7 @@ export default class MoradorController {
             TenantsSerive.aplicarTenantRepublica(request.perfil.tipoPerfil, query, request.usuario.republicaId);
             TenantsSerive.aplicarTenantRepublica(request.perfil.tipoPerfil, queryCount, request.usuario.republicaId);
 
-            const moradores = await query.select().limit(limit).offset(offset).orderBy('id', 'ASC');;
+            const moradores = await query.select().limit(limit).offset(offset).orderBy('id', 'ASC');
             const countPlanos: any[] = await queryCount.select().count();
 
             return response.status(200).send({ rows: moradores, count: Array.isArray(countPlanos) && countPlanos.length > 0 ? +countPlanos[0].count : 0 });

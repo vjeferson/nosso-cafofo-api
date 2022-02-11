@@ -9,6 +9,7 @@ export class Usuario extends Model implements IUsuario {
     nome: string;
     email: string;
     senha?: string;
+    ativo: boolean;
     createTime?: string;
     updateTime?: string;
     perfilId: number;
@@ -16,7 +17,6 @@ export class Usuario extends Model implements IUsuario {
     moradorId?: number;
     facebookId?: string;
     googleId?: string;
-
     perfil?: Perfil;
 
     static get tableName() {
@@ -32,11 +32,12 @@ export class Usuario extends Model implements IUsuario {
             nome: { type: 'string', maxLength: 50 },
             email: { type: 'string', maxLength: 70 },
             senha: { type: ['string', 'null'], maxLength: 70 },
+            ativo: { type: 'boolean', default: true },
             createTime: { type: 'string', format: 'date-time' },
             updateTime: { type: 'string', format: 'date-time' },
             perfilId: { type: 'integer' },
             republicaId: { type: ['integer', 'null'] },
-            moradorId: { type: ['integer', 'null'] }
+            moradorId: { type: ['integer', 'null'] },
         }
     }
 

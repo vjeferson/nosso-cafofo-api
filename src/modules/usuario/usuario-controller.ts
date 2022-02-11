@@ -1,12 +1,15 @@
 import { Request, Response } from 'express';
+import { Transaction } from 'objection';
 import { IDesvinculaAccountSocialData } from '../../interfaces/desvincula-account-social-interface';
 import { ITrocaSenhaAcesso } from '../../interfaces/troca-senha-interface';
 import { INovoUsuario } from '../../interfaces/usuario-create-interface';
 import { IFiltroUsuario } from '../../interfaces/usuario-filter-interface';
 import { IUpdateUsuario } from '../../interfaces/usuario-update-interface';
 import { IVinculaAccountSocialData } from '../../interfaces/vincula-account-social-interface';
+import { LIMIT_DEFAULT, LIMIT_MAXIMO } from '../../utils/consts';
 import CriptografarSenhasSerive from '../../utils/criptografar-senhas-service';
 import { EnumTipoPerfil } from '../../utils/enums';
+import errorHandlerObjection from '../../utils/handler-erros-objection';
 import TenantsSerive from '../../utils/tenants-service';
 import ValidadoresSerive from '../../utils/validadores-service';
 import { Perfil } from '../perfil/perfil-model';
@@ -17,17 +20,29 @@ export default class UsuarioController {
     async find(request: Request, response: Response) {
         try {
             const filters: IFiltroUsuario = request.query as any;
-
+            const limit: number = filters.limit && !isNaN(+filters.limit) && filters.limit < LIMIT_MAXIMO ?
+                +filters.limit : LIMIT_DEFAULT;
+            const offset: number = filters.offset || 0;
             const query = Usuario.query();
+            const queryCount = Usuario.query();
 
             if (filters.nome) {
                 query.where('nome', 'like', `${filters.nome}%`);
+                queryCount.where('nome', 'like', `${filters.nome}%`);
+            }
+
+            if (filters.ativo !== null && filters.ativo !== undefined &&
+                (Boolean(filters.ativo) === true || Boolean(filters.ativo) === false)) {
+                query.where('ativo', filters.ativo);
+                queryCount.where('ativo', filters.ativo);
             }
 
             TenantsSerive.aplicarTenantRepublica(request.perfil.tipoPerfil, query, request.usuario.republicaId);
-            const usuarios = await query.select();
+            TenantsSerive.aplicarTenantRepublica(request.perfil.tipoPerfil, queryCount, request.usuario.republicaId);
+            const usuarios = await query.select().limit(limit).offset(offset).orderBy('id', 'ASC');
+            const count: any[] = await queryCount.select().count();
 
-            return response.status(200).send(usuarios);
+            return response.status(200).send({ rows: usuarios, count: Array.isArray(count) && count.length > 0 ? +count[0].count : 0 });
         } catch (error: any) {
             return response.status(400).json({ error: 'Erro ao consultar usuários', message: error.message });
         }
@@ -220,6 +235,35 @@ export default class UsuarioController {
             }
         } catch (error: any) {
             return response.status(400).json({ error: 'Erro ao desvincular conta social', message: error.message });
+        }
+    }
+
+    async ativacaoOuDesativacao(request: Request, response: Response) {
+        let transaction: Transaction;
+        try {
+            const ativo: boolean = request.path.includes('desativar') ? false : true;
+            const identificadorRegistro = request.params.id;
+            if (isNaN(+identificadorRegistro) || identificadorRegistro === null || identificadorRegistro === undefined) {
+                throw new Error('Id (identificador) informado é inválido!');
+            }
+
+            transaction = await Usuario.startTransaction();
+            const registro = await Usuario.query(transaction).findById(identificadorRegistro);
+            if (!registro) {
+                throw new Error('Não existe um registro para o id (identificador) informado!');
+            }
+
+            await Usuario.query(transaction)
+                .patch({ ativo, id: registro.id, email: registro.email })
+                .where('id', '=', registro.id);
+
+            await transaction.commit();
+            return response.status(200).send(true);
+        } catch (error: any) {
+            if (transaction) {
+                await transaction.rollback();
+            }
+            errorHandlerObjection(error, response, 'Erro ao ativar registro');
         }
     }
 
