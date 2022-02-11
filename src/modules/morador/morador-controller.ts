@@ -3,16 +3,16 @@ import { Transaction } from 'objection';
 import { INovoMorador } from '../../interfaces/morador-create-interface';
 import { IFiltroMorador } from '../../interfaces/morador-filter-interface';
 import { IUpdateMorador } from '../../interfaces/morador-update-interface';
+import { BaseController } from '../../utils/base/base-controler';
 import { LIMIT_DEFAULT, LIMIT_MAXIMO } from '../../utils/consts';
 import CriptografarSenhasSerive from '../../utils/criptografar-senhas-service';
+import errorHandlerObjection from '../../utils/handler-erros-objection';
 import TenantsSerive from '../../utils/tenants-service';
 import ValidadoresSerive from '../../utils/validadores-service';
 import { Usuario } from '../usuario/usuario-model';
 import { Morador } from './morador-model';
 
 export default class MoradorController {
-
-    constructor() { };
 
     async find(request: Request, response: Response) {
         try {
@@ -143,6 +143,35 @@ export default class MoradorController {
             return response.status(200).send(true);
         } catch (error: any) {
             return response.status(400).json({ error: 'Erro ao atualizar morador', message: error.message });
+        }
+    }
+
+    async ativacaoOuDesativacao(request: Request, response: Response) {
+        let transaction: Transaction;
+        try {
+            const ativo: boolean = request.path.includes('desativar') ? false : true;
+            const identificadorRegistro = request.params.id;
+            if (isNaN(+identificadorRegistro) || identificadorRegistro === null || identificadorRegistro === undefined) {
+                throw new Error('Id (identificador) informado é inválido!');
+            }
+
+            transaction = await Morador.startTransaction();
+            const registro = await Morador.query(transaction).findById(identificadorRegistro);
+            if (!registro) {
+                throw new Error('Não existe um registro para o id (identificador) informado!');
+            }
+
+            await Morador.query(transaction)
+                .patch({ ativo })
+                .where('id', '=', registro.id);
+
+            await transaction.commit();
+            return response.status(200).send(true);
+        } catch (error: any) {
+            if (transaction) {
+                await transaction.rollback();
+            }
+            errorHandlerObjection(error, response, 'Erro ao ativar registro');
         }
     }
 

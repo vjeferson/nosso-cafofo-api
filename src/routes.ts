@@ -23,11 +23,9 @@ import EstatisticasController from './modules/estatisticas/estatisticas.controll
 
 const routes = express.Router();
 const pingController = new PingController();
-
 const estadoController = new EstadoController();
 const cidadeController = new CidadeController();
 const perfilController = new PerfilController();
-
 const clienteController = new ClienteController();
 const authController = new AuthController();
 
@@ -35,13 +33,10 @@ const republicaController = new RepublicaController();
 const usuarioController = new UsuarioController();
 const moradorController = new MoradorController();
 const reuniaoController = new ReuniaoController();
-
 const assinaturaController = new AssinaturaController();
 const planoController = new PlanoController();
-
 const festaController = new FestaController();
 const participantesFestaController = new ParticipantesFestaController();
-
 const contaController = new ContaController();
 const estatisticasController = new EstatisticasController();
 
@@ -85,6 +80,8 @@ routes.get('/morador', authMiddleware, moradorController.find);
 routes.get('/morador/:id', authMiddleware, moradorController.findOne);
 routes.post('/morador', authMiddleware, moradorController.create);
 routes.put('/morador/:id', authMiddleware, moradorController.upsert);
+routes.put('/morador/ativar/:id', authMiddleware, moradorController.ativacaoOuDesativacao);
+routes.put('/morador/desativar/:id', authMiddleware, moradorController.ativacaoOuDesativacao);
 
 routes.get('/reuniao', authMiddleware, reuniaoController.find);
 routes.get('/reuniao/:id', authMiddleware, reuniaoController.findOne);
