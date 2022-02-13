@@ -25,8 +25,8 @@ export default class MoradorController {
             const queryCount = Morador.query();
 
             if (filters.nome) {
-                query.where('nome', 'like', `${filters.nome}%`);
-                queryCount.where('nome', 'like', `${filters.nome}%`);
+                query.where('morador.nome', 'like', `${filters.nome}%`);
+                queryCount.where('morador.nome', 'like', `${filters.nome}%`);
             }
 
             if (!isNaN(+(filters.anoEntrada as any)) && filters.anoEntrada !== null && filters.anoEntrada !== undefined
@@ -37,12 +37,20 @@ export default class MoradorController {
 
             if (filters.ativo !== null && filters.ativo !== undefined &&
                 (Boolean(filters.ativo) === true || Boolean(filters.ativo) === false)) {
-                query.where('ativo', filters.ativo);
-                queryCount.where('ativo', filters.ativo);
+                query.where('morador.ativo', filters.ativo);
+                queryCount.where('morador.ativo', filters.ativo);
             }
 
-            TenantsSerive.aplicarTenantRepublica(request.perfil.tipoPerfil, query, request.usuario.republicaId);
-            TenantsSerive.aplicarTenantRepublica(request.perfil.tipoPerfil, queryCount, request.usuario.republicaId);
+            if (filters.apenasMoradoresNaoVinculadosEmUsuario !== null && filters.apenasMoradoresNaoVinculadosEmUsuario !== undefined &&
+                (filters.apenasMoradoresNaoVinculadosEmUsuario === true || (filters as any).apenasMoradoresNaoVinculadosEmUsuario === 'true')) {
+                query.leftJoin('usuario', 'morador.id', 'usuario.moradorId');
+                queryCount.leftJoin('usuario', 'morador.id', 'usuario.moradorId');
+                query.where('usuario.id', null);
+                queryCount.where('usuario.id', null);
+            }
+
+            TenantsSerive.aplicarTenantRepublica(request.perfil.tipoPerfil, query, request.usuario.republicaId, 'morador');
+            TenantsSerive.aplicarTenantRepublica(request.perfil.tipoPerfil, queryCount, request.usuario.republicaId, 'morador');
 
             const moradores = await query.select().limit(limit).offset(offset).orderBy('id', 'ASC');
             const countPlanos: any[] = await queryCount.select().count();

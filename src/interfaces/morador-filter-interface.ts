@@ -4,4 +4,5 @@ export interface IFiltroMorador {
     ativo: boolean;
     limit: number;
     offset: number;
+    apenasMoradoresNaoVinculadosEmUsuario?: boolean;
 }
