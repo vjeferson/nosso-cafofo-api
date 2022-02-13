@@ -1128,6 +1128,18 @@
                         "bearerAuth": []
                     }
                 ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Informações do novo usuário",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/NovoUsuario"
+                        }
+                    }
+                ],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -1140,6 +1152,7 @@
                                         "nome": "João de Barro",
                                         "email": "joao@gmail.com",
                                         "senha": "senha$do$joao",
+                                        "confirmarSenha": "senha$do$joao",
                                         "moradorId": null,
                                         "perfilId": 2
                                     }
@@ -2512,8 +2525,8 @@
                                         "realizarCadastroDeUsuario": false,
                                         "email": null,
                                         "senha": null,
-                                        "confirmarSenha":null,
-                                        "perfilId":null
+                                        "confirmarSenha": null,
+                                        "perfilId": null
                                     }
                                 }
                             }
@@ -2608,6 +2621,15 @@
                         "name": "ativo",
                         "in": "query",
                         "description": "Situação do morador. Morador esta ativo?",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "apenasMoradoresNaoVinculadosEmUsuario",
+                        "in": "query",
+                        "description": "Verificar vinculação de Morador a algum Usuário. Morador já está vinculado a algum usuário?",
                         "required": false,
                         "schema": {
                             "type": "boolean"
@@ -4778,6 +4800,13 @@
         },
         "NovoUsuario": {
             "type": "object",
+            "required": [
+                "nome",
+                "email",
+                "senha",
+                "confirmarSenha",
+                "perfilId"
+            ],
             "properties": {
                 "nome": {
                     "type": "string"
@@ -4786,6 +4815,9 @@
                     "type": "string"
                 },
                 "senha": {
+                    "type": "string"
+                },
+                "confirmarSenha": {
                     "type": "string"
                 },
                 "moradorId": {
@@ -4808,6 +4840,12 @@
                 },
                 "email": {
                     "type": "string"
+                },
+                "perfilId": {
+                    "type": "number"
+                },
+                "ativo": {
+                    "type": "boolean"
                 }
             }
         },

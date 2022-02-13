@@ -1,5 +1,6 @@
 export interface IUpdateUsuario {
-    nome: string;
+    nome: string
     email: string;
-    ativo:boolean;
+    ativo?: boolean;
+    perfilId?: number;
 }

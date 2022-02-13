@@ -72,8 +72,11 @@ export default class UsuarioController {
 
             ValidadoresSerive.validaEmail(data.email);
             ValidadoresSerive.validaSenha(data.senha as string);
-            const senhaEncriptada = CriptografarSenhasSerive.encrypt(data.senha);
+            if (data.senha !== data.confirmarSenha) {
+                throw new Error('Senha não confere com a confirmação!');
+            }
 
+            const senhaEncriptada = CriptografarSenhasSerive.encrypt(data.senha);
             if (request.perfil.tipoPerfil === EnumTipoPerfil.AdministradorNossoCafofo) {
                 data.perfilId = request.perfil.id;
             } else {
@@ -107,9 +110,24 @@ export default class UsuarioController {
 
             const data: IUpdateUsuario = request.body;
 
+            let objetoAtualizacao: any = {
+                id: +usuarioId,
+                nome: data.nome,
+                email: data.email
+            };
+
+            if (data.perfilId !== null && data.perfilId !== undefined && !isNaN(+data.perfilId as any)) {
+                objetoAtualizacao['perfilId'] = data.perfilId;
+            }
+
+            if (data.ativo !== null && data.ativo !== undefined && ((data.ativo === true || (data as any).ativo === 'true')
+                || (data.ativo === false || (data as any).ativo === 'false'))) {
+                objetoAtualizacao['ativo'] = data.ativo;
+            }
+
             const usuarioAtualizado = await Usuario.query().findById(+usuarioId)
                 .skipUndefined()
-                .patch({ id: +usuarioId, nome: data.nome, email: data.email });
+                .patch(objetoAtualizacao);
 
             if (!usuarioAtualizado) {
                 throw new Error('Não existe um usuário para o id (identificador) informado!');
