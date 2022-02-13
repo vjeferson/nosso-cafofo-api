@@ -52,6 +52,7 @@ routes.get('/api-docs.json', (request, response) => {
 
 routes.post('/cliente', clienteController.adicionarCliente);
 routes.post('/authenticate', authController.authenticate);
+routes.post('/authenticate-conta-social', authController.authenticateComContaSocial);
 
 routes.get('/estado', estadoController.find);
 routes.get('/estado/:id', estadoController.findOne);

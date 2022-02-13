@@ -17,43 +17,63 @@ import { IRepublica } from '../../interfaces/republica-interface';
 import { Morador } from '../morador/morador-model';
 import { Assinatura } from '../assinatura/assinatura-model';
 import { IAssinatura } from '../../interfaces/assinatura-interface';
+import { IAuthenticateContaSocialBody } from '../../interfaces/auth-conta-social-body-interface';
 
 dotenv.config();
 
 export default class AuthService {
     constructor() { };
 
-    async authenticate(filters: IAuthenticateBody): Promise<IAuthenticateResult> {
+    async authenticate(filters: IAuthenticateBody | IAuthenticateContaSocialBody, logarUsandoContaSocial: boolean = false): Promise<IAuthenticateResult> {
         try {
-            ValidadoresSerive.validaEmail(filters.email);
-            ValidadoresSerive.validaSenha(filters.senha);
+            let usuario: Usuario[];
+            if (logarUsandoContaSocial) {
+                const mapSocialTypeColumn: any = {
+                    'facebook': 'facebookId',
+                    'google': 'googleId'
+                };
 
-            const usuario: Usuario[] = await database('usuario')
-                .select('usuario.*')
-                .where('usuario.email', filters.email)
-                .limit(1)
-                .offset(0);
+                if (!mapSocialTypeColumn[(filters as IAuthenticateContaSocialBody).socialType]) {
+                    throw new Error('Tipo de Conta Social inválida!');
+                }
+
+                usuario = await database('usuario')
+                    .select('usuario.*')
+                    .where(mapSocialTypeColumn[(filters as IAuthenticateContaSocialBody).socialType], (filters as IAuthenticateContaSocialBody).idContaSocial)
+                    .limit(1)
+                    .offset(0);
+            } else {
+                ValidadoresSerive.validaEmail((filters as IAuthenticateBody).email);
+                ValidadoresSerive.validaSenha((filters as IAuthenticateBody).senha);
+                usuario = await database('usuario')
+                    .select('usuario.*')
+                    .where('usuario.email', (filters as IAuthenticateBody).email)
+                    .limit(1)
+                    .offset(0);
+            }
 
             if (Array.isArray(usuario) && usuario.length > 0) {
-                const perfil: IPerfil = await Perfil.query().findById(usuario[0].perfilId);
-                let republica!: IRepublica;
-                let assinatura!: IAssinatura[];
-                if (usuario[0].republicaId) {
-                    republica = await Republica.query().findById(usuario[0].republicaId);
-                    if (republica) {
-                        assinatura = await Assinatura.query().select('a.id').alias('a')
-                            .where('a.ativa', '=', true)
-                            .where('a.republicaId', '=', republica.id);
+                let usuarioValido: boolean = logarUsandoContaSocial ? true :
+                    CriptografarSenhasSerive.decrypt((filters as IAuthenticateBody).senha, (usuario[0] as IUsuario).senha as string);
+
+                if (usuarioValido) {
+                    const perfil: IPerfil = await Perfil.query().findById(usuario[0].perfilId);
+                    let republica!: IRepublica;
+                    let assinatura!: IAssinatura[];
+                    if (usuario[0].republicaId) {
+                        republica = await Republica.query().findById(usuario[0].republicaId);
+                        if (republica) {
+                            assinatura = await Assinatura.query().select('a.id').alias('a')
+                                .where('a.ativa', '=', true)
+                                .where('a.republicaId', '=', republica.id);
+                        }
                     }
-                }
 
-                let morador!: IMorador;
-                if (usuario[0].moradorId) {
-                    morador = await Morador.query().findById(usuario[0].moradorId);
-                }
+                    let morador!: IMorador;
+                    if (usuario[0].moradorId) {
+                        morador = await Morador.query().findById(usuario[0].moradorId);
+                    }
 
-                const senhaIsValid = CriptografarSenhasSerive.decrypt(filters.senha, (usuario[0] as IUsuario).senha as string);
-                if (senhaIsValid) {
                     const { token, decoded } = this.signToken({ id: usuario[0].id });
 
                     return {
@@ -77,7 +97,8 @@ export default class AuthService {
                     throw new Error('Credenciais inválidas!');
                 }
             } else {
-                throw new Error('Não existe um usuário para o Email informado!');
+                throw new Error(logarUsandoContaSocial ? 'Não existe um usuário vinculado a Conta Social informada!'
+                    : 'Não existe um usuário para o Email informado!');
             }
         } catch (error) {
             throw error;
