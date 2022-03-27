@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import moment from 'moment';
+import { Assinatura } from '../assinatura/assinatura-model';
 
 export default class EstatisticasController {
 
@@ -7,7 +8,13 @@ export default class EstatisticasController {
 
     async countAssinantes(request: Request, response: Response) {
         try {
-            return response.status(200).send({ assinantes: 3 });
+            const queryCount = Assinatura.query().alias('a');
+            queryCount.where('a.ativa', '=', true);
+
+            const count: any[] = await queryCount.select()
+                .count();
+
+            return response.status(200).send({ assinantes: Array.isArray(count) && count.length > 0 ? +count[0].count : 0 });
         } catch (error: any) {
             return response.status(400).json({ error: 'Erro ao consultar estatísticas de número de assinantes', message: error.message });
         }
