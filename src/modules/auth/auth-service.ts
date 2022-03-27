@@ -53,6 +53,9 @@ export default class AuthService {
             }
 
             if (Array.isArray(usuario) && usuario.length > 0) {
+                if (!usuario[0].ativo) {
+                    throw new Error('Usuário foi desativado!');
+                }
                 let usuarioValido: boolean = logarUsandoContaSocial ? true :
                     CriptografarSenhasSerive.decrypt((filters as IAuthenticateBody).senha, (usuario[0] as IUsuario).senha as string);
 
