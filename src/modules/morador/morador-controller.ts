@@ -36,7 +36,10 @@ export default class MoradorController {
             }
 
             if (filters.ativo !== null && filters.ativo !== undefined &&
-                (Boolean(filters.ativo) === true || Boolean(filters.ativo) === false)) {
+                (filters.ativo as any) !== 'todos' &&
+                (filters.ativo === true || (filters as any).ativo === 'true' ||
+                    filters.ativo === false || (filters.ativo as any) === 'false')
+            ) {
                 query.where('morador.ativo', filters.ativo);
                 queryCount.where('morador.ativo', filters.ativo);
             }
