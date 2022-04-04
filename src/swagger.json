@@ -1713,6 +1713,78 @@
                 }
             }
         },
+        "/usuario/verifica-vinculo-account-social": {
+            "post": {
+                "summary": "Verifica Vinculo Conta Social",
+                "description": "Rota para verificação de vinculaçao de algum usuário a conta social informada.",
+                "tags": [
+                    "Usuarios"
+                ],
+                "security": [],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Informações de vinculo",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/InformacaoVerificacaoVinculoAccountSocial"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/definitions/InformacaoVerificacaoVinculoAccountSocial"
+                            },
+                            "examples": {
+                                "exemplo": {
+                                    "value": {
+                                        "socialType": "facebook",
+                                        "id": "fasdfasdfasdfasfc4w543523452345234523452",
+                                        "email": "exemplo@gmail.com"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Erro ao verificar vínculo",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/definitions/Erro"
+                                },
+                                "examples": {
+                                    "erro": {
+                                        "value": {
+                                            "error": "Erro ao verificar vínculo",
+                                            "message": "Tipo de conta para verificação inválida!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "201": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/definitions/RespostaVerificaoVinculoAccountSocial"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/usuario/{id}/vincular-account-social": {
             "put": {
                 "summary": "Vincular Conta Social",
@@ -4954,6 +5026,33 @@
                     "type": "string"
                 },
                 "confirmarSenha": {
+                    "type": "string"
+                }
+            }
+        },
+        "RespostaVerificaoVinculoAccountSocial": {
+            "type": "object",
+            "properties": {
+                "jaVinculado": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "InformacaoVerificacaoVinculoAccountSocial": {
+            "type": "object",
+            "required": [
+                "socialType",
+                "id",
+                "email"
+            ],
+            "properties": {
+                "socialType": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "email": {
                     "type": "string"
                 }
             }

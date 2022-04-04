@@ -5,6 +5,7 @@ import { ITrocaSenhaAcesso } from '../../interfaces/troca-senha-interface';
 import { INovoUsuario } from '../../interfaces/usuario-create-interface';
 import { IFiltroUsuario } from '../../interfaces/usuario-filter-interface';
 import { IUpdateUsuario } from '../../interfaces/usuario-update-interface';
+import { IVerificaVinculoAccountSocialData } from '../../interfaces/verifica-vinculo-account-social-interface';
 import { IVinculaAccountSocialData } from '../../interfaces/vincula-account-social-interface';
 import { LIMIT_DEFAULT, LIMIT_MAXIMO } from '../../utils/consts';
 import CriptografarSenhasSerive from '../../utils/criptografar-senhas-service';
@@ -180,6 +181,33 @@ export default class UsuarioController {
             }
         } catch (error: any) {
             return response.status(400).json({ error: 'Erro ao atualizar senha de acesso do usuário', message: error.message });
+        }
+    }
+
+    async verificaExistenciaCadastroSocial(request: Request, response: Response) {
+        try {
+            const body: IVerificaVinculoAccountSocialData = request.body;
+            const mapSocialTypeColumn: any = {
+                'facebook': 'facebookId',
+                'google': 'googleId'
+            };
+            if (!mapSocialTypeColumn[body.socialType]) {
+                throw new Error('Tipo de conta para verificação inválida!')
+            }
+
+            const usuario = await Usuario.query()
+                .select('id')
+                .where(function() {
+                    this.where(mapSocialTypeColumn[body.socialType], '=', body.id)
+                    .orWhere('email', '=', body.email)
+                })
+            const result = {
+                jaVinculado: Array.isArray(usuario) && usuario.length > 0
+            };
+
+            return response.status(201).send(result);
+        } catch (error: any) {
+            return response.status(400).json({ error: 'Erro ao verificar vínculo', message: error.message });
         }
     }
 

@@ -76,6 +76,7 @@ routes.put('/usuario/:id', authMiddleware, usuarioController.upsert);
 routes.put('/usuario/ativar/:id', authMiddleware, usuarioController.ativacaoOuDesativacao);
 routes.put('/usuario/desativar/:id', authMiddleware, usuarioController.ativacaoOuDesativacao);
 routes.put('/usuario/:id/troca-senha', authMiddleware, usuarioController.trocaSenha);
+routes.post('/usuario/verifica-vinculo-account-social', usuarioController.verificaExistenciaCadastroSocial);
 routes.put('/usuario/:id/vincular-account-social', authMiddleware, usuarioController.vincularAccountSocial);
 routes.put('/usuario/:id/desvincular-account-social', authMiddleware, usuarioController.desvincularAccountSocial);
 
