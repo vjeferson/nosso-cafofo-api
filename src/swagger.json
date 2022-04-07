@@ -1713,6 +1713,220 @@
                 }
             }
         },
+        "/usuario/recuperar-senha": {
+            "post": {
+                "summary": "Recuperar Senha",
+                "description": "Rota para geração do código de recuperação de senha.",
+                "tags": [
+                    "Usuarios"
+                ],
+                "security": [],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Informações de recuperação",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/RecuperarSenha"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/definitions/RecuperarSenha"
+                            },
+                            "examples": {
+                                "usuario": {
+                                    "value": {
+                                        "email": "exemplo@gmail.com"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Erro ao recuperar senha",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/definitions/Erro"
+                                },
+                                "examples": {
+                                    "erro": {
+                                        "value": {
+                                            "error": "Erro ao recuperar senha",
+                                            "message": "Não existe um cadastro de usuário para o e-mail informado!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "boolean",
+                                    "value": true
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/usuario/valida-codigo-recuperacao-senha": {
+            "post": {
+                "summary": "Valida Código Recuperação de Senha",
+                "description": "Rota para validação do código de recuperação de senha.",
+                "tags": [
+                    "Usuarios"
+                ],
+                "security": [],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Informações de validação",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/ValidarCodigoRecuperacaoSenha"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/definitions/ValidarCodigoRecuperacaoSenha"
+                            },
+                            "examples": {
+                                "usuario": {
+                                    "value": {
+                                        "email": "exemplo@gmail.com",
+                                        "codigo": "12345678"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Erro ao validar código de recuperação de senha",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/definitions/Erro"
+                                },
+                                "examples": {
+                                    "erro": {
+                                        "value": {
+                                            "error": "Erro ao validar código de recuperação de senha",
+                                            "message": "Não existe um cadastro de usuário para o e-mail informado!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "boolean",
+                                    "value": true
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/usuario/troca-senha-recuperacao": {
+            "post": {
+                "summary": "Troca de Senha da Recuperação",
+                "description": "Rota para trocar a senha no processo de recuperação da mesma.",
+                "tags": [
+                    "Usuarios"
+                ],
+                "security": [],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Novas informações de senha",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/TrocaSenhaRecuperacao"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/definitions/TrocaSenhaRecuperacao"
+                            },
+                            "examples": {
+                                "usuario": {
+                                    "value": {
+                                        "email": "exemplo@hotmail.com.br",
+                                        "codigo": "teste022",
+                                        "senha": "12345678",
+                                        "confirmaSenha": "12345678"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Erro ao redefinir senha de acesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/definitions/Erro"
+                                },
+                                "examples": {
+                                    "erro": {
+                                        "value": {
+                                            "error": "Erro ao redefinir senha de acesso",
+                                            "message": "Não existe um cadastro de usuário para o e-mail informado!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "boolean",
+                                    "value": true
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/usuario/verifica-vinculo-account-social": {
             "post": {
                 "summary": "Verifica Vinculo Conta Social",
@@ -5026,6 +5240,55 @@
                     "type": "string"
                 },
                 "confirmarSenha": {
+                    "type": "string"
+                }
+            }
+        },
+        "TrocaSenhaRecuperacao": {
+            "type": "object",
+            "required": [
+                "codigo",
+                "email",
+                "senha",
+                "confirmaSenha"
+            ],
+            "properties": {
+                "codigo": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "senha": {
+                    "type": "string"
+                },
+                "confirmaSenha": {
+                    "type": "string"
+                }
+            }
+        },
+        "RecuperarSenha": {
+            "type": "object",
+            "required": [
+                "email"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string"
+                }
+            }
+        },
+        "ValidarCodigoRecuperacaoSenha": {
+            "type": "object",
+            "required": [
+                "email",
+                "codigo"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "codigo": {
                     "type": "string"
                 }
             }

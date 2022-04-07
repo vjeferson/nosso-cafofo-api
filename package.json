@@ -1,6 +1,6 @@
 {
   "name": "nosso-cafofo-api",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Api do Nosso Cafofo para suprir a Aplicação Web e Aplicativos Mobile.",
   "main": "server.js",
   "scripts": {
@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/VJEFERSON/nosso-cafofo-api#readme",
   "dependencies": {
+    "@sendgrid/mail": "^7.6.2",
     "cors": "^2.8.5",
     "crypto-js": "^4.1.1",
     "dotenv": "^10.0.0",

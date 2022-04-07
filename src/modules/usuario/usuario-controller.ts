@@ -1,10 +1,13 @@
 import { Request, Response } from 'express';
 import { Transaction } from 'objection';
 import { IDesvinculaAccountSocialData } from '../../interfaces/desvincula-account-social-interface';
+import { IRecuperaSenhaAcesso } from '../../interfaces/recupera-senha-interface';
 import { ITrocaSenhaAcesso } from '../../interfaces/troca-senha-interface';
+import { ITrocaSenhaAcessoRecuperacao } from '../../interfaces/troca-senha-recuperacao-interface';
 import { INovoUsuario } from '../../interfaces/usuario-create-interface';
 import { IFiltroUsuario } from '../../interfaces/usuario-filter-interface';
 import { IUpdateUsuario } from '../../interfaces/usuario-update-interface';
+import { IValidaRecuperacaoSenhaAcesso } from '../../interfaces/valida-recuperacao-senha-interface';
 import { IVerificaVinculoAccountSocialData } from '../../interfaces/verifica-vinculo-account-social-interface';
 import { IVinculaAccountSocialData } from '../../interfaces/vincula-account-social-interface';
 import { LIMIT_DEFAULT, LIMIT_MAXIMO } from '../../utils/consts';
@@ -12,9 +15,12 @@ import CriptografarSenhasSerive from '../../utils/criptografar-senhas-service';
 import { EnumTipoPerfil } from '../../utils/enums';
 import errorHandlerObjection from '../../utils/handler-erros-objection';
 import TenantsSerive from '../../utils/tenants-service';
+import UtilsSerive from '../../utils/utils-service';
 import ValidadoresSerive from '../../utils/validadores-service';
 import { Perfil } from '../perfil/perfil-model';
 import { Usuario } from './usuario-model';
+const sgMail = require('@sendgrid/mail');
+
 
 export default class UsuarioController {
 
@@ -184,6 +190,127 @@ export default class UsuarioController {
         }
     }
 
+    async trocaSenhaRecuperacao(request: Request, response: Response) {
+        try {
+            const body: ITrocaSenhaAcessoRecuperacao = request.body;
+            ValidadoresSerive.validaEmail(body.email);
+            ValidadoresSerive.validaSenha(body.senha);
+
+            if (body.senha !== body.confirmaSenha) {
+                throw new Error('Nova senha não confere com a confirmação!');
+            }
+
+            const usuario = (await Usuario.query()
+                .select('id', 'recoveryPasswordCode')
+                .where('email', '=', body.email))[0] || null;
+
+            if (usuario) {
+                const usuarioId = Number(usuario.id);
+                const codigoRecuperacaoValido: boolean =
+                    CriptografarSenhasSerive.decrypt(body.codigo, usuario.recoveryPasswordCode || '');
+
+                if (!codigoRecuperacaoValido) {
+                    throw new Error('Código informado é inválido!');
+                }
+
+                const senhaCriptografada =
+                    CriptografarSenhasSerive.encrypt(body.senha);
+
+                await Usuario.query().findById(+usuarioId)
+                    .skipUndefined()
+                    .patch({
+                        id: +usuarioId,
+                        email: body.email,
+                        senha: senhaCriptografada,
+                        recoveryPasswordCode: null
+                    });
+
+                return response.status(200).send(true);
+            } else {
+                throw new Error('Não existe um cadastro de usuário para o e-mail informado!');
+            }
+        } catch (error: any) {
+            return response.status(400).json({ error: 'Erro ao redefinir senha de acesso', message: error.message });
+        }
+    }
+
+    async recuperaSenha(request: Request, response: Response) {
+        try {
+            const body: IRecuperaSenhaAcesso = request.body;
+            ValidadoresSerive.validaEmail(body.email);
+
+            sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+            const usuario = await Usuario.query()
+                .select('id', 'nome')
+                .where('email', '=', body.email);
+
+            if (Array.isArray(usuario) && usuario.length > 0) {
+                const usuarioId = Number(usuario[0].id);
+                const codigoRecuperacaoSenha = UtilsSerive.gerarCodigoRecuperacaoSenha();
+                const codigoRecuperacaoSenhaEncriptado =
+                    CriptografarSenhasSerive.encrypt(codigoRecuperacaoSenha);
+
+                const msg = {
+                    to: body.email,
+                    from: 'valdecijpr@gmail.com',
+                    templateId: 'd-840e157031e14212bbeffffb0985ff1a',
+                    dynamicTemplateData: {
+                        subject: 'Nosso Cafofo - Recuperação de Senha',
+                        name: usuario[0].nome,
+                        codigoRecuperacaoSenha
+                    }
+                };
+
+                await Usuario.query().findById(+usuarioId)
+                    .skipUndefined()
+                    .patch({
+                        id: +usuarioId,
+                        nome: usuario[0].nome,
+                        email: body.email,
+                        recoveryPasswordCode: codigoRecuperacaoSenhaEncriptado
+                    });
+
+                sgMail
+                    .send(msg)
+                    .then(() => {
+                        return response.status(200).send(true);
+                    })
+                    .catch((error: any) => {
+                        throw new Error('Email de recuperação não foi enviado!');
+                    })
+            } else {
+                throw new Error('Não existe um cadastro de usuário para o e-mail informado!');
+            }
+        } catch (error: any) {
+            return response.status(400).json({ error: 'Erro ao recuperar senha', message: error.message });
+        }
+    }
+
+    async verificaCodigoRecuperacaoSenha(request: Request, response: Response) {
+        try {
+            const body: IValidaRecuperacaoSenhaAcesso = request.body;
+            ValidadoresSerive.validaEmail(body.email);
+
+            const usuario = await Usuario.query()
+                .select('recoveryPasswordCode')
+                .where('email', '=', body.email);
+
+            if (Array.isArray(usuario) && usuario.length > 0) {
+                const codigoEncriptado = CriptografarSenhasSerive.encrypt(body.codigo);
+
+                if (codigoEncriptado !== usuario[0].recoveryPasswordCode) {
+                    throw new Error('Código informado é inválido!');
+                }
+
+                return response.status(200).send(true);
+            } else {
+                throw new Error('Não existe um cadastro de usuário para o e-mail informado!');
+            }
+        } catch (error: any) {
+            return response.status(400).json({ error: 'Erro ao validar código de recuperação de senha', message: error.message });
+        }
+    }
+
     async verificaExistenciaCadastroSocial(request: Request, response: Response) {
         try {
             const body: IVerificaVinculoAccountSocialData = request.body;
@@ -197,9 +324,9 @@ export default class UsuarioController {
 
             const usuario = await Usuario.query()
                 .select('id')
-                .where(function() {
+                .where(function () {
                     this.where(mapSocialTypeColumn[body.socialType], '=', body.id)
-                    .orWhere('email', '=', body.email)
+                        .orWhere('email', '=', body.email)
                 })
             const result = {
                 jaVinculado: Array.isArray(usuario) && usuario.length > 0
