@@ -26,8 +26,9 @@ export default class ContaController {
                 queryCount.where('descricao', 'like', `${filters.descricao}%`);
             }
 
-            if (!isNaN(+filters.situacao) && filters.situacao !== null && filters.situacao !== undefined
-                && (filters.situacao as any) !== '') {
+            if (filters.situacao !== null && filters.situacao !== undefined &&
+                (filters.situacao as any) !== 'todos' && !isNaN(+filters.situacao) 
+            ) {
                 query.where('situacao', filters.situacao);
                 queryCount.where('situacao', filters.situacao);
             }
