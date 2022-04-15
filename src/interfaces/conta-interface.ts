@@ -3,7 +3,9 @@ export interface IConta {
     descricao: string;
     valor: number;
     situacao: number;
-    mesAnoConta: string;
+    dataConta: Date | string;
+    mesAnoDivisaoConta: string;
     divisaoPorIgualEntreMoradores?: boolean;
     republicaId: number;
+    moradorId?: number;
 }

@@ -1349,10 +1349,8 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/definitions/Usuario"
-                                    }
+                                    "type": "object",
+                                    "$ref": "#/definitions/RetornoUsuario"
                                 }
                             }
                         }
@@ -3025,10 +3023,8 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/definitions/Morador"
-                                    }
+                                    "type": "object",
+                                    "$ref": "#/definitions/RetornoMorador"
                                 }
                             }
                         }
@@ -4386,6 +4382,18 @@
                         "bearerAuth": []
                     }
                 ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Informações do nova conta",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/NovaConta"
+                        }
+                    }
+                ],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -4397,8 +4405,10 @@
                                     "value": {
                                         "descricao": "Aluguelzin Dezembro",
                                         "valor": 1500,
-                                        "mesAnoConta": "122021",
-                                        "divisaoPorIgualEntreMoradores": true
+                                        "dataConta": "2021-12-07",
+                                        "mesAnoDivisaoConta": "122021",
+                                        "divisaoPorIgualEntreMoradores": true,
+                                        "moradorId": null
                                     }
                                 }
                             }
@@ -4523,10 +4533,8 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/definitions/Conta"
-                                    }
+                                    "type": "object",
+                                    "$ref": "#/definitions/RetornoContas"
                                 }
                             }
                         }
@@ -4613,6 +4621,16 @@
                         "schema": {
                             "type": "number"
                         }
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Novas informações da Conta",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/AtualizaConta"
+                        }
                     }
                 ],
                 "requestBody": {
@@ -4625,8 +4643,10 @@
                                 "conta": {
                                     "value": {
                                         "descricao": "Aluguelzin alterado mais caro",
-                                        "situacao": 0,
-                                        "valor": 1850.50
+                                        "valor": 1850.50,
+                                        "dataConta":"2021-10-07",
+                                        "mesAnoDivisaoConta":"102021",
+                                        "divisaoPorIgualEntreMoradores": true
                                     }
                                 }
                             }
@@ -5174,6 +5194,20 @@
                 }
             }
         },
+        "RetornoUsuario": {
+            "type": "object",
+            "properties": {
+                "rows": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Usuario"
+                    }
+                },
+                "count": {
+                    "type": "number"
+                }
+            }
+        },
         "NovoUsuario": {
             "type": "object",
             "required": [
@@ -5592,6 +5626,20 @@
                 }
             }
         },
+        "RetornoMorador": {
+            "type": "object",
+            "properties": {
+                "rows": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Morador"
+                    }
+                },
+                "count": {
+                    "type": "number"
+                }
+            }
+        },
         "NovoMorador": {
             "type": "object",
             "required": [
@@ -5816,7 +5864,10 @@
                 "situacao": {
                     "type": "number"
                 },
-                "mesAnoConta": {
+                "dataConta": {
+                    "type": "string"
+                },
+                "mesAnoDivisaoConta": {
                     "type": "string"
                 },
                 "divisaoPorIgualEntreMoradores": {
@@ -5824,11 +5875,35 @@
                 },
                 "republicaId": {
                     "type": "number"
+                },
+                "moradorId": {
+                    "type": "number"
+                }
+            }
+        },
+        "RetornoContas": {
+            "type": "object",
+            "properties": {
+                "rows": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Conta"
+                    }
+                },
+                "count": {
+                    "type": "number"
                 }
             }
         },
         "NovaConta": {
             "type": "object",
+            "required": [
+                "descricao",
+                "valor",
+                "dataConta",
+                "mesAnoDivisaoConta",
+                "divisaoPorIgualEntreMoradores"
+            ],
             "properties": {
                 "descricao": {
                     "type": "string"
@@ -5836,16 +5911,29 @@
                 "valor": {
                     "type": "number"
                 },
-                "mesAnoConta": {
+                "dataConta": {
+                    "type": "string"
+                },
+                "mesAnoDivisaoConta": {
                     "type": "string"
                 },
                 "divisaoPorIgualEntreMoradores": {
                     "type": "boolean"
+                },
+                "moradorId": {
+                    "type": "number"
                 }
             }
         },
         "AtualizaConta": {
             "type": "object",
+            "required": [
+                "descricao",
+                "valor",
+                "dataConta",
+                "mesAnoDivisaoConta",
+                "divisaoPorIgualEntreMoradores"
+            ],
             "properties": {
                 "descricao": {
                     "type": "string"
@@ -5853,7 +5941,16 @@
                 "valor": {
                     "type": "number"
                 },
-                "situacao": {
+                "dataConta": {
+                    "type": "string"
+                },
+                "mesAnoDivisaoConta": {
+                    "type": "string"
+                },
+                "divisaoPorIgualEntreMoradores": {
+                    "type": "boolean"
+                },
+                "moradorId": {
                     "type": "number"
                 }
             }

@@ -1,6 +1,7 @@
 import { Model } from 'objection';
 import { IConta } from '../../interfaces/conta-interface';
 import { EnumSituacaoConta } from '../../utils/enums';
+import { Morador } from '../morador/morador-model';
 import { Republica } from '../republica/republica.model';
 
 export class Conta extends Model implements IConta {
@@ -8,9 +9,11 @@ export class Conta extends Model implements IConta {
     descricao: string;
     valor: number;
     situacao: number;
-    mesAnoConta: string;
+    mesAnoDivisaoConta: string;
+    dataConta: Date | string;
     divisaoPorIgualEntreMoradores?: boolean;
     republicaId: number;
+    moradorId?: number;
 
     static get tableName() {
         return 'conta';
@@ -18,16 +21,18 @@ export class Conta extends Model implements IConta {
 
     static jsonSchema = {
         type: 'object',
-        required: ['descricao', 'valor', 'situacao', 'mesAnoConta', 'republicaId'],
+        required: ['descricao', 'valor', 'situacao', 'mesAnoDivisaoConta', 'republicaId'],
 
         properties: {
             id: { type: 'integer' },
             descricao: { type: 'string', minLength: 1, maxLength: 70 },
             valor: { type: 'number' },
             situacao: { type: 'integer' },
-            mesAnoConta: { type: 'string', minLength: 6, maxLength: 6 },
+            dataConta: { type: ['string'], format: 'date' },
+            mesAnoDivisaoConta: { type: 'string', minLength: 6, maxLength: 6 },
             divisaoPorIgualEntreMoradores: { type: 'boolean', default: true },
-            republicaId: { type: 'integer' }
+            republicaId: { type: 'integer' },
+            moradorId: { type: ['integer', 'null'] }
         }
     }
 
@@ -39,12 +44,20 @@ export class Conta extends Model implements IConta {
                 from: 'conta.republicaId',
                 to: 'republica.id'
             }
+        },
+        morador: {
+            relation: Model.HasOneRelation,
+            modelClass: Morador,
+            join: {
+                from: 'conta.moradorId',
+                to: 'morador.id'
+            }
         }
     };
 
     private validaMesAndAnoConta() {
-        const mes = this.mesAnoConta.substring(0, 2);
-        const ano = this.mesAnoConta.substring(2, 6);
+        const mes = this.mesAnoDivisaoConta.substring(0, 2);
+        const ano = this.mesAnoDivisaoConta.substring(2, 6);
 
         if (isNaN(+mes) || +mes < 0 || +mes > 12) {
             throw new Error('Valor do mês inválido! Informe de 01(Janeiro) a 12(Dezembro) para representar os meses!');

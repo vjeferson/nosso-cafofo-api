@@ -14,24 +14,37 @@ export default class ContaController {
     async find(request: Request, response: Response) {
         try {
             const filters: IFiltroConta = request.query as any;
+            const limit: number = filters.limit && !isNaN(+filters.limit) && filters.limit < LIMIT_MAXIMO ?
+                +filters.limit : LIMIT_DEFAULT;
+            const offset: number = filters.offset || 0;
 
             const query = Conta.query();
-            const limit: number = filters.limit && !isNaN(+filters.limit) && filters.limit < LIMIT_MAXIMO ? +filters.limit : LIMIT_DEFAULT;
-            const offset: number = filters.offset || 0;
+            const queryCount = Conta.query();
 
             if (filters.descricao) {
                 query.where('descricao', 'like', `${filters.descricao}%`);
+                queryCount.where('descricao', 'like', `${filters.descricao}%`);
             }
 
             if (!isNaN(+filters.situacao) && filters.situacao !== null && filters.situacao !== undefined
                 && (filters.situacao as any) !== '') {
                 query.where('situacao', filters.situacao);
+                queryCount.where('situacao', filters.situacao);
             }
 
-            TenantsSerive.aplicarTenantRepublica(request.perfil.tipoPerfil, query, request.usuario.republicaId);
-            const contas = await query.select().limit(limit).offset(offset);
+            TenantsSerive.aplicarTenantRepublica(request.perfil.tipoPerfil, query,
+                request.usuario.republicaId);
+            TenantsSerive.aplicarTenantRepublica(request.perfil.tipoPerfil, queryCount,
+                request.usuario.republicaId);
 
-            return response.status(200).send(contas);
+            const contas = await query.select().limit(limit).offset(offset);
+            const count: any[] = await queryCount.select().count();
+
+            return response.status(200).send({
+                rows: contas,
+                count: Array.isArray(count) && count.length > 0 ?
+                    +count[0].count : 0
+            });
         } catch (error: any) {
             return response.status(400).json({ error: 'Erro ao consultar contas', message: error.message });
         }
@@ -61,10 +74,12 @@ export default class ContaController {
             const novaConta = await Conta.query().insert({
                 descricao: dados.descricao,
                 valor: dados.valor,
-                mesAnoConta: dados.mesAnoConta,
+                dataConta: dados.dataConta,
+                mesAnoDivisaoConta: dados.mesAnoDivisaoConta,
                 situacao: EnumSituacaoConta.EmAberto,
                 divisaoPorIgualEntreMoradores: dados.divisaoPorIgualEntreMoradores,
-                republicaId: +request.republica.id
+                republicaId: +request.republica.id,
+                moradorId: dados.moradorId || null
             });
 
             return response.status(201).send(novaConta);
@@ -94,7 +109,10 @@ export default class ContaController {
                     .patch({
                         descricao: dados.descricao,
                         valor: dados.valor,
-                        situacao: dados.situacao
+                        situacao: dados.situacao,
+                        dataConta: dados.dataConta,
+                        mesAnoDivisaoConta: dados.mesAnoDivisaoConta,
+                        moradorId: dados.moradorId || null
                     });
             } else {
                 throw new Error('Não existe uma conta para o id (identificador) informado!');

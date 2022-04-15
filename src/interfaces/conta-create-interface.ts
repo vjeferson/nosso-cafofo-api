@@ -1,6 +1,8 @@
 export interface INovaConta {
     descricao: string;
     valor: number;
-    mesAnoConta: number;
+    mesAnoDivisaoConta: number;
+    dataConta: Date | string;
     divisaoPorIgualEntreMoradores?: boolean;
+    moradorId?: number;
 }

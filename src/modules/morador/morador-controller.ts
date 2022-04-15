@@ -3,7 +3,6 @@ import { Transaction } from 'objection';
 import { INovoMorador } from '../../interfaces/morador-create-interface';
 import { IFiltroMorador } from '../../interfaces/morador-filter-interface';
 import { IUpdateMorador } from '../../interfaces/morador-update-interface';
-import { BaseController } from '../../utils/base/base-controler';
 import { LIMIT_DEFAULT, LIMIT_MAXIMO } from '../../utils/consts';
 import CriptografarSenhasSerive from '../../utils/criptografar-senhas-service';
 import errorHandlerObjection from '../../utils/handler-erros-objection';
@@ -29,7 +28,8 @@ export default class MoradorController {
                 queryCount.where('morador.nome', 'like', `${filters.nome}%`);
             }
 
-            if (!isNaN(+(filters.anoEntrada as any)) && filters.anoEntrada !== null && filters.anoEntrada !== undefined
+            if (!isNaN(+(filters.anoEntrada as any)) && filters.anoEntrada !== null &&
+                filters.anoEntrada !== undefined
                 && (filters.anoEntrada as any) !== '') {
                 query.where('anoEntrada', filters.anoEntrada);
                 queryCount.where('anoEntrada', filters.anoEntrada);
@@ -44,21 +44,29 @@ export default class MoradorController {
                 queryCount.where('morador.ativo', filters.ativo);
             }
 
-            if (filters.apenasMoradoresNaoVinculadosEmUsuario !== null && filters.apenasMoradoresNaoVinculadosEmUsuario !== undefined &&
-                (filters.apenasMoradoresNaoVinculadosEmUsuario === true || (filters as any).apenasMoradoresNaoVinculadosEmUsuario === 'true')) {
+            if (filters.apenasMoradoresNaoVinculadosEmUsuario !== null &&
+                filters.apenasMoradoresNaoVinculadosEmUsuario !== undefined &&
+                (filters.apenasMoradoresNaoVinculadosEmUsuario === true ||
+                    (filters as any).apenasMoradoresNaoVinculadosEmUsuario === 'true')) {
                 query.leftJoin('usuario', 'morador.id', 'usuario.moradorId');
                 queryCount.leftJoin('usuario', 'morador.id', 'usuario.moradorId');
                 query.where('usuario.id', null);
                 queryCount.where('usuario.id', null);
             }
 
-            TenantsSerive.aplicarTenantRepublica(request.perfil.tipoPerfil, query, request.usuario.republicaId, 'morador');
-            TenantsSerive.aplicarTenantRepublica(request.perfil.tipoPerfil, queryCount, request.usuario.republicaId, 'morador');
+            TenantsSerive.aplicarTenantRepublica(request.perfil.tipoPerfil, query,
+                request.usuario.republicaId, 'morador');
+            TenantsSerive.aplicarTenantRepublica(request.perfil.tipoPerfil, queryCount,
+                request.usuario.republicaId, 'morador');
 
             const moradores = await query.select().limit(limit).offset(offset).orderBy('id', 'ASC');
             const countPlanos: any[] = await queryCount.select().count();
 
-            return response.status(200).send({ rows: moradores, count: Array.isArray(countPlanos) && countPlanos.length > 0 ? +countPlanos[0].count : 0 });
+            return response.status(200).send({
+                rows: moradores,
+                count: Array.isArray(countPlanos)
+                    && countPlanos.length > 0 ? +countPlanos[0].count : 0
+            });
         } catch (error: any) {
             return response.status(400).json({ error: 'Erro ao consultar moradores', message: error.message });
         }
