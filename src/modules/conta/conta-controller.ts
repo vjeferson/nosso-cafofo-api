@@ -113,6 +113,7 @@ export default class ContaController {
                         situacao: dados.situacao,
                         dataConta: dados.dataConta,
                         mesAnoDivisaoConta: dados.mesAnoDivisaoConta,
+                        divisaoPorIgualEntreMoradores: dados.divisaoPorIgualEntreMoradores,
                         moradorId: dados.moradorId || null
                     });
             } else {
