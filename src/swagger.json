@@ -3393,6 +3393,24 @@
                         "schema": {
                             "type": "string"
                         }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit da consulta (para paginação: máximo de 50 registros padrão por consulta)",
+                        "required": false,
+                        "schema": {
+                            "type": "number"
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Offset da consulta (para paginação: padrão 0)",
+                        "required": false,
+                        "schema": {
+                            "type": "number"
+                        }
                     }
                 ],
                 "responses": {
@@ -3423,10 +3441,8 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/definitions/Reuniao"
-                                    }
+                                    "type": "object",
+                                    "$ref": "#/definitions/RetornoReuniao"
                                 }
                             }
                         }
@@ -5710,6 +5726,20 @@
                 }
             }
         },
+        "RetornoReuniao": {
+            "type": "object",
+            "properties": {
+                "rows": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Reuniao"
+                    }
+                },
+                "count": {
+                    "type": "number"
+                }
+            }
+        },
         "NovaReuniao": {
             "type": "object",
             "properties": {
@@ -5955,17 +5985,6 @@
                 }
             }
         },
-        "Erro": {
-            "type": "object",
-            "properties": {
-                "error": {
-                    "type": "string"
-                },
-                "message": {
-                    "type": "string"
-                }
-            }
-        },
         "RetornoEstatisticaNumeroAssinantes": {
             "type": "object",
             "properties": {
@@ -5986,6 +6005,17 @@
             "type": "object",
             "properties": {
                 "data": {
+                    "type": "string"
+                }
+            }
+        },
+        "Erro": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string"
+                },
+                "message": {
                     "type": "string"
                 }
             }

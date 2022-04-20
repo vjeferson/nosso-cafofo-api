@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { INovaReuniao } from '../../interfaces/reuniao-create-interface';
 import { IFiltroReuniao } from '../../interfaces/reuniao-filter-interface';
 import { IUpdateReuniao } from '../../interfaces/reuniao-update-interface';
+import { LIMIT_DEFAULT, LIMIT_MAXIMO } from '../../utils/consts';
 import TenantsSerive from '../../utils/tenants-service';
 import { Reuniao } from './reuniao-model';
 
@@ -12,20 +13,36 @@ export default class ReuniaoController {
     async find(request: Request, response: Response) {
         try {
             const filters: IFiltroReuniao = request.query as any;
+            const limit: number = filters.limit && !isNaN(+filters.limit) && filters.limit < LIMIT_MAXIMO ?
+                +filters.limit : LIMIT_DEFAULT;
+            const offset: number = filters.offset || 0;
 
             const query = Reuniao.query();
+            const queryCount = Reuniao.query();
 
             if (filters.descricao) {
                 query.where('descricao', 'like', `${filters.descricao}%`);
+                queryCount.where('descricao', 'like', `${filters.descricao}%`);
             }
 
             if (filters.data) {
                 query.where('data', filters.data);
+                queryCount.where('data', filters.data);
             }
 
-            TenantsSerive.aplicarTenantRepublica(request.perfil.tipoPerfil, query, request.usuario.republicaId);
-            const reunioes = await query.select();
-            return response.status(200).send(reunioes);
+            TenantsSerive.aplicarTenantRepublica(request.perfil.tipoPerfil, query,
+                request.usuario.republicaId);
+            TenantsSerive.aplicarTenantRepublica(request.perfil.tipoPerfil, queryCount,
+                request.usuario.republicaId);
+
+            const reunioes = await query.select().limit(limit).offset(offset);
+            const count: any[] = await queryCount.select().count();
+
+            return response.status(200).send({
+                rows: reunioes,
+                count: Array.isArray(count) && count.length > 0 ?
+                    +count[0].count : 0
+            });
         } catch (error: any) {
             return response.status(400).json({ error: 'Erro ao consultar reuniões', message: error.message });
         }
