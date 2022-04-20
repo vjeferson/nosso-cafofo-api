@@ -37,12 +37,4 @@ export class Reuniao extends Model implements IReuniao {
         }
     };
 
-    $beforeInsert() {
-        this.data = new Date(this.data).toISOString();
-    }
-
-    $beforeUpdate() {
-        this.data = new Date(this.data).toISOString();
-    }
-
 }

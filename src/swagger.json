@@ -3310,6 +3310,18 @@
                         "bearerAuth": []
                     }
                 ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Informações do nova reunião",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/NovaReuniao"
+                        }
+                    }
+                ],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -5742,6 +5754,10 @@
         },
         "NovaReuniao": {
             "type": "object",
+            "required": [
+                "descricao",
+                "data"
+            ],
             "properties": {
                 "descricao": {
                     "type": "string"
