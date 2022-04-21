@@ -26,8 +26,12 @@ export default class ReuniaoController {
             }
 
             if (filters.data) {
-                query.where('data', filters.data);
-                queryCount.where('data', filters.data);
+                filters.data = Array.isArray(filters.data) ? filters.data :
+                    (filters.data as string).split(',');
+                query.whereBetween('data', [new Date(filters.data[0]),
+                new Date(filters.data[1])] as any);
+                queryCount.whereBetween('data', [new Date(filters.data[0]),
+                new Date(filters.data[1])] as any);
             }
 
             TenantsSerive.aplicarTenantRepublica(request.perfil.tipoPerfil, query,
@@ -35,7 +39,7 @@ export default class ReuniaoController {
             TenantsSerive.aplicarTenantRepublica(request.perfil.tipoPerfil, queryCount,
                 request.usuario.republicaId);
 
-            const reunioes = await query.select().limit(limit).offset(offset);
+            const reunioes = await query.select().limit(limit).offset(offset).orderBy('id');;
             const count: any[] = await queryCount.select().count();
 
             return response.status(200).send({

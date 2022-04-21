@@ -3403,8 +3403,14 @@
                         "description": "Data e hora da reunião",
                         "required": false,
                         "schema": {
-                            "type": "string"
-                        }
+                            "type": "array",
+                            "items":{
+                                "type": "string",
+                                "minItems": 2
+                            }
+                        },
+                        "style": "form",
+                        "explode": "false"
                     },
                     {
                         "name": "limit",
@@ -3540,6 +3546,16 @@
                         "required": true,
                         "schema": {
                             "type": "number"
+                        }
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Novas informações da registro",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/AtualizaReuniao"
                         }
                     }
                 ],

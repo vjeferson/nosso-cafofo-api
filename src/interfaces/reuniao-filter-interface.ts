@@ -1,6 +1,6 @@
 export interface IFiltroReuniao {
     descricao: string;
-    data: Date;
+    data: Array<string>;
     limit: number;
     offset: number;
 }
