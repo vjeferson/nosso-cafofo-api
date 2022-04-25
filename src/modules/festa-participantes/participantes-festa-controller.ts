@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { INovoParticipantesFesta } from '../../interfaces/participantes-festa-create-interface';
 import { IFiltroParticipantesFesta } from '../../interfaces/participantes-festa-filter-interface';
 import { IUpdateParticipantesFesta } from '../../interfaces/participantes-festa-update-interface';
+import { LIMIT_DEFAULT, LIMIT_MAXIMO } from '../../utils/consts';
 import errorHandlerObjection from '../../utils/handler-erros-objection';
 import TenantsSerive from '../../utils/tenants-service';
 import { ParticipantesFesta } from './participantes-festa-model';
@@ -14,33 +15,51 @@ export default class ParticipantesFestaController {
         try {
             const filters: IFiltroParticipantesFesta = request.query as any;
             const festaId = request.params.festaId;
+            const limit: number = filters.limit && !isNaN(+filters.limit) && filters.limit < LIMIT_MAXIMO ?
+                +filters.limit : LIMIT_DEFAULT;
+            const offset: number = filters.offset || 0;
 
             const query = ParticipantesFesta.query();
+            const queryCount = ParticipantesFesta.query();
 
             if (!isNaN(+(festaId as any)) && festaId !== null && festaId !== undefined
                 && (festaId as any) !== '') {
                 query.where('festaId', festaId);
+                queryCount.where('festaId', festaId);
             } else {
                 throw new Error('Identificador(id) da festa não foi informado!');
             }
 
             if (filters.nome) {
                 query.where('nome', 'like', `${filters.nome}%`);
+                queryCount.where('nome', 'like', `${filters.nome}%`);
             }
 
             if (!isNaN(+filters.situacao) && filters.situacao !== null && filters.situacao !== undefined
                 && (filters.situacao as any) !== '') {
                 query.where('situacao', filters.situacao);
+                queryCount.where('situacao', filters.situacao);
             }
 
             if (!isNaN(+filters.lote) && filters.lote !== null && filters.lote !== undefined
                 && (filters.lote as any) !== '') {
                 query.where('lote', filters.lote);
+                queryCount.where('lote', filters.lote);
             }
 
-            TenantsSerive.aplicarTenantRepublica(request.perfil.tipoPerfil, query, request.usuario.republicaId);
-            const participantes = await query.select();
-            return response.status(200).send(participantes);
+            TenantsSerive.aplicarTenantRepublica(request.perfil.tipoPerfil, query,
+                request.usuario.republicaId);
+            TenantsSerive.aplicarTenantRepublica(request.perfil.tipoPerfil, queryCount,
+                request.usuario.republicaId);
+
+            const participantes = await query.select().limit(limit).offset(offset).orderBy('id');
+            const count: any[] = await queryCount.select().count();
+
+            return response.status(200).send({
+                rows: participantes,
+                count: Array.isArray(count) && count.length > 0 ?
+                    +count[0].count : 0
+            });
         } catch (error: any) {
             return response.status(400).json({ error: 'Erro ao consultar participantes', message: error.message });
         }

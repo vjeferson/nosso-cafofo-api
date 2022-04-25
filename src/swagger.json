@@ -3777,6 +3777,24 @@
                         "schema": {
                             "type": "number"
                         }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit da consulta (para paginação: máximo de 50 registros padrão por consulta)",
+                        "required": false,
+                        "schema": {
+                            "type": "number"
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Offset da consulta (para paginação: padrão 0)",
+                        "required": false,
+                        "schema": {
+                            "type": "number"
+                        }
                     }
                 ],
                 "responses": {
@@ -3809,7 +3827,7 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/definitions/Festa"
+                                        "$ref": "#/definitions/RetornoFestas"
                                     }
                                 }
                             }
@@ -4140,6 +4158,24 @@
                         "schema": {
                             "type": "number"
                         }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit da consulta (para paginação: máximo de 50 registros padrão por consulta)",
+                        "required": false,
+                        "schema": {
+                            "type": "number"
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Offset da consulta (para paginação: padrão 0)",
+                        "required": false,
+                        "schema": {
+                            "type": "number"
+                        }
                     }
                 ],
                 "responses": {
@@ -4172,7 +4208,7 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/definitions/ParticipanteFesta"
+                                        "$ref": "#/definitions/RetornoParticipantesFesta"
                                     }
                                 }
                             }
@@ -5823,6 +5859,20 @@
                 }
             }
         },
+        "RetornoFestas": {
+            "type": "object",
+            "properties": {
+                "rows": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Festa"
+                    }
+                },
+                "count": {
+                    "type": "number"
+                }
+            }
+        },
         "NovaFesta": {
             "type": "object",
             "properties": {
@@ -5870,6 +5920,20 @@
                     "type": "number"
                 },
                 "republicaId": {
+                    "type": "number"
+                }
+            }
+        },
+        "RetornoParticipantesFesta": {
+            "type": "object",
+            "properties": {
+                "rows": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ParticipanteFesta"
+                    }
+                },
+                "count": {
                     "type": "number"
                 }
             }

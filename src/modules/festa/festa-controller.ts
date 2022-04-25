@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { INovaFesta } from '../../interfaces/festa-create-interface';
 import { IFiltroFesta } from '../../interfaces/festa-filter-interface';
 import { IUpdateFesta } from '../../interfaces/festa-update-interface';
+import { LIMIT_DEFAULT, LIMIT_MAXIMO } from '../../utils/consts';
 import TenantsSerive from '../../utils/tenants-service';
 import { Festa } from './festa-model';
 
@@ -12,21 +13,37 @@ export default class FestaController {
     async find(request: Request, response: Response) {
         try {
             const filters: IFiltroFesta = request.query as any;
+            const limit: number = filters.limit && !isNaN(+filters.limit) && filters.limit < LIMIT_MAXIMO ?
+                +filters.limit : LIMIT_DEFAULT;
+            const offset: number = filters.offset || 0;
 
             const query = Festa.query();
+            const queryCount = Festa.query();
 
             if (filters.descricao) {
                 query.where('descricao', 'like', `${filters.descricao}%`);
+                queryCount.where('descricao', 'like', `${filters.descricao}%`);
             }
 
             if (!isNaN(+filters.situacao) && filters.situacao !== null && filters.situacao !== undefined
                 && (filters.situacao as any) !== '') {
                 query.where('situacao', filters.situacao);
+                queryCount.where('situacao', filters.situacao);
             }
 
-            TenantsSerive.aplicarTenantRepublica(request.perfil.tipoPerfil, query, request.usuario.republicaId);
-            const festas = await query.select();
-            return response.status(200).send(festas);
+            TenantsSerive.aplicarTenantRepublica(request.perfil.tipoPerfil, query,
+                request.usuario.republicaId);
+            TenantsSerive.aplicarTenantRepublica(request.perfil.tipoPerfil, queryCount,
+                request.usuario.republicaId);
+
+            const festas = await query.select().limit(limit).offset(offset).orderBy('id');
+            const count: any[] = await queryCount.select().count();
+
+            return response.status(200).send({
+                rows: festas,
+                count: Array.isArray(count) && count.length > 0 ?
+                    +count[0].count : 0
+            });
         } catch (error: any) {
             return response.status(400).json({ error: 'Erro ao consultar festas', message: error.message });
         }

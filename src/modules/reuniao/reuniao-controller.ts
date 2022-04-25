@@ -39,7 +39,7 @@ export default class ReuniaoController {
             TenantsSerive.aplicarTenantRepublica(request.perfil.tipoPerfil, queryCount,
                 request.usuario.republicaId);
 
-            const reunioes = await query.select().limit(limit).offset(offset).orderBy('id');;
+            const reunioes = await query.select().limit(limit).offset(offset).orderBy('id');
             const count: any[] = await queryCount.select().count();
 
             return response.status(200).send({

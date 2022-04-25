@@ -3,4 +3,6 @@ export interface IFiltroParticipantesFesta {
     lote: number;
     situacao: number;
     festaId: number;
+    limit: number;
+    offset: number;
 }
