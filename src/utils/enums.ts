@@ -25,7 +25,8 @@ export enum EnumSituacaoValoresMensaisMorador {
 
 export enum EnumSituacaoFesta {
     EmAberto,
-    Finalizada
+    Finalizada,
+    Cancelada = 99
 }
 
 export enum EnumSituacaoPagamentoParticipanteFesta {

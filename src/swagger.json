@@ -3695,6 +3695,18 @@
                         "bearerAuth": []
                     }
                 ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Informações da nova festa",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/NovaFesta"
+                        }
+                    }
+                ],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -5875,6 +5887,10 @@
         },
         "NovaFesta": {
             "type": "object",
+            "required": [
+                "descricao",
+                "data"
+            ],
             "properties": {
                 "descricao": {
                     "type": "string"
