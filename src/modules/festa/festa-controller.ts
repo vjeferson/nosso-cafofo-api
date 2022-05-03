@@ -31,6 +31,15 @@ export default class FestaController {
                 queryCount.where('situacao', filters.situacao);
             }
 
+            if (filters.data) {
+                filters.data = Array.isArray(filters.data) ? filters.data :
+                    (filters.data as string).split(',');
+                query.whereBetween('data', [new Date(filters.data[0]),
+                new Date(filters.data[1])] as any);
+                queryCount.whereBetween('data', [new Date(filters.data[0]),
+                new Date(filters.data[1])] as any);
+            }
+
             TenantsSerive.aplicarTenantRepublica(request.perfil.tipoPerfil, query,
                 request.usuario.republicaId);
             TenantsSerive.aplicarTenantRepublica(request.perfil.tipoPerfil, queryCount,

@@ -3791,6 +3791,21 @@
                         }
                     },
                     {
+                        "name": "data",
+                        "in": "query",
+                        "description": "Data e hora da festa",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items":{
+                                "type": "string",
+                                "minItems": 2
+                            }
+                        },
+                        "style": "form",
+                        "explode": "false"
+                    },
+                    {
                         "name": "limit",
                         "in": "query",
                         "description": "Limit da consulta (para paginação: máximo de 50 registros padrão por consulta)",
