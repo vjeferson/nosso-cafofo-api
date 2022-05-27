@@ -3942,6 +3942,16 @@
                         "schema": {
                             "type": "number"
                         }
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Novas informações da Festa",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/AtualizaFesta"
+                        }
                     }
                 ],
                 "requestBody": {
@@ -3954,7 +3964,6 @@
                                 "festa": {
                                     "value": {
                                         "descricao": "Nova Festinha Dezembro Testa Alteracao",
-                                        "situacao": 0,
                                         "data": "2021-12-20T16:00:00.000Z"
                                     }
                                 }
@@ -5917,15 +5926,16 @@
         },
         "AtualizaFesta": {
             "type": "object",
+            "required":[
+                "descricao",
+                "data"
+            ],
             "properties": {
                 "descricao": {
                     "type": "string"
                 },
                 "data": {
                     "type": "string"
-                },
-                "situacao": {
-                    "type": "number"
                 }
             }
         },

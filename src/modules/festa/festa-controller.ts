@@ -111,8 +111,7 @@ export default class FestaController {
                     .findById(festa.id as number)
                     .patch({
                         descricao: dados.descricao,
-                        data: dados.data,
-                        situacao: dados.situacao
+                        data: dados.data
                     });
             } else {
                 throw new Error('Não existe uma festa para o id (identificador) informado!');
