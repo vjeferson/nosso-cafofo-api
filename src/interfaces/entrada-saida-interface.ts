@@ -1,5 +1,6 @@
 export interface IEntradaSaida {
     id?: number;
+    descricao:string;
     tipoMovimento: number;
     valorMovimentado: number;
     dataMovimento: Date | String;

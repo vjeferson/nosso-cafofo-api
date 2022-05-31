@@ -6,6 +6,7 @@ import { Republica } from '../republica/republica.model';
 
 export class EntradaSaida extends Model implements IEntradaSaida {
     id?: number;
+    descricao: string;
     tipoMovimento: number;
     valorMovimentado: number;
     dataMovimento: Date | String;
@@ -32,6 +33,7 @@ export class EntradaSaida extends Model implements IEntradaSaida {
 
         properties: {
             id: { type: 'integer' },
+            descricao: { type: 'string', minLength: 1, maxLength: 50 },
             tipoMovimento: { type: 'integer' },
             valorMovimentado: { type: 'number' },
             dataMovimento: { type: 'string', format: 'date' },
