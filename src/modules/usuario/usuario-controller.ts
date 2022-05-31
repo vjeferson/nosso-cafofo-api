@@ -443,4 +443,12 @@ export default class UsuarioController {
         }
     }
 
+    async trocaImagemProfile(request: Request, response: Response) {
+        try {
+            return response.status(200).send('https://nosso-cafofo-public.s3.sa-east-1.amazonaws.com/images/profile/profile-luffy.jpg');
+        } catch (error: any) {
+            return response.status(400).json({ error: 'Erro ao redefinir senha de acesso', message: error.message });
+        }
+    }
+
 }

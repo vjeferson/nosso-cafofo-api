@@ -2170,6 +2170,84 @@
                 }
             }
         },
+        "/usuario/troca-imagem-profile": {
+            "post": {
+                "summary": "Troca de Imagem de Profile",
+                "description": "Rota para trocar a imagem de Profile (Perfil).",
+                "tags": [
+                    "Usuarios"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Imagem",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "profileImage": {
+                                    "type": "string",
+                                    "format": "binary"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "profileImage": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Erro ao trocar imagem de profile",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/definitions/Erro"
+                                },
+                                "examples": {
+                                    "erro": {
+                                        "value": {
+                                            "error": "Erro ao trocar imagem de profile",
+                                            "message": "Tamanho não suportado!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "string",
+                                    "value": "https://nosso-cafofo-public.s3.sa-east-1.amazonaws.com/images/profile/profile-luffy.jpg"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/republica": {
             "get": {
                 "summary": "Consulta Repúblicas",
