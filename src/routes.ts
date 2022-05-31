@@ -21,8 +21,8 @@ import ReuniaoController from './modules/reuniao/reuniao-controller';
 import UsuarioController from './modules/usuario/usuario-controller';
 import EstatisticasController from './modules/estatisticas/estatisticas.controller';
 
-const multer  = require('multer');
-const upload = multer({ dest: 'uploads/' });
+import multer from 'multer';
+import {uploadAvatar} from './middlewares/uploadAvatarMiddleware';
 
 const routes = express.Router();
 const pingController = new PingController();
@@ -86,7 +86,7 @@ routes.post('/usuario/verifica-vinculo-account-social', usuarioController.verifi
 routes.put('/usuario/:id/vincular-account-social', authMiddleware, usuarioController.vincularAccountSocial);
 routes.put('/usuario/:id/desvincular-account-social', authMiddleware, usuarioController.desvincularAccountSocial);
 routes.post('/usuario/troca-imagem-profile', authMiddleware,
-upload.fields([{name: "profileImage", maxCount: 1}]), usuarioController.trocaImagemProfile);
+    multer(uploadAvatar.getConfig).single("avatar"), usuarioController.trocaImagemProfile);
 
 routes.get('/morador', authMiddleware, moradorController.find);
 routes.get('/morador/:id', authMiddleware, moradorController.findOne);

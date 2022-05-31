@@ -2182,30 +2182,31 @@
                         "bearerAuth": []
                     }
                 ],
+                "consumes": "multipart/form-data",
                 "parameters": [
                     {
                         "name": "body",
-                        "in": "body",
-                        "description": "Imagem",
+                        "in": "formData",
                         "required": true,
+                        "description": "Arquivo de imagem",
                         "schema": {
                             "type": "object",
                             "properties": {
-                                "profileImage": {
-                                    "type": "string",
-                                    "format": "binary"
+                                "avatar": {
+                                    "type": "file"
                                 }
                             }
                         }
                     }
                 ],
                 "requestBody": {
+                    "required": true,
                     "content": {
                         "multipart/form-data": {
                             "schema": {
                                 "type": "object",
                                 "properties": {
-                                    "profileImage": {
+                                    "avatar": {
                                         "type": "string",
                                         "format": "binary"
                                     }

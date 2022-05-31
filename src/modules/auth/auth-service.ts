@@ -93,7 +93,8 @@ export default class AuthService {
                             assinaturaId: Array.isArray(assinatura) && assinatura.length > 0 ? assinatura[0].id : null,
                             anoEntradaRepublica: morador ? morador.anoEntrada : null,
                             facebookVinculado: usuario[0] && usuario[0].facebookId ? true : false,
-                            googleVinculado: usuario[0] && usuario[0].googleId ? true : false
+                            googleVinculado: usuario[0] && usuario[0].googleId ? true : false,
+                            profileUrlImage: usuario[0].profileUrlImage
                         }
                     } as IAuthenticateResult;
                 } else {

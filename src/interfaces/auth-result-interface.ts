@@ -10,6 +10,7 @@ export interface IUsuarioAutenticado {
     anoEntradaRepublica: number;
     facebookVinculado: boolean;
     googleVinculado: boolean;
+    profileUrlImage?: string;
 }
 
 export interface IAuthenticateResult {

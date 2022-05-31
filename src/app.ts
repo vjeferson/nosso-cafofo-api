@@ -5,6 +5,9 @@ import swaggerUi from 'swagger-ui-express';
 import swaggerDocs from './swagger.json';
 import fs from 'fs';
 import dotenv from 'dotenv';
+import path from 'path';
+
+const morgan = require("morgan");
 
 export default class App {
     private express: express.Application;
@@ -30,6 +33,11 @@ export default class App {
     private middlewares(): void {
         this.express.use(cors());
         this.express.use(express.json());
+        this.express.use(morgan("dev"));
+        this.express.use(
+            "/files",
+            express.static(path.resolve(__dirname, "..", "tmp", "uploads"))
+          );
     }
 
     private swagger(): void {

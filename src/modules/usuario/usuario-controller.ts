@@ -20,7 +20,7 @@ import ValidadoresSerive from '../../utils/validadores-service';
 import { Perfil } from '../perfil/perfil-model';
 import { Usuario } from './usuario-model';
 const sgMail = require('@sendgrid/mail');
-
+import mime from "mime";
 
 export default class UsuarioController {
 
@@ -445,9 +445,33 @@ export default class UsuarioController {
 
     async trocaImagemProfile(request: Request, response: Response) {
         try {
-            return response.status(200).send('https://nosso-cafofo-public.s3.sa-east-1.amazonaws.com/images/profile/profile-luffy.jpg');
+            if (request.file) {
+                const name = `usuario-${request.usuario.id}.${mime.extension(request.file.mimetype)}`;
+                const url = await UtilsSerive.sendFileS3(request.file.buffer, name, 'nosso-cafofo-public/images/profile');            
+                
+                
+                const urlSplited = url.split('?')[0];
+                let objetoAtualizacao: any = {
+                    id: +request.usuario.id,
+                    nome: request.usuario.nome,
+                    email: request.usuario.email,
+                    profileUrlImage: urlSplited
+                };
+    
+                const usuarioAtualizado = await Usuario.query().findById(+objetoAtualizacao.id)
+                    .skipUndefined()
+                    .patch(objetoAtualizacao);
+    
+                if (!usuarioAtualizado) {
+                    throw new Error('Não existe um usuário para o id (identificador) informado!');
+                }
+                
+                return response.status(200).send(urlSplited);
+            }
+
+            throw new Error('Faltou informar o arquivo!');
         } catch (error: any) {
-            return response.status(400).json({ error: 'Erro ao redefinir senha de acesso', message: error.message });
+            errorHandlerObjection(error, response, 'Erro ao ativar registro');
         }
     }
 

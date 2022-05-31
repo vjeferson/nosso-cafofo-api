@@ -19,6 +19,7 @@ export class Usuario extends Model implements IUsuario {
     facebookId?: string;
     googleId?: string;
     perfil?: Perfil;
+    profileUrlImage?:string;
 
     static get tableName() {
         return 'usuario';
@@ -40,6 +41,7 @@ export class Usuario extends Model implements IUsuario {
             perfilId: { type: 'integer' },
             republicaId: { type: ['integer', 'null'] },
             moradorId: { type: ['integer', 'null'] },
+            profileUrlImage: { type: ['string', 'null'], maxLength: 255 }
         }
     }
 
