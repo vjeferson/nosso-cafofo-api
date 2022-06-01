@@ -50,14 +50,26 @@ export default class ClienteController {
 
             const perfil = await Perfil.query(transaction).select('id').where('tipoPerfil', '=', EnumTipoPerfil.MoradorAdministrador);
 
-            await Usuario.query(transaction).insert({
+
+            let objectUsuario: any = {
                 nome: dadosCliente.nome,
                 email: dadosCliente.email,
                 senha: senhaEncriptada,
                 perfilId: perfil[0].id,
                 moradorId: morador.id,
                 republicaId: republica.id
-            });
+            };
+
+            if (dadosCliente.idSocialAccount && dadosCliente.socialType) {
+                const mapSocialTypeColumn: any = {
+                    'facebook': 'facebookId',
+                    'google': 'googleId'
+                };
+
+                objectUsuario[mapSocialTypeColumn[dadosCliente.socialType]] = dadosCliente.idSocialAccount;
+            }
+
+            await Usuario.query(transaction).insert(objectUsuario);
 
             let plano: Plano[];
             if (!dadosCliente.planoId) {

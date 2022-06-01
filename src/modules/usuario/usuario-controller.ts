@@ -326,7 +326,6 @@ export default class UsuarioController {
                 .select('id')
                 .where(function () {
                     this.where(mapSocialTypeColumn[body.socialType], '=', body.id)
-                        .orWhere('email', '=', body.email)
                 })
             const result = {
                 jaVinculado: Array.isArray(usuario) && usuario.length > 0

@@ -13,4 +13,6 @@ export interface INovoCliente {
     cidadeId: number;
     anoEntradaMorador: number;
     planoId?: number;
+    idSocialAccount?:string
+    socialType?: string;
 }

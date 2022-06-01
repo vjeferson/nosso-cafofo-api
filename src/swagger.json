@@ -5666,6 +5666,12 @@
                 },
                 "planoId": {
                     "type": "number"
+                },
+                "idSocialAccount": {
+                    "type": "string"
+                },
+                "socialType": {
+                    "type": "string"
                 }
             }
         },
