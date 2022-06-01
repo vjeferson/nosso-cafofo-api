@@ -20,6 +20,7 @@ import RepublicaController from './modules/republica/republica-controller';
 import ReuniaoController from './modules/reuniao/reuniao-controller';
 import UsuarioController from './modules/usuario/usuario-controller';
 import EstatisticasController from './modules/estatisticas/estatisticas.controller';
+import RelatoriosController from './modules/relatorios/relatorios-controller';
 
 import multer from 'multer';
 import {uploadAvatar} from './middlewares/uploadAvatarMiddleware';
@@ -42,6 +43,7 @@ const festaController = new FestaController();
 const participantesFestaController = new ParticipantesFestaController();
 const contaController = new ContaController();
 const estatisticasController = new EstatisticasController();
+const relatoriosController = new RelatoriosController();
 
 routes.get('/', pingController.ping);
 
@@ -142,5 +144,7 @@ routes.get('/entrada-saida', authMiddleware, contaController.find);
 routes.get('/estatisticas/count-assinantes', authMiddleware, authAdministradorNossoCafofoMiddleware, estatisticasController.countAssinantes);
 routes.get('/estatisticas/count-pagamentos', authMiddleware, authAdministradorNossoCafofoMiddleware, estatisticasController.countPagamentos);
 routes.get('/estatisticas/ultima-reuniao', authMiddleware, estatisticasController.ultimaReuniao);
+
+routes.get('/relatorios/assinantes', authMiddleware, authAdministradorNossoCafofoMiddleware, relatoriosController.assinantes);
 
 export default routes;
