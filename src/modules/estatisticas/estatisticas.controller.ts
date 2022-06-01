@@ -3,6 +3,7 @@ import moment from 'moment';
 import { raw } from 'objection';
 import { EnumNumeroMes, EnumTipoPlano } from '../../utils/enums';
 import { Assinatura } from '../assinatura/assinatura-model';
+import { Republica } from '../republica/republica.model';
 
 export default class EstatisticasController {
 
@@ -55,12 +56,12 @@ export default class EstatisticasController {
                 .count()
                 .groupBy('p.tipoPlano');
 
-            const mapPercentualPlanos: {[key:number]: number} = {};
+            const mapPercentualPlanos: { [key: number]: number } = {};
 
-            (countPorPlano || []).forEach(item =>{
+            (countPorPlano || []).forEach(item => {
                 mapPercentualPlanos[item.tipoPlano] = (item.count / totalAssinantesAtivos) * 100;
             });
-            
+
             const retorno: { [key: string]: number } = {
                 percentualPlanoFree: mapPercentualPlanos[EnumTipoPlano.Free] || 0,
                 percentualPlanoMensal: mapPercentualPlanos[EnumTipoPlano.Mensal] || 0,
@@ -82,16 +83,16 @@ export default class EstatisticasController {
             const dataInicio = moment().startOf('year');
             const dataFim = moment().endOf('year');
             queryCount.whereBetween('a.dataAssinatura', [dataInicio, dataFim]);
-            
+
             const countPorMes: any[] = await queryCount.select(
-                    raw("TO_CHAR(??, 'MM')", 'a.dataAssinatura').as('dataAssinatura')
-                )
+                raw("TO_CHAR(??, 'MM')", 'a.dataAssinatura').as('dataAssinatura')
+            )
                 .count()
                 .groupBy(raw("TO_CHAR(??, 'MM')", 'a.dataAssinatura'));
 
-            const mapAssinaturasMensal: {[key:number]: number} = {};
+            const mapAssinaturasMensal: { [key: number]: number } = {};
 
-            (countPorMes || []).forEach(item =>{
+            (countPorMes || []).forEach(item => {
                 mapAssinaturasMensal[+item.dataAssinatura] = +item.count;
             });
 
@@ -104,6 +105,51 @@ export default class EstatisticasController {
                 junho: mapAssinaturasMensal[EnumNumeroMes.Junho] || 0,
                 julho: mapAssinaturasMensal[EnumNumeroMes.Julho] || 0,
                 agosto: mapAssinaturasMensal[EnumNumeroMes.Agosto] || 0
+            };
+
+            return response.status(200).send(retorno);
+        } catch (error: any) {
+            return response.status(400).json({ error: 'Erro ao consultar estatísticas:', message: error.message });
+        }
+    }
+
+    async planosAssinadosPorEstado(request: Request, response: Response) {
+        try {
+            const query = Assinatura.query().alias('a');
+
+            const countPorEstado = await query.select(
+                'r.estadoId',
+                'p.tipoPlano'
+            ).joinRelated('republica', { alias: 'r' })
+                .joinRelated('plano', { alias: 'p' })
+                .count()
+                .groupBy('r.estadoId')
+                .groupBy('p.tipoPlano')
+                .orderBy('r.estadoId', 'ASC');
+
+            let codigosEstadosComClientes: string[] = [];
+            const mapValoresPorPlanos: { [key: number]: number[] } = {
+                [EnumTipoPlano.Free]: [],
+                [EnumTipoPlano.Mensal]: [],
+                [EnumTipoPlano.Semestral]: [],
+                [EnumTipoPlano.Anual]: [],
+                [EnumTipoPlano.PromocionalAnual]: []
+            };
+
+            (countPorEstado || []).forEach(item => {
+                codigosEstadosComClientes.push((item as any).estadoId);
+                mapValoresPorPlanos[+(item as any).tipoPlano].push(+(item as any).count);
+            });
+
+            const retorno = {
+                codigosEstadosComClientes,
+                valores: {
+                    planoFree: mapValoresPorPlanos[EnumTipoPlano.Free] || [],
+                    planoMensal: mapValoresPorPlanos[EnumTipoPlano.Mensal] || [],
+                    planoSemestral: mapValoresPorPlanos[EnumTipoPlano.Semestral] || [],
+                    planoAnual: mapValoresPorPlanos[EnumTipoPlano.Anual] || [],
+                    planoPromocionalAnual: mapValoresPorPlanos[EnumTipoPlano.PromocionalAnual] || [],
+                }
             };
 
             return response.status(200).send(retorno);
