@@ -50,3 +50,14 @@ export enum EnumSituacaoConta {
     PagamentoParcial,
     Pago
 }
+
+export enum EnumNumeroMes {
+    Janeiro = 1,
+    Fevereiro,
+    Marco,
+    Abril,
+    Maio,
+    Junho,
+    Julho,
+    Agosto
+}

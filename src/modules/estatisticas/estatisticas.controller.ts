@@ -1,6 +1,7 @@
-import { Request, Response } from 'express';
+import { query, Request, Response } from 'express';
 import moment from 'moment';
-import { EnumTipoPlano } from '../../utils/enums';
+import { raw } from 'objection';
+import { EnumNumeroMes, EnumTipoPlano } from '../../utils/enums';
 import { Assinatura } from '../assinatura/assinatura-model';
 
 export default class EstatisticasController {
@@ -71,6 +72,43 @@ export default class EstatisticasController {
             return response.status(200).send(retorno);
         } catch (error: any) {
             return response.status(400).json({ error: 'Erro ao consultar estatísticas', message: error.message });
+        }
+    }
+
+
+    async assinanturasPorMes(request: Request, response: Response) {
+        try {
+            const queryCount = Assinatura.query().alias('a');
+            const dataInicio = moment().startOf('year');
+            const dataFim = moment().endOf('year');
+            queryCount.whereBetween('a.dataAssinatura', [dataInicio, dataFim]);
+            
+            const countPorMes: any[] = await queryCount.select(
+                    raw("TO_CHAR(??, 'MM')", 'a.dataAssinatura').as('dataAssinatura')
+                )
+                .count()
+                .groupBy(raw("TO_CHAR(??, 'MM')", 'a.dataAssinatura'));
+
+            const mapAssinaturasMensal: {[key:number]: number} = {};
+
+            (countPorMes || []).forEach(item =>{
+                mapAssinaturasMensal[+item.dataAssinatura] = +item.count;
+            });
+
+            const retorno: { [key: string]: number } = {
+                janeiro: mapAssinaturasMensal[EnumNumeroMes.Janeiro] || 0,
+                fevereiro: mapAssinaturasMensal[EnumNumeroMes.Fevereiro] || 0,
+                marco: mapAssinaturasMensal[EnumNumeroMes.Marco] || 0,
+                abril: mapAssinaturasMensal[EnumNumeroMes.Abril] || 0,
+                maio: mapAssinaturasMensal[EnumNumeroMes.Maio] || 0,
+                junho: mapAssinaturasMensal[EnumNumeroMes.Junho] || 0,
+                julho: mapAssinaturasMensal[EnumNumeroMes.Julho] || 0,
+                agosto: mapAssinaturasMensal[EnumNumeroMes.Agosto] || 0
+            };
+
+            return response.status(200).send(retorno);
+        } catch (error: any) {
+            return response.status(400).json({ error: 'Erro ao consultar estatísticas:', message: error.message });
         }
     }
 

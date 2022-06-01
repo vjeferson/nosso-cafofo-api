@@ -143,6 +143,7 @@ routes.get('/entrada-saida', authMiddleware, contaController.find);
 
 routes.get('/estatisticas/count-assinantes', authMiddleware, authAdministradorNossoCafofoMiddleware, estatisticasController.countAssinantes);
 routes.get('/estatisticas/percentual-assinantes-por-plano', authMiddleware, authAdministradorNossoCafofoMiddleware, estatisticasController.percentualAssinantesPorPlano);
+routes.get('/estatisticas/assinanturas-por-mes', authMiddleware, authAdministradorNossoCafofoMiddleware, estatisticasController.assinanturasPorMes);
 
 routes.get('/estatisticas/count-pagamentos', authMiddleware, authAdministradorNossoCafofoMiddleware, estatisticasController.countPagamentos);
 routes.get('/estatisticas/ultima-reuniao', authMiddleware, estatisticasController.ultimaReuniao);
