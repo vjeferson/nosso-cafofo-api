@@ -4168,6 +4168,18 @@
                         "bearerAuth": []
                     }
                 ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Informações do participante",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/NovoParticipanteFesta"
+                        }
+                    }
+                ],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -6440,6 +6452,13 @@
         },
         "NovoParticipanteFesta": {
             "type": "object",
+            "required":[
+                "nome",
+                "lote",
+                "situacao",
+                "valor",
+                "festaId"
+            ],
             "properties": {
                 "nome": {
                     "type": "string"
