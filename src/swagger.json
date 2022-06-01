@@ -4441,6 +4441,16 @@
                         "schema": {
                             "type": "number"
                         }
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Novas informações do participante",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/AtualizaParticipanteFesta"
+                        }
                     }
                 ],
                 "requestBody": {
@@ -6479,6 +6489,12 @@
         },
         "AtualizaParticipanteFesta": {
             "type": "object",
+            "required": [
+                "nome",
+                "lote",
+                "situacao",
+                "valor"
+            ],
             "properties": {
                 "nome": {
                     "type": "string"
