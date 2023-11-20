@@ -1,7 +1,7 @@
 {
   "name": "nosso-cafofo-api",
   "version": "2.0.0",
-  "description": "Api do Nosso Cafofo para suprir a Aplicação Web e Aplicativos Mobile.",
+  "description": "Api REST do Nosso Cafofo para suprir o(s) cliente(s) Front-end",
   "main": "server.js",
   "scripts": {
     "build": "tsc",
